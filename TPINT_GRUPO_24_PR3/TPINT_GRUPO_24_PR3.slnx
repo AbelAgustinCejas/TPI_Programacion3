@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Datos/Datos.csproj" Id="8164a4be-8096-4aae-8df7-c8e8be013eac" />
+  <Project Path="Entidades/Entidades.csproj" Id="cd110e52-89da-4ad5-9447-a8ab450b567c" />
+  <Project Path="Negocio/Negocio.csproj" Id="bb105d3e-094d-4656-add7-21b7b7f85bf4" />
+  <Project Path="Vistas/Vistas.csproj" Id="582321c1-59bc-4e71-8113-81638d616748" />
+</Solution>
