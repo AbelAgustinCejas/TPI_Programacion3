@@ -5,12 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Menu Administrador</title>
-    <style type="text/css">
-        .auto-style1 {
-            width: 100%;
-        }
-    </style>
+    <title>Menu Administradores</title>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -29,22 +24,22 @@
         <table style="margin:auto;">
             <tr>
                 <td>
-                    <asp:Button runat="server" Text="Gestion Pacientes" Width="250px" Height="50px" />
+                    <asp:Button runat="server" Text="Gestion Pacientes" Width="250px" Height="50px" ID="btnGP" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    <asp:Button ID="Button2" runat="server" Text="Gestion Medicos" Width="250px" Height="50px" />
+                    <asp:Button ID="btnGM" runat="server" Text="Gestion Medicos" Width="250px" Height="50px" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    <asp:Button ID="Button3" runat="server" Text="Asignacion turnos" Width="250px" Height="50px" />
+                    <asp:Button ID="btnAT" runat="server" Text="Asignacion de Turnos" Width="250px" Height="50px" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    <asp:Button ID="Button4" runat="server" Text="Informes" Width="250px" Height="50px" />
+                    <asp:Button ID="btnInformes" runat="server" Text="Informes" Width="250px" Height="50px" />
                 </td>
             </tr>
         </table>

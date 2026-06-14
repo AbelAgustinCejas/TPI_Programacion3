@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|c:\\users\\agust\\desktop\\tpi_programacion3\\tpint_grupo_24_pr3\\vistas\\menuadmin.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|solutionrelative:vistas\\menuadmin.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\vistas\\menumedico.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|solutionrelative:vistas\\menumedico.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\vistas\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|solutionrelative:vistas\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|c:\\users\\agust\\desktop\\tpi_programacion3\\tpint_grupo_24_pr3\\vistas\\menuadmin.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|solutionrelative:vistas\\menuadmin.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,21 +22,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Login.aspx",
-              "DocumentMoniker": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\Login.aspx",
-              "RelativeDocumentMoniker": "Vistas\\Login.aspx",
-              "ToolTip": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\Login.aspx",
-              "RelativeToolTip": "Vistas\\Login.aspx",
-              "LogicalView": "7651a702-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2026-06-13T19:14:23.542Z",
-              "IsPinned": true
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
@@ -47,7 +34,21 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "Login.aspx",
+              "DocumentMoniker": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\Login.aspx",
+              "RelativeDocumentMoniker": "Vistas\\Login.aspx",
+              "ToolTip": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\Login.aspx",
+              "RelativeToolTip": "Vistas\\Login.aspx",
+              "LogicalView": "7651a702-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-06-13T19:14:23.542Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "MenuAdmin.aspx",
               "DocumentMoniker": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MenuAdmin.aspx",
               "RelativeDocumentMoniker": "Vistas\\MenuAdmin.aspx",
@@ -56,19 +57,21 @@
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
               "WhenOpened": "2026-06-13T20:44:39.067Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "MenuMedico.aspx",
               "DocumentMoniker": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MenuMedico.aspx",
               "RelativeDocumentMoniker": "Vistas\\MenuMedico.aspx",
               "ToolTip": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MenuMedico.aspx",
               "RelativeToolTip": "Vistas\\MenuMedico.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "LogicalView": "7651a702-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2026-06-13T20:44:49.577Z"
+              "WhenOpened": "2026-06-13T20:44:49.577Z",
+              "EditorCaption": ""
             }
           ]
         },
