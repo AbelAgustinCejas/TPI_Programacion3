@@ -70,6 +70,7 @@
     <Content Include="Login.aspx" />
     <Content Include="MenuAdmin.aspx" />
     <Content Include="MenuMedico.aspx" />
+    <Content Include="MenuPaciente.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +94,13 @@
     </Compile>
     <Compile Include="MenuMedico.aspx.designer.cs">
       <DependentUpon>MenuMedico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MenuPaciente.aspx.cs">
+      <DependentUpon>MenuPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MenuPaciente.aspx.designer.cs">
+      <DependentUpon>MenuPaciente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
