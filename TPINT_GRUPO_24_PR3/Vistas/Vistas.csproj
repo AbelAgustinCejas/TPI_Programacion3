@@ -1,5 +1,4 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -43,6 +42,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -62,45 +64,98 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Login.aspx" />
-    <Content Include="MenuAdmin.aspx" />
-    <Content Include="MenuMedico.aspx" />
-    <Content Include="MenuPaciente.aspx" />
+    <Content Include="MENU ADMIN\GestionMedicos_Modificar.aspx" />
+    <Content Include="MENU ADMIN\GestionPacientes_Modificar.aspx" />
+    <Content Include="PRINCIPAL\Login.aspx" />
+    <Content Include="MENU ADMIN\INFORMES\InformeAsistencia.aspx" />
+    <Content Include="MENU ADMIN\INFORMES\InformeEspecialidad.aspx" />
+    <Content Include="MENU ADMIN\INFORMES\InformeMedico.aspx" />
+    <Content Include="MENU ADMIN\AsignacionTurnos.aspx" />
+    <Content Include="PRINCIPAL\MenuAdmin.aspx">
+      <BrowseToURL>~/Principal/MenuAdmin.aspx</BrowseToURL>
+    </Content>
+    <Content Include="PRINCIPAL\MenuMedico.aspx" />
+    <Content Include="MENU ADMIN\GestionMedicos.aspx" />
+    <Content Include="MENU ADMIN\GestionPacientes.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Login.aspx.cs">
+    <Compile Include="MENU ADMIN\GestionMedicos_Modificar.aspx.cs">
+      <DependentUpon>GestionMedicos_Modificar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MENU ADMIN\GestionMedicos_Modificar.aspx.designer.cs">
+      <DependentUpon>GestionMedicos_Modificar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MENU ADMIN\GestionPacientes_Modificar.aspx.cs">
+      <DependentUpon>GestionPacientes_Modificar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MENU ADMIN\GestionPacientes_Modificar.aspx.designer.cs">
+      <DependentUpon>GestionPacientes_Modificar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PRINCIPAL\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Login.aspx.designer.cs">
+    <Compile Include="PRINCIPAL\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MenuAdmin.aspx.cs">
+    <Compile Include="MENU ADMIN\INFORMES\InformeAsistencia.aspx.cs">
+      <DependentUpon>InformeAsistencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MENU ADMIN\INFORMES\InformeAsistencia.aspx.designer.cs">
+      <DependentUpon>InformeAsistencia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MENU ADMIN\INFORMES\InformeEspecialidad.aspx.cs">
+      <DependentUpon>InformeEspecialidad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MENU ADMIN\INFORMES\InformeEspecialidad.aspx.designer.cs">
+      <DependentUpon>InformeEspecialidad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MENU ADMIN\INFORMES\InformeMedico.aspx.cs">
+      <DependentUpon>InformeMedico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MENU ADMIN\INFORMES\InformeMedico.aspx.designer.cs">
+      <DependentUpon>InformeMedico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MENU ADMIN\AsignacionTurnos.aspx.cs">
+      <DependentUpon>AsignacionTurnos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MENU ADMIN\AsignacionTurnos.aspx.designer.cs">
+      <DependentUpon>AsignacionTurnos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PRINCIPAL\MenuAdmin.aspx.cs">
       <DependentUpon>MenuAdmin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MenuAdmin.aspx.designer.cs">
+    <Compile Include="PRINCIPAL\MenuAdmin.aspx.designer.cs">
       <DependentUpon>MenuAdmin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MenuMedico.aspx.cs">
+    <Compile Include="PRINCIPAL\MenuMedico.aspx.cs">
       <DependentUpon>MenuMedico.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MenuMedico.aspx.designer.cs">
+    <Compile Include="PRINCIPAL\MenuMedico.aspx.designer.cs">
       <DependentUpon>MenuMedico.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MenuPaciente.aspx.cs">
-      <DependentUpon>MenuPaciente.aspx</DependentUpon>
+    <Compile Include="MENU ADMIN\GestionMedicos.aspx.cs">
+      <DependentUpon>GestionMedicos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MenuPaciente.aspx.designer.cs">
-      <DependentUpon>MenuPaciente.aspx</DependentUpon>
+    <Compile Include="MENU ADMIN\GestionMedicos.aspx.designer.cs">
+      <DependentUpon>GestionMedicos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MENU ADMIN\GestionPacientes.aspx.cs">
+      <DependentUpon>GestionPacientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MENU ADMIN\GestionPacientes.aspx.designer.cs">
+      <DependentUpon>GestionPacientes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -123,6 +178,7 @@
       <Name>Negocio</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -155,10 +211,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
   </Target>
 </Project>
