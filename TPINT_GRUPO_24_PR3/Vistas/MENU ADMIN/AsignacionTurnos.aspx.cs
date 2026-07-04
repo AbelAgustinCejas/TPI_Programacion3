@@ -33,7 +33,7 @@ namespace Vistas
             ddlEspecialidad.DataValueField = "IdEspecialidad_ESP";
             ddlEspecialidad.DataBind();
 
-            ddlEspecialidad.Items.Insert(0, new ListItem("-- Seleccione --", "-1"));
+            ddlEspecialidad.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
         }
         private void CargarMedicos(int idEspecialidad)
         {
@@ -44,25 +44,38 @@ namespace Vistas
             ddlMedico.DataValueField = "Legajo_MED";
             ddlMedico.DataBind();
 
-            ddlMedico.Items.Insert(0, new ListItem("-- Seleccione --", "-1"));
+            ddlMedico.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
         }
-        private void CargarHorarios(int legajo)
+        protected void CargarHorarios()
         {
             ddlHorario.Items.Clear();
 
-            ddlHorario.DataSource = new NegocioMedico().ObtenerHorariosMedicoAsignacion(legajo);
-            ddlHorario.DataTextField = "Horario";
-            ddlHorario.DataValueField = "IdHorario_HM";
-            ddlHorario.DataBind();
+            if (ddlMedico.SelectedIndex == 0)
+                return;
 
-            ddlHorario.Items.Insert(0, new ListItem("-- Seleccione --", "-1"));
+            if (Calendar1.SelectedDate == DateTime.MinValue)
+                return;
+
+            NegocioTurno negocio = new NegocioTurno();
+
+            int legajo = Convert.ToInt32(ddlMedico.SelectedValue);
+
+            List<TimeSpan> horarios =
+                negocio.ObtenerHorariosDisponibles(legajo, Calendar1.SelectedDate);
+
+            foreach (TimeSpan hora in horarios)
+            {
+                ddlHorario.Items.Add(new ListItem(
+                    hora.ToString(@"hh\:mm"),
+                    hora.ToString(@"hh\:mm")));
+            }
         }
-
 
         protected void gvPaciente_SelectedIndexChanged(object sender, EventArgs e)
         {
 
             int idPaciente = Convert.ToInt32(gvPaciente.SelectedDataKey.Value);
+            ViewState["idPaciente"] = idPaciente;
 
             GridViewRow fila = gvPaciente.SelectedRow;
 
@@ -74,17 +87,26 @@ namespace Vistas
 
         private void ActualizarResumen()
         {
-            lblEspecialidadResumen.Text = ddlEspecialidad.SelectedItem.Text;
-            lblMedicoResumen.Text = ddlMedico.SelectedItem.Text;
+            if (ddlEspecialidad.Items.Count > 0 && ddlEspecialidad.SelectedIndex >= 0)
+                lblEspecialidadResumen.Text = ddlEspecialidad.SelectedItem.Text;
+            else
+                lblEspecialidadResumen.Text = "";
+
+            if (ddlMedico.Items.Count > 0 && ddlMedico.SelectedIndex >= 0)
+                lblMedicoResumen.Text = ddlMedico.SelectedItem.Text;
+            else
+                lblMedicoResumen.Text = "";
 
             if (Calendar1.SelectedDate != DateTime.MinValue)
-            {
                 lblFechaResumen.Text = Calendar1.SelectedDate.ToString("dd/MM/yyyy");
-            }
+            else
+                lblFechaResumen.Text = "";
 
-            lblHorarioResumen.Text = ddlHorario.SelectedItem.Text;
+            if (ddlHorario.Items.Count > 0 && ddlHorario.SelectedIndex >= 0)
+                lblHorarioResumen.Text = ddlHorario.SelectedItem.Text;
+            else
+                lblHorarioResumen.Text = "";
         }
-
         protected void btnBuscarPaciente_Click(object sender, EventArgs e)
         {
             lblMensaje.Text = "";
@@ -126,17 +148,93 @@ namespace Vistas
         {
             if (ddlMedico.SelectedValue != "0")
             {
-                CargarHorarios(Convert.ToInt32(ddlMedico.SelectedValue));
+                CargarHorarios();
             }
         }
 
-        protected void btnConfirmarTurno_Click(object sender, EventArgs e)
+        protected void btnConfirmar_Click(object sender, EventArgs e)
         {
+            if (ViewState["idPaciente"] == null)
+            {
+                lblMensaje.Text = "Debe seleccionar un paciente.";
+                return;
+            }
+
+            if (ddlHorario.SelectedIndex == -1)
+            {
+                lblMensaje.Text = "Seleccione un horario.";
+                return;
+            }
+
             NegocioTurno negocio = new NegocioTurno();
 
-            if (gvPaciente.SelectedIndex == -1)
+            int legajo = Convert.ToInt32(ddlMedico.SelectedValue);
+            int idPaciente = Convert.ToInt32(ViewState["idPaciente"]);
+
+            DateTime fecha = Calendar1.SelectedDate;
+
+            TimeSpan hora = TimeSpan.Parse(ddlHorario.SelectedValue);
+
+            bool agregado = negocio.ConfirmarTurno(
+                legajo,
+                idPaciente,
+                fecha,
+                hora);
+
+            if (agregado)
             {
-                lblMensaje.Text = "Seleccione un paciente.";
+                lblMensaje.Text = "Turno registrado correctamente.";
+
+                if (agregado)
+                {
+                    lblMensaje.Text = "Turno registrado correctamente.";
+
+                    // Limpiar búsqueda
+                    txtDNI.Text = "";
+
+                    // Ocultar o vaciar el GridView
+                    gvPaciente.DataSource = null;
+                    gvPaciente.DataBind();
+
+                    // limpiar ddl
+                    ddlEspecialidad.SelectedIndex = 0;
+                    ddlMedico.Items.Clear();
+                    ddlHorario.Items.Clear();
+
+                    // Limpiar calendario
+                    Calendar1.SelectedDates.Clear();
+                    Calendar1.SelectedDate = DateTime.MinValue;
+
+                    // Limpiar ViewState
+                    ViewState["idPaciente"] = null;
+
+                    // Limpiar resumen
+                    lblPacienteResumen.Text = "";
+                    lblDniResumen.Text = "";
+                    lblEspecialidadResumen.Text = "";
+                    lblMedicoResumen.Text = "";
+                    lblFechaResumen.Text = "";
+                    lblHorarioResumen.Text = "";
+                }
+
+                ViewState["idPaciente"] = null;
+            }
+            else
+            {
+                lblMensaje.Text = "No se pudo registrar el turno.";
+            }
+        }
+
+        protected void Calendar1_SelectionChanged(object sender, EventArgs e)
+        {
+
+            lblMensaje.Text = "";
+            ddlHorario.Items.Clear();
+
+            // No permitir fechas anteriores a hoy
+            if (Calendar1.SelectedDate.Date < DateTime.Today)
+            {
+                lblMensaje.Text = "No puede seleccionar una fecha anterior al día de hoy.";
                 return;
             }
 
@@ -146,35 +244,77 @@ namespace Vistas
                 return;
             }
 
-            if (ddlHorario.SelectedIndex <= 0)
-            {
-                lblMensaje.Text = "Seleccione un horario.";
-                return;
-            }
-
-            if (Calendar1.SelectedDate == DateTime.MinValue)
-            {
-                lblMensaje.Text = "Seleccione una fecha.";
-                return;
-            }
+            NegocioTurno negocio = new NegocioTurno();
 
             int legajo = Convert.ToInt32(ddlMedico.SelectedValue);
 
-            int idPaciente = Convert.ToInt32(gvPaciente.SelectedDataKey.Value);
-
-            DateTime fecha = Calendar1.SelectedDate;
-
-            string horario = ddlHorario.SelectedItem.Text;
-
-            TimeSpan hora = TimeSpan.Parse(horario.Split('-')[0].Trim());
-
-            if (negocio.AgregarTurno(legajo, idPaciente, fecha, hora))
+            // Verificar si el médico atiende ese día
+            if (!negocio.MedicoAtiendeEseDia(legajo, Calendar1.SelectedDate))
             {
-                lblMensaje.Text = "Turno asignado correctamente.";
+                lblMensaje.Text = "El médico seleccionado no atiende ese día.";
+                return;
+            }
+
+            CargarHorarios();
+
+            if (ddlHorario.Items.Count == 0)
+            {
+                lblMensaje.Text = "No hay horarios disponibles para esa fecha.";
+            }
+        }
+
+        protected void btnBuscarTurno_Click(object sender, EventArgs e)
+        {
+            NegocioTurno negocio = new NegocioTurno();
+
+            DataTable dt = negocio.BuscarTurnoPorDni(Convert.ToInt32(txtBuscarDni.Text));
+
+            gvTurnos.DataSource = dt;
+            gvTurnos.DataBind();
+
+            if (dt.Rows.Count == 0)
+            {
+                lblMensaje.Text = "No se encontró ningún turno.";
+            }
+        }
+
+        protected void gvTurnos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ViewState["IdTurno"] = gvTurnos.DataKeys[gvTurnos.SelectedIndex].Value;
+
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnEliminarTurno_Click(object sender, EventArgs e)
+        {
+            if (ViewState["IdTurno"] == null)
+            {
+                lblMensaje.Text = "Seleccione un turno.";
+                return;
+            }
+
+            NegocioTurno negocio = new NegocioTurno();
+
+            bool eliminado = negocio.EliminarTurno(Convert.ToInt32(ViewState["IdTurno"]));
+
+            if (eliminado)
+            {
+                lblMensaje.Text = "Turno eliminado correctamente.";
+
+                gvTurnos.DataSource = null;
+                gvTurnos.DataBind();
+
+                txtBuscarDni.Text = "";
+
+                ViewState["IdTurno"] = null;
             }
             else
             {
-                lblMensaje.Text = "No se pudo asignar el turno.";
+                lblMensaje.Text = "No se pudo eliminar el turno.";
             }
         }
     }

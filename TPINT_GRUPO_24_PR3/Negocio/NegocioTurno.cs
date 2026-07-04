@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Datos;
+using Entidades;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Datos;
-using Entidades;
 
 namespace Negocio
 {
@@ -12,11 +13,34 @@ namespace Negocio
     {
 
 
-        public bool AgregarTurno(int legajo, int idPaciente, DateTime fecha, TimeSpan hora)
+        DaoClinica dao = new DaoClinica();
+
+        public bool ConfirmarTurno(int legajo, int idPaciente, DateTime fecha, TimeSpan hora)
         {
-            DaoClinica dao = new DaoClinica();
             return dao.AgregarTurno(legajo, idPaciente, fecha, hora);
         }
 
+        public List<TimeSpan> ObtenerHorariosDisponibles(int legajo, DateTime fecha)
+        {
+            return dao.ObtenerHorariosDisponibles(legajo, fecha);
+        }
+
+        public bool MedicoAtiendeEseDia(int legajo, DateTime fecha)
+        {
+            DaoClinica dao = new DaoClinica();
+            return dao.MedicoAtiendeEseDia(legajo, fecha);
+        }
+
+        public DataTable BuscarTurnoPorDni(int dni)
+        {
+            DaoClinica dao = new DaoClinica();
+            return dao.BuscarTurnoPorDni(dni);
+        }
+
+        public bool EliminarTurno(int idTurno)
+        {
+            DaoClinica dao = new DaoClinica();
+            return dao.EliminarTurno(idTurno);
+        }
     }
 }

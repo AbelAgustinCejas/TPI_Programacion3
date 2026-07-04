@@ -84,6 +84,13 @@
             align-items: flex-start;
         }
 
+        .auto-style1 {
+            width: 264px;
+        }
+        .auto-style2 {
+            width: 253px;
+        }
+
     </style>
 </head>
 
@@ -121,11 +128,11 @@
         <asp:GridView ID="gvPaciente"
             runat="server"
             AutoGenerateColumns="False"
-            Visible="true"
             Width="850px"
             DataKeyNames="IdPaciente_PAC"
-            AutoPostBack="true"
-            OnSelectedIndexChanged="gvPaciente_SelectedIndexChanged">
+            OnSelectedIndexChanged="gvPaciente_SelectedIndexChanged" CellPadding="4" ForeColor="#333333" GridLines="None">
+
+            <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
 
             <Columns>
                 <asp:CommandField ShowSelectButton="True" />
@@ -138,10 +145,74 @@
 <asp:BoundField DataField="FechaNacimiento_PAC" HeaderText="Fecha de Nacimiento" DataFormatString="{0:dd/MM/yyyy}" />
             </Columns>
 
+            <EditRowStyle BackColor="#999999" />
+            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+            <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+            <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+            <SortedAscendingCellStyle BackColor="#E9E7E2" />
+            <SortedAscendingHeaderStyle BackColor="#506C8C" />
+            <SortedDescendingCellStyle BackColor="#FFFDF8" />
+            <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+
         </asp:GridView>
 
     </div>
 
+    <br />
+   <table>
+    <tr>
+        <td class="auto-style1">Buscar Turno por DNI:</td>
+        <td class="auto-style2">
+            <asp:TextBox ID="txtBuscarDni" runat="server" Width="240px"></asp:TextBox>
+        </td>
+        <td>
+            <asp:Button ID="btnBuscarTurno" runat="server" OnClick="btnBuscarTurno_Click" Text="Buscar Turno" Width="212px" />
+            <asp:Button ID="btnEliminarTurno" runat="server" OnClick="btnEliminarTurno_Click" Text="Eliminar Turno" />
+        </td>
+    </tr>
+</table>
+    <br />
+    <br />
+
+    <asp:GridView ID="gvTurnos"
+    runat="server"
+    AutoGenerateColumns="False"
+    DataKeyNames="IdTurno_TUR"
+    OnSelectedIndexChanged="gvTurnos_SelectedIndexChanged" CellPadding="4" ForeColor="#333333" GridLines="None" Width="866px">
+
+        <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+
+    <Columns>
+
+        <asp:CommandField ShowSelectButton="True" SelectText="Seleccionar"/>
+
+        <asp:BoundField DataField="Fecha"
+            HeaderText="Fecha"
+        />
+
+        <asp:BoundField DataField="Hora_TUR"
+            HeaderText="Hora"
+            />
+
+        <asp:BoundField DataField="Apellido_MED"
+            HeaderText="Medico" />
+
+    </Columns>
+
+        <EditRowStyle BackColor="#999999" />
+        <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+        <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+        <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+        <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+        <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+        <SortedAscendingCellStyle BackColor="#E9E7E2" />
+        <SortedAscendingHeaderStyle BackColor="#506C8C" />
+        <SortedDescendingCellStyle BackColor="#FFFDF8" />
+        <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+
+</asp:GridView>
     <br />
 
     <!-- CONTENEDOR PRINCIPAL -->
@@ -183,7 +254,7 @@
 
                         <tr>
                             <td colspan="2" style="text-align:center;">
-                                <asp:Calendar ID="Calendar1" runat="server"></asp:Calendar>
+                                <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
                             </td>
                         </tr>
 
@@ -254,7 +325,7 @@
                     runat="server"
                     Text="Confirmar Turno"
                     Width="180px"
-                    Height="40px" OnClick="btnConfirmarTurno_Click" />
+                    Height="40px" OnClick="btnConfirmar_Click" />
             </div>
 
         </div>

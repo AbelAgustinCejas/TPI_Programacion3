@@ -1,5 +1,8 @@
 ﻿using System;
+using Entidades;
+using Negocio;
 using System.Data;
+using System.Web.UI.WebControls;
 
 namespace Vistas
 {
@@ -7,38 +10,71 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                CargarEspecialidades();
+            }
+        }
+        private void CargarEspecialidades()
+        {
+            ddlEspecialidad.Items.Clear();
+            ddlEspecialidad.DataSource = new NegocioInforme().GetTablaEspecialidad();
+            ddlEspecialidad.DataTextField = "Descripcion_ESP";
+            ddlEspecialidad.DataValueField = "IdEspecialidad_ESP";
+            ddlEspecialidad.DataBind();
 
+            ddlEspecialidad.Items.Insert(0, new ListItem("-- Seleccione --", "-1"));
         }
 
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
+           
+            NegocioInforme negocio = new NegocioInforme();
+            int idEspecialidad = Convert.ToInt32(ddlEspecialidad.SelectedValue);
 
-            dt.Columns.Add("Especialidad");
-            dt.Columns.Add("Turnos");
+            DataTable dt = negocio.InformeTurnosEspecialidad(idEspecialidad);
 
-            dt.Rows.Add("Cardiología", "42");
-            dt.Rows.Add("Pediatría", "35");
-            dt.Rows.Add("Traumatología", "28");
-            dt.Rows.Add("Dermatología", "21");
-            dt.Rows.Add("Neurología", "18");
-            dt.Rows.Add("Oftalmología", "15");
-            dt.Rows.Add("Urología", "13");
-            dt.Rows.Add("Ginecología", "11");
-            dt.Rows.Add("Endocrinología", "9");
-            dt.Rows.Add("Neumonología", "7");
+            gvInforme.DataSource = dt;
+            gvInforme.DataBind();
 
-            gvEspecialidades.DataSource = dt;
-            gvEspecialidades.DataBind();
+            MostrarResumen(dt);
+        }
+        private void MostrarResumen(DataTable dt)
+        {
+            int total = 0;
 
-            lblTotal.Text =
-                "Total de turnos registrados: 199";
+            string mayor = "";
+            string menor = "";
 
-            lblMayor.Text =
-                "Especialidad más solicitada: Cardiología (42)";
+            int cantMayor = 0;
+            int cantMenor = 999999;
 
-            lblMenor.Text =
-                "Especialidad menos solicitada: Neumonología (7)";
+            foreach (DataRow fila in dt.Rows)
+            {
+                int cantidad = Convert.ToInt32(fila["Cantidad"]);
+
+                total += cantidad;
+
+                if (cantidad > cantMayor)
+                {
+                    cantMayor = cantidad;
+                    mayor = fila["Especialidad"].ToString();
+                }
+
+                if (cantidad < cantMenor)
+                {
+                    cantMenor = cantidad;
+                    menor = fila["Especialidad"].ToString();
+                }
+            }
+
+            lblTotal.Text = "Total de turnos: " + total;
+
+            lblMayor.Text = "Especialidad con más turnos: " +
+                            mayor + " (" + cantMayor + ")";
+
+            lblMenor.Text = "Especialidad con menos turnos: " +
+                            menor + " (" + cantMenor + ")";
         }
     }
 }

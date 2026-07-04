@@ -1,8 +1,10 @@
 ﻿using Entidades;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 
 namespace Datos
@@ -711,58 +713,243 @@ namespace Datos
         }
 
 
+        public int ObtenerProximoIdTurno()
+        {
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            string consulta = "SELECT ISNULL(MAX(IdTurno_TUR),0) + 1 FROM Turno";
+
+            SqlCommand comando = new SqlCommand(consulta, connection);
+
+            connection.Open();
+
+            int id = Convert.ToInt32(comando.ExecuteScalar());
+
+            connection.Close();
+
+            return id;
+        }
+
         public bool AgregarTurno(int legajo, int idPaciente, DateTime fecha, TimeSpan hora)
         {
             SqlConnection connection = conexion.ObtenerConexion();
 
-            string consulta = @"INSERT INTO Turno 
-    (Fecha_TUR, Hora_TUR, IdPaciente_TUR, Legajo_TUR, Asistencia_TUR)
-    VALUES 
-    (@Fecha, @Hora, @Paciente, @Medico, @Asistencia_TUR)";
+            int idTurno = ObtenerProximoIdTurno();
+
+            string consulta = @"INSERT INTO Turno
+    (IdTurno_TUR, Fecha_TUR, Hora_TUR, IdPaciente_TUR, Legajo_TUR, Asistencia_TUR)
+    VALUES
+    (@IdTurno, @Fecha, @Hora, @Paciente, @Medico, @Asistencia)";
 
             SqlCommand comando = new SqlCommand(consulta, connection);
 
-            comando.Parameters.AddWithValue("@Medico", legajo);
-            comando.Parameters.AddWithValue("@Paciente", idPaciente);
+            comando.Parameters.AddWithValue("@IdTurno", idTurno);
             comando.Parameters.AddWithValue("@Fecha", fecha.Date);
             comando.Parameters.AddWithValue("@Hora", hora);
-            comando.Parameters.AddWithValue("@Asistencia_TUR", 0);
+            comando.Parameters.AddWithValue("@Paciente", idPaciente);
+            comando.Parameters.AddWithValue("@Medico", legajo);
+            comando.Parameters.AddWithValue("@Asistencia", false);
 
-            connection.Open();
+            try
+            {
+                connection.Open();
 
-            int filas = comando.ExecuteNonQuery();
+                int filas = comando.ExecuteNonQuery();
 
-            connection.Close();
+                connection.Close();
+
+                return filas > 0;
+            }
+            catch (Exception ex)
+            {
+                connection.Close();
+                throw new Exception("Error al insertar turno: " + ex.Message);
+            }
+        }
+        public List<TimeSpan> ObtenerHorariosOcupados(int legajo, DateTime fecha)
+        {
+            List<TimeSpan> ocupados = new List<TimeSpan>();
+
+            SqlConnection cn = conexion.ObtenerConexion();
+
+            string consulta = @"SELECT Hora_TUR
+                        FROM Turno
+                        WHERE Legajo_TUR=@Legajo
+                        AND Fecha_TUR=@Fecha";
+
+            SqlCommand cmd = new SqlCommand(consulta, cn);
+
+            cmd.Parameters.AddWithValue("@Legajo", legajo);
+            cmd.Parameters.AddWithValue("@Fecha", fecha.Date);
+
+            cn.Open();
+
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                ocupados.Add((TimeSpan)dr["Hora_TUR"]);
+            }
+
+            cn.Close();
+
+            return ocupados;
+        }
+        public List<TimeSpan> ObtenerHorariosDisponibles(int legajo, DateTime fecha)
+        {
+            List<TimeSpan> horarios = new List<TimeSpan>();
+
+            SqlConnection cn = conexion.ObtenerConexion();
+
+            int diaSemana = (int)fecha.DayOfWeek;
+
+           //// dia lunes 0 dia domingo 7 
+            if (diaSemana == 0)
+                diaSemana = 7;
+
+            string consulta = @"SELECT HoraInicio_HM, HoraFin_HM
+                        FROM HorarioMedico
+                        WHERE Legajo_HM=@Legajo
+                        AND DiaSemana_HM=@Dia
+                        AND Estado_HM=1";
+
+            SqlCommand cmd = new SqlCommand(consulta, cn);
+            cmd.Parameters.AddWithValue("@Legajo", legajo);
+            cmd.Parameters.AddWithValue("@Dia", diaSemana);
+
+            cn.Open();
+
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            if (dr.Read())
+            {
+                TimeSpan inicio = (TimeSpan)dr["HoraInicio_HM"];
+                TimeSpan fin = (TimeSpan)dr["HoraFin_HM"];
+
+                while (inicio < fin)
+                {
+                    horarios.Add(inicio);
+                    inicio = inicio.Add(TimeSpan.FromHours(1)); // Turnos de 1 hora
+                }
+            }
+
+            cn.Close();
+
+            List<TimeSpan> ocupados = ObtenerHorariosOcupados(legajo, fecha);
+
+            return horarios.Except(ocupados).ToList();
+        }
+        public bool MedicoAtiendeEseDia(int legajo, DateTime fecha)
+        {
+            SqlConnection cn = conexion.ObtenerConexion();
+
+            int diaSemana = (int)fecha.DayOfWeek;
+            if (diaSemana == 0)
+                diaSemana = 7; // Si tu BD usa 1=Lunes ... 7=Domingo
+
+            string consulta = @"SELECT COUNT(*)
+                        FROM HorarioMedico
+                        WHERE Legajo_HM=@Legajo
+                        AND DiaSemana_HM=@Dia
+                        AND Estado_HM=1";
+
+            SqlCommand cmd = new SqlCommand(consulta, cn);
+
+            cmd.Parameters.AddWithValue("@Legajo", legajo);
+            cmd.Parameters.AddWithValue("@Dia", diaSemana);
+
+            cn.Open();
+
+            int cantidad = (int)cmd.ExecuteScalar();
+
+            cn.Close();
+
+            return cantidad > 0;
+        }
+
+        public DataTable BuscarTurnoPorDni(int dni)
+        {
+            SqlConnection cn = conexion.ObtenerConexion();
+
+          string consulta = @"
+            SELECT T.IdTurno_TUR,
+CONVERT(varchar(10), T.Fecha_TUR, 103) AS Fecha,
+T.Hora_TUR,
+                   M.Nombre_MED,
+                   M.Apellido_MED
+            FROM Turno T
+            INNER JOIN Paciente P
+                ON T.IdPaciente_TUR = P.IdPaciente_PAC
+            INNER JOIN Medico M
+                ON T.Legajo_TUR = M.Legajo_MED
+            WHERE P.DNI_PAC = @Dni";
+
+            SqlCommand cmd = new SqlCommand(consulta, cn);
+            cmd.Parameters.AddWithValue("@Dni", dni);
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            da.Fill(dt);
+
+            return dt;
+        }
+
+        public bool EliminarTurno(int idTurno)
+        {
+            SqlConnection cn = conexion.ObtenerConexion();
+
+            string consulta = "DELETE FROM Turno WHERE IdTurno_TUR=@Id";
+
+            SqlCommand cmd = new SqlCommand(consulta, cn);
+            cmd.Parameters.AddWithValue("@Id", idTurno);
+
+            cn.Open();
+
+            int filas = cmd.ExecuteNonQuery();
+
+            cn.Close();
 
             return filas > 0;
         }
 
+        //////////////////////////////////////// INFORMES ////////////////////////////////////////
 
-        public DataTable ObtenerHorariosMedicoAsignacion(int legajo)
+        public DataTable InformeTurnosEspecialidad(int idEspecialidad)
         {
-            DataTable dataTable = new DataTable();
-
-            SqlConnection connection = conexion.ObtenerConexion();
+            SqlConnection cn = conexion.ObtenerConexion();
 
             string consulta = @"SELECT
-                            IdHorario_HM,
-                            CONVERT(VARCHAR(5), HoraInicio_HM, 108) + ' - ' +
-                            CONVERT(VARCHAR(5), HoraFin_HM, 108) AS Horario
-                        FROM HorarioMedico
-                        WHERE Legajo_HM = @Legajo
-                        AND Estado_HM = 1
-                        ORDER BY HoraInicio_HM";
+                                    E.Descripcion_ESP AS Especialidad,
+                                    COUNT(T.IdTurno_TUR) AS Cantidad
+                                FROM Turno T
+                                INNER JOIN Medico M
+                                    ON T.Legajo_TUR = M.Legajo_MED
+                                INNER JOIN Especialidad E
+                                    ON M.IdEspecialidad_MED = E.IdEspecialidad_ESP";
 
-            SqlCommand command = new SqlCommand(consulta, connection);
-            command.Parameters.AddWithValue("@Legajo", legajo);
+            if (idEspecialidad != 0)
+            {
+                consulta += " WHERE M.IdEspecialidad_MED = @ID ";
+            }
 
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-            dataAdapter.Fill(dataTable);
+            consulta += @"
+                        GROUP BY E.Descripcion_ESP
+                        ORDER BY Cantidad DESC";
 
-            return dataTable;
+            SqlCommand cmd = new SqlCommand(consulta, cn);
+
+            if (idEspecialidad != 0)
+                cmd.Parameters.AddWithValue("@ID", idEspecialidad);
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+            DataTable tabla = new DataTable();
+
+            da.Fill(tabla);
+
+            return tabla;
         }
-
-
 
     }
 }

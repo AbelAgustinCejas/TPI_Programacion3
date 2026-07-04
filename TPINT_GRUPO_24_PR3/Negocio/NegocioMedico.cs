@@ -105,11 +105,7 @@ namespace Negocio
         }
 
 
-        public DataTable ObtenerHorariosMedicoAsignacion(int legajo)
-        {
-            DaoClinica dao = new DaoClinica();
-            return dao.ObtenerHorariosMedicoAsignacion(legajo);
-        }
+   
 
 
 

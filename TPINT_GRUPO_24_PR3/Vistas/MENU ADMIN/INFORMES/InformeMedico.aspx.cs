@@ -1,5 +1,9 @@
 ﻿using System;
+using Entidades;
+using Negocio;
+
 using System.Data;
+using System.Web.UI.WebControls;
 
 namespace Vistas
 {
