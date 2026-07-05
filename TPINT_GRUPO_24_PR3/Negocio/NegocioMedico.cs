@@ -103,11 +103,5 @@ namespace Negocio
         {
             return new DaoClinica().ModificarMedico(medico);
         }
-
-
-   
-
-
-
     }
 }

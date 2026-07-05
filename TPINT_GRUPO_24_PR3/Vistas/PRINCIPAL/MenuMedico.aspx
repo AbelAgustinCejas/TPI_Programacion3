@@ -5,111 +5,171 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Menu Medicos</title>
+    <title>Menú Médico</title>
 
-    <style type="text/css">
-        .label-busqueda {
-            text-align: right;
-            padding-right: 10px;
-            font-size: 18px;
-            white-space: nowrap;
+    <style>
+        *{
+            font-family:Arial;
         }
+
+        body{
+            background:#F5F5F5;
+        }
+
+        .header{
+            width:100%;
+            height:90px;
+            background:#0b6fa4;
+            color:white;
+        }
+
+        .titulo{
+            width:100%;
+            font-size:30px;
+            font-weight:bold;
+        }
+
+        .usuario{
+            width:100%;
+            font-size:20px;
+        }
+
+        .contenedor{
+            width:100%;
+            margin:30px auto;
+        }
+
+/*        .panelFiltros{
+            background:white;
+            border-radius:10px;
+            padding:20px;
+            display:flex;
+            justify-content:space-between;
+            margin-bottom:25px;
+        }
+
+        .filtro{
+            width:32%;
+        }
+
+        .filtro label{
+            display:block;
+            margin-bottom:8px;
+            font-weight:bold;
+            color:#444;
+        }
+*/
+        .textbox{
+            width:100%;
+            padding:10px;
+            border:1px solid;
+            border-radius:6px;
+            font-size:15px;
+        }
+
+        .panelGrid{
+            background:white;
+            padding:20px;
+            border-radius:10px;
+        }
+
+        .tituloGrid{
+            font-size:24px;
+            margin-bottom:15px;
+            color:royalblue;
+            font-weight:bold;
+        }
+
+        .grid{
+            width:100%;
+        }
+
+        .grid th{
+            background:#0b6fa4;
+            color:white;
+            padding:10px;
+            text-align:center;
+        }
+
+        .grid td{
+            padding:10px;
+            border-bottom:1px solid;
+            text-align:center;
+        }
+
+        .mensaje{
+            margin-top:15px;
+            color:orangered;
+            font-weight:bold;
+        }
+
     </style>
+
 </head>
+    <body>
+        <form id="form1" runat="server">
+            <div class="header">
+                <div class="titulo">
+                    Menu Medico
+                </div>
+                <div class="usuario">
+                    <asp:Label ID="lblUsuario" runat="server"></asp:Label>
+                    <asp:ImageButton ID="btnLogout" runat="server" ImageUrl="~/IMAGENES/logout.jpg" OnClick="btnLogout_Click"/>
+                </div>
+            </div>
+            <div class="contenedor">
+<%--                <div class="panelFiltros">
+                    <div class="filtro">
+                        <label>Paciente</label>
+                        <asp:TextBox ID="txtFiltro1" runat="server" CssClass="textbox"></asp:TextBox>
+                    </div>
+                    <div class="filtro">
+                        <label>Fecha</label>
+                        <asp:TextBox ID="txtFiltro2" runat="server" CssClass="textbox"></asp:TextBox>
+                    </div>
+                    <div class="filtro">
+                        <label>DNI</label>
+                        <asp:TextBox ID="txtFiltro3" runat="server" CssClass="textbox"></asp:TextBox>
+                    </div>
+                </div>--%>
+                <div class="panelGrid">
+                    <div class="tituloGrid"> Turnos </div>
+                    <asp:GridView ID="gvTurnos" runat="server" AutoGenerateColumns="False" CssClass="grid" DataKeyNames="IdTurno_TUR" OnRowCommand="gvTurnos_RowCommand">
+                        <Columns>
+                            <asp:BoundField DataField="Nombre" HeaderText="Nombre"/>
+                            <asp:BoundField DataField="Apellido" HeaderText="Apellido"/>
+                            <asp:BoundField DataField="DNI" HeaderText="DNI"/>
+                            <asp:BoundField DataField="Fecha" HeaderText="Fecha"/>
+                            <asp:BoundField DataField="Hora" HeaderText="Hora"/>
+                            <asp:BoundField DataField="Asistencia" HeaderText="Asistencia"/>
+                            <asp:TemplateField HeaderText="Presente">
+                                <ItemTemplate>
+                                    <asp:ImageButton
+                                        ID="btnPresente"
+                                        runat="server"
+                                        ImageUrl="~/IMAGENES/presente2.jpg"
+                                        CommandName="Presente"
+                                        CommandArgument='<%# Container.DataItemIndex %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
 
-<body>
-
-    <form id="form1" runat="server">
-
-        <!-- HEADER -->
-        <div style="font-size: 30px; background-color: #C5D3BF; padding: 10px; border: 1px solid #4a90e2; text-align: center;">
-            Bienvenido/a:&nbsp;
-        <asp:Label ID="lblUsuarioIngresado" runat="server"></asp:Label>
-            <br />
-        </div>
-
-        <p style="font-size: 20px; text-decoration: underline; text-align: center;">
-            Opciones disponibles
-        </p>
-
-        <table style="margin: auto; width: 520px; border-collapse: collapse;">
-
-            <!-- BOTONES -->
-            <tr>
-                <td style="text-align: center; padding-bottom: 15px;">
-                    <asp:Button
-                        ID="btnTA"
-                        runat="server"
-                        Text="Turnos Asignados"
-                        Width="250px"
-                        Height="50px" />
-
-                    <asp:Button
-                        ID="btnBuscar"
-                        runat="server"
-                        Text="Buscar"
-                        Width="250px"
-                        Height="50px" />
-                </td>
-            </tr>
-
-            <!-- FILTROS -->
-            <tr>
-                <td style="text-align: center; padding-bottom: 15px;">
-
-                    <span style="margin-right: 5px;">Sexo:</span>
-                    <asp:DropDownList ID="ddlSexo" runat="server" >
-                        <asp:ListItem Value="-1">Seleccionar</asp:ListItem>
-                    </asp:DropDownList>
-
-                    &nbsp;&nbsp;&nbsp;
-
-                    <span style="margin-right: 5px;">Provincia:</span>
-                    <asp:DropDownList ID="ddlProvincia" runat="server" >
-                        <asp:ListItem Value="-1">Seleccionar</asp:ListItem>
-                    </asp:DropDownList>
-
-                    &nbsp;&nbsp;&nbsp;
-
-                    <span style="margin-right: 5px;">Localidad:</span>
-                    <asp:DropDownList ID="ddlLocalidad" runat="server" >
-                        <asp:ListItem Value="-1">Seleccionar</asp:ListItem>
-                    </asp:DropDownList>
-
-                    &nbsp;&nbsp;&nbsp;
-
-                    <br />
-
-                    <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" Width="100%" />
-
-                </td>
-            </tr>
-
-            <!-- BUSQUEDA -->
-            <tr>
-                <td style="text-align: center; padding-bottom: 15px;">
-
-                    <span style="font-size: 18px; margin-right: 10px;">Buscar por nombre:
-                    </span>
-
-                    <asp:TextBox
-                        ID="txtBusqueda"
-                        runat="server"
-                        Width="300px" />
-
-                </td>
-            </tr>
-
-            <!-- GRID -->
-            <tr>
-                <td>
-                    <asp:GridView ID="GridView1" runat="server" Width="100%"></asp:GridView>
-                </td>
-            </tr>
-
-        </table>
-
-    </form>
-
-</body>
+                            <asp:TemplateField HeaderText="Ausente">
+                                <ItemTemplate>
+                                    <asp:ImageButton
+                                        ID="btnAusente"
+                                        runat="server"
+                                        ImageUrl="~/IMAGENES/ausente2.jpg"
+                                        CommandName="Ausente"
+                                        CommandArgument='<%# Container.DataItemIndex %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                    <div class="mensaje">
+                    <asp:Label ID="lblMensaje" runat="server"></asp:Label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
 </html>

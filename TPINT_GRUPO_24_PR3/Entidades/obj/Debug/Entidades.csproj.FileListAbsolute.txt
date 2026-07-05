@@ -16,3 +16,9 @@ C:\Users\ezequ\Downloads\TPI_Programacion3\TPINT_GRUPO_24_PR3\Entidades\obj\Debu
 C:\Users\ezequ\Downloads\TPI_Programacion3\TPINT_GRUPO_24_PR3\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
 C:\Users\ezequ\Downloads\TPI_Programacion3\TPINT_GRUPO_24_PR3\Entidades\obj\Debug\Entidades.dll
 C:\Users\ezequ\Downloads\TPI_Programacion3\TPINT_GRUPO_24_PR3\Entidades\obj\Debug\Entidades.pdb
+C:\Users\Familia\Documents\GitHub\TPI_Programacion3\TPINT_GRUPO_24_PR3\Entidades\bin\Debug\Entidades.dll
+C:\Users\Familia\Documents\GitHub\TPI_Programacion3\TPINT_GRUPO_24_PR3\Entidades\bin\Debug\Entidades.pdb
+C:\Users\Familia\Documents\GitHub\TPI_Programacion3\TPINT_GRUPO_24_PR3\Entidades\obj\Debug\Entidades.csproj.AssemblyReference.cache
+C:\Users\Familia\Documents\GitHub\TPI_Programacion3\TPINT_GRUPO_24_PR3\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
+C:\Users\Familia\Documents\GitHub\TPI_Programacion3\TPINT_GRUPO_24_PR3\Entidades\obj\Debug\Entidades.dll
+C:\Users\Familia\Documents\GitHub\TPI_Programacion3\TPINT_GRUPO_24_PR3\Entidades\obj\Debug\Entidades.pdb

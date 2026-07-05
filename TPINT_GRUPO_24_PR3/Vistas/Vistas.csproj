@@ -64,6 +64,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="IMAGENES\ausente.jpg" />
+    <Content Include="IMAGENES\ausente2.jpg" />
+    <Content Include="IMAGENES\logout.jpg" />
+    <Content Include="IMAGENES\presente.jpg" />
+    <Content Include="IMAGENES\presente2.jpg" />
     <Content Include="MENU ADMIN\GestionMedicos_Modificar.aspx" />
     <Content Include="MENU ADMIN\GestionPacientes_Modificar.aspx" />
     <Content Include="PRINCIPAL\Login.aspx" />

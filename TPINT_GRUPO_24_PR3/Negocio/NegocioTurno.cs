@@ -15,6 +15,13 @@ namespace Negocio
 
         DaoClinica dao = new DaoClinica();
 
+        public DataTable GetTablaTurnos(int idUsuario)
+        {
+            DataTable tablaTurnos = new DaoClinica().ListarTurnosPorUsuario(idUsuario);
+
+            return tablaTurnos;
+        }
+
         public bool ConfirmarTurno(int legajo, int idPaciente, DateTime fecha, TimeSpan hora)
         {
             return dao.AgregarTurno(legajo, idPaciente, fecha, hora);
@@ -41,6 +48,12 @@ namespace Negocio
         {
             DaoClinica dao = new DaoClinica();
             return dao.EliminarTurno(idTurno);
+        }
+
+        public bool ActualizarAsistencia(int idTurno, bool asistencia)
+        {
+            DaoClinica dao = new DaoClinica();
+            return dao.ActualizarAsistencia(idTurno, asistencia);
         }
     }
 }
