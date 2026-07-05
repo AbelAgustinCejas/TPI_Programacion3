@@ -104,7 +104,10 @@ namespace Negocio
             return new DaoClinica().ModificarMedico(medico);
         }
 
-
+        public DataTable GetTablaMedicosPorEspecialidad (int idEspecialidad)
+        {
+            return new DaoClinica().ListarMedicosPorEspecialidad(idEspecialidad);
+        }
    
 
 

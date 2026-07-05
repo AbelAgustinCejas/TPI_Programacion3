@@ -140,6 +140,15 @@
 
                     <div class="text-center mt-3">
                         <asp:Button ID="btnAgregar" runat="server" Text="Agregar médico" CssClass="btn btn-success px-4" OnClick="btnAgregar_Click" />
+
+                        <asp:Button
+                            ID="btnMenuPrincipal"
+                            runat="server"
+                            Text="Menú Principal"
+                            CssClass="btn btn-secondary"
+                            CausesValidation="false"
+                            OnClick="btnMenuPrincipal_Click" />
+
                     </div>
 
                     <div class="text-center mt-2">

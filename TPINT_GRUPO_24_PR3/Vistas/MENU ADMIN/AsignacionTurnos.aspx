@@ -254,14 +254,14 @@
 
                         <tr>
                             <td colspan="2" style="text-align:center;">
-                                <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
+                                <asp:Calendar ID="Calendar1" runat="server"></asp:Calendar>
                             </td>
                         </tr>
 
                         <tr>
                             <td>Horario:</td>
                             <td>
-                                <asp:DropDownList ID="ddlHorario" runat="server" AutoPostBack="True">
+                                <asp:DropDownList ID="ddlHorario" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlHorario_SelectedIndexChanged">
                                     <asp:ListItem Value="-1">Seleccionar</asp:ListItem>
                                 </asp:DropDownList>
                             </td>

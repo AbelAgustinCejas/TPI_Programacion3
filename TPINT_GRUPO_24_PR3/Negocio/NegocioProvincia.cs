@@ -6,14 +6,14 @@ namespace Negocio
     public class NegocioProvincia
     {
 
-        public DataTable getTablaProvincia()
+        public DataTable GetTablaProvincia()
         {
             DataTable tablaProvincias = new DaoClinica().ListarProvincias();
 
             return tablaProvincias;
         }
 
-        public DataTable getTablaLocalidadPorProvincia(int idProvincia)
+        public DataTable GetTablaLocalidadPorProvincia(int idProvincia)
         {
             DataTable tablaLocalidades = new DaoClinica().ListarLocalidadesPorProvincia(idProvincia);
 

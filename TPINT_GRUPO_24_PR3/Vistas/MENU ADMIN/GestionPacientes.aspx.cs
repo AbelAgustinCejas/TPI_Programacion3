@@ -149,7 +149,7 @@ namespace Vistas.MENU_ADMIN
         private void CargarProvincias()
         {
             ddlProvincia.Items.Clear();
-            ddlProvincia.DataSource = new NegocioProvincia().getTablaProvincia();
+            ddlProvincia.DataSource = new NegocioProvincia().GetTablaProvincia();
             ddlProvincia.DataTextField = "Nombre_PRO";
             ddlProvincia.DataValueField = "IdProvincia_PRO";
             ddlProvincia.DataBind();
@@ -161,12 +161,11 @@ namespace Vistas.MENU_ADMIN
         private void CargarLocalidades(int idProvincia)
         {
             ddlLocalidad.Items.Clear();
-            ddlLocalidad.DataSource = new NegocioProvincia().getTablaLocalidadPorProvincia(idProvincia);
+            ddlLocalidad.DataSource = new NegocioProvincia().GetTablaLocalidadPorProvincia(idProvincia);
             ddlLocalidad.DataTextField = "Nombre_LOC";
             ddlLocalidad.DataValueField = "IdLocalidad_LOC";
 
             ddlLocalidad.DataBind();
-
 
             ddlLocalidad.Items.Insert(0, new ListItem("-- Seleccione --", "-1"));
         }

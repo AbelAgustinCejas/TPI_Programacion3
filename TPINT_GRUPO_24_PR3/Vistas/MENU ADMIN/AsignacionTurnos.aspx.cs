@@ -33,18 +33,20 @@ namespace Vistas
             ddlEspecialidad.DataValueField = "IdEspecialidad_ESP";
             ddlEspecialidad.DataBind();
 
-            ddlEspecialidad.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
+            ddlEspecialidad.Items.Insert(0, new ListItem("-- Seleccione --", "-1"));
+            ddlMedico.Items.Insert(0, new ListItem("-- Seleccione --", "-1"));
         }
+
         private void CargarMedicos(int idEspecialidad)
         {
             ddlMedico.Items.Clear();
 
-            ddlMedico.DataSource = new NegocioMedico().GetMedicosDDL();
-            ddlMedico.DataTextField = "Medico";
+            ddlMedico.DataSource = new NegocioMedico().GetTablaMedicosPorEspecialidad(idEspecialidad);
+            ddlMedico.DataTextField = "Nombre";
             ddlMedico.DataValueField = "Legajo_MED";
             ddlMedico.DataBind();
 
-            ddlMedico.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
+            ddlMedico.Items.Insert(0, new ListItem("-- Seleccione --", "-1"));
         }
         protected void CargarHorarios()
         {
@@ -138,7 +140,7 @@ namespace Vistas
 
         protected void ddlEspecialidad_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ddlEspecialidad.SelectedValue != "0")
+            if (ddlEspecialidad.SelectedValue != "-1")
             {
                 CargarMedicos(Convert.ToInt32(ddlEspecialidad.SelectedValue));
             }
@@ -146,7 +148,7 @@ namespace Vistas
 
         protected void ddlMedico_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ddlMedico.SelectedValue != "0")
+            if (ddlMedico.SelectedValue != "-1")
             {
                 CargarHorarios();
             }
@@ -316,6 +318,11 @@ namespace Vistas
             {
                 lblMensaje.Text = "No se pudo eliminar el turno.";
             }
+        }
+
+        protected void ddlHorario_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

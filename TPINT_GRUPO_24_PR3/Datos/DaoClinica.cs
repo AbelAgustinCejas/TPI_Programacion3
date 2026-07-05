@@ -683,9 +683,26 @@ namespace Datos
             return filas;
         }
 
+        public DataTable ListarMedicosPorEspecialidad(int idEspecialidad)
+        {
+            DataTable dataTable = new DataTable();
+            string consulta = "SELECT Legajo_MED, Apellido_MED + ', ' + Nombre_MED AS NombreCompleto FROM Medico WHERE IdEspecialidad_MED = @id ORDER BY Nombre_MED";
+
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+            command.Parameters.AddWithValue("@id", idEspecialidad);
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+            dataAdapter.Fill(dataTable);
+
+            return dataTable;
+        }
+
 
         //////////////////////////////////////// ASIGNACION DE TURNOS ////////////////////////////////////////
-        public DataTable BuscarPacientePorDni(string dni)
+        public DataTable BuscarPacientePorDni(string DNI)
         {
             SqlConnection connection = conexion.ObtenerConexion();
 
@@ -697,11 +714,11 @@ namespace Datos
                         Sexo_PAC,
                         Nacionalidad_PAC,
                         FechaNacimiento_PAC
-                    FROM Paciente
-                    WHERE DNI_PAC = @DNI";
+                        FROM Paciente
+                        WHERE DNI_PAC = @DNI";
 
             SqlCommand comando = new SqlCommand(consulta, connection);
-            comando.Parameters.AddWithValue("@DNI", dni);
+            comando.Parameters.AddWithValue("@DNI", DNI);
 
             SqlDataAdapter adapter = new SqlDataAdapter(comando);
 
