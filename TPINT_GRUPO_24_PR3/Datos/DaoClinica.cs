@@ -177,13 +177,13 @@ namespace Datos
 
 
           string consulta = @"INSERT INTO Paciente
-                (DNI_PAC, Nombre_PAC, Apellido_PAC, Sexo_PAC, Nacionalidad_PAC,
-                FechaNacimiento_PAC, Direccion_PAC, Email_PAC, Telefono_PAC,
-                IdLocalidad_PAC, Estado_PAC)
-                VALUES
-                (@DNI,@Nombre,@Apellido,@Sexo,@Nacionalidad,
-                @FechaNacimiento,@Direccion,@Email,@Telefono,
-                @IdLocalidad,1)";
+                            (DNI_PAC, Nombre_PAC, Apellido_PAC, Sexo_PAC, Nacionalidad_PAC,
+                            FechaNacimiento_PAC, Direccion_PAC, Email_PAC, Telefono_PAC,
+                            IdLocalidad_PAC, Estado_PAC)
+                            VALUES
+                            (@DNI,@Nombre,@Apellido,@Sexo,@Nacionalidad,
+                            @FechaNacimiento,@Direccion,@Email,@Telefono,
+                            @IdLocalidad,1)";
 
             SqlCommand command = new SqlCommand(consulta, connection);
 
@@ -210,18 +210,18 @@ namespace Datos
             SqlConnection connection = conexion.ObtenerConexion();
 
             string consulta = @"UPDATE Paciente
-                        SET IdLocalidad_PAC = @IdLocalidad,
-                            DNI_PAC = @DNI,
-                            Nombre_PAC = @Nombre,
-                            Apellido_PAC = @Apellido,
-                            Sexo_PAC = @Sexo,
-                            Nacionalidad_PAC = @Nacionalidad,
-                            FechaNacimiento_PAC = @FechaNacimiento,
-                            Direccion_PAC = @Direccion,
-                            Email_PAC = @Email,
-                            Telefono_PAC = @Telefono,
-                            Estado_PAC = @Estado
-                            WHERE IdPaciente_PAC = @IdPaciente";
+                                SET IdLocalidad_PAC = @IdLocalidad,
+                                    DNI_PAC = @DNI,
+                                    Nombre_PAC = @Nombre,
+                                    Apellido_PAC = @Apellido,
+                                    Sexo_PAC = @Sexo,
+                                    Nacionalidad_PAC = @Nacionalidad,
+                                    FechaNacimiento_PAC = @FechaNacimiento,
+                                    Direccion_PAC = @Direccion,
+                                    Email_PAC = @Email,
+                                    Telefono_PAC = @Telefono,
+                                    Estado_PAC = @Estado
+                                    WHERE IdPaciente_PAC = @IdPaciente";
 
             SqlCommand command = new SqlCommand(consulta, connection);
 
@@ -250,37 +250,37 @@ namespace Datos
             SqlConnection connection = conexion.ObtenerConexion();
 
             string consulta = @"INSERT INTO Medico
-                        (
-                            Nombre_MED,
-                            Apellido_MED,
-                            IdEspecialidad_MED,
-                            Estado_MED,
-                            DNI_MED,
-                            Sexo_MED,
-                            Nacionalidad_MED,
-                            FechaNacimiento_MED,
-                            Direccion_MED,
-                            Email_MED,
-                            Telefono_MED,
-                            IdLocalidad_MED
-                        )
-                        VALUES
-                        (
-                            @Nombre,
-                            @Apellido,
-                            @Especialidad,
-                            1,
-                            @DNI,
-                            @Sexo,
-                            @Nacionalidad,
-                            @FechaNacimiento,
-                            @Direccion,
-                            @Email,
-                            @Telefono,
-                            @IdLocalidad
-                        );
+                                (
+                                    Nombre_MED,
+                                    Apellido_MED,
+                                    IdEspecialidad_MED,
+                                    Estado_MED,
+                                    DNI_MED,
+                                    Sexo_MED,
+                                    Nacionalidad_MED,
+                                    FechaNacimiento_MED,
+                                    Direccion_MED,
+                                    Email_MED,
+                                    Telefono_MED,
+                                    IdLocalidad_MED
+                                )
+                                VALUES
+                                (
+                                    @Nombre,
+                                    @Apellido,
+                                    @Especialidad,
+                                    1,
+                                    @DNI,
+                                    @Sexo,
+                                    @Nacionalidad,
+                                    @FechaNacimiento,
+                                    @Direccion,
+                                    @Email,
+                                    @Telefono,
+                                    @IdLocalidad
+                                );
 
-                        SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                                SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
             SqlCommand command = new SqlCommand(consulta, connection);
 
@@ -350,11 +350,11 @@ namespace Datos
 
             string consulta = @"SELECT IdHorario_HM, DiaSemana_HM,
                                 CASE DiaSemana_HM
-                                WHEN 1 THEN 'Lunes'
-                                WHEN 2 THEN 'Martes'
-                                WHEN 3 THEN 'Miércoles'
-                                WHEN 4 THEN 'Jueves'
-                                WHEN 5 THEN 'Viernes'
+                                    WHEN 1 THEN 'Lunes'
+                                    WHEN 2 THEN 'Martes'
+                                    WHEN 3 THEN 'Miércoles'
+                                    WHEN 4 THEN 'Jueves'
+                                    WHEN 5 THEN 'Viernes'
                                 END AS Dia,
                                 HoraInicio_HM, HoraFin_HM
                                 FROM HorarioMedico
@@ -434,21 +434,21 @@ namespace Datos
             SqlConnection cn = conexion.ObtenerConexion();
 
             string consulta = @"INSERT INTO Usuario
-                        (
-                            NombreUsuario_USU,
-                            Contraseña_USU,
-                            Tipo_USU,
-                            Estado_USU
-                        )
-                        VALUES
-                        (
-                            @NombreUsuario,
-                            @Contraseña,
-                            1,
-                            1
-                        );
+                                (
+                                    NombreUsuario_USU,
+                                    Contraseña_USU,
+                                    Tipo_USU,
+                                    Estado_USU
+                                )
+                                VALUES
+                                (
+                                    @NombreUsuario,
+                                    @Contraseña,
+                                    1,
+                                    1
+                                );
 
-                        SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                                SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
             SqlCommand cmd = new SqlCommand(consulta, cn);
 
@@ -754,9 +754,9 @@ namespace Datos
             int idTurno = ObtenerProximoIdTurno();
 
             string consulta = @"INSERT INTO Turno
-    (IdTurno_TUR, Fecha_TUR, Hora_TUR, IdPaciente_TUR, Legajo_TUR, Asistencia_TUR)
-    VALUES
-    (@IdTurno, @Fecha, @Hora, @Paciente, @Medico, @Asistencia)";
+                                (IdTurno_TUR, Fecha_TUR, Hora_TUR, IdPaciente_TUR, Legajo_TUR, Asistencia_TUR)
+                                VALUES
+                                (@IdTurno, @Fecha, @Hora, @Paciente, @Medico, @Asistencia)";
 
             SqlCommand comando = new SqlCommand(consulta, connection);
 
@@ -888,18 +888,17 @@ namespace Datos
         {
             SqlConnection cn = conexion.ObtenerConexion();
 
-          string consulta = @"
-            SELECT T.IdTurno_TUR,
-CONVERT(varchar(10), T.Fecha_TUR, 103) AS Fecha,
-T.Hora_TUR,
-                   M.Nombre_MED,
-                   M.Apellido_MED
-            FROM Turno T
-            INNER JOIN Paciente P
-                ON T.IdPaciente_TUR = P.IdPaciente_PAC
-            INNER JOIN Medico M
-                ON T.Legajo_TUR = M.Legajo_MED
-            WHERE P.DNI_PAC = @Dni";
+          string consulta = @"SELECT T.IdTurno_TUR,
+                                CONVERT(varchar(10), T.Fecha_TUR, 103) AS Fecha,
+                                T.Hora_TUR,
+                                M.Nombre_MED,
+                                M.Apellido_MED
+                                FROM Turno T
+                                INNER JOIN Paciente P
+                                ON T.IdPaciente_TUR = P.IdPaciente_PAC
+                                INNER JOIN Medico M
+                                ON T.Legajo_TUR = M.Legajo_MED
+                                WHERE P.DNI_PAC = @Dni";
 
             SqlCommand cmd = new SqlCommand(consulta, cn);
             cmd.Parameters.AddWithValue("@Dni", dni);
@@ -967,6 +966,102 @@ T.Hora_TUR,
 
             return tabla;
         }
+        public DataTable ListarTurnos()
+        {
+            DataTable dataTable = new DataTable();
 
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            string consulta = @"SELECT
+                                T.IdTurno_TUR,
+                                P.Nombre_PAC AS Nombre,
+                                P.Apellido_PAC AS Apellido,
+                                P.DNI_PAC AS DNI,
+                                T.Fecha_TUR AS Fecha,
+                                T.Hora_TUR AS Hora,
+                                CASE
+                                    WHEN T.Asistencia_TUR = 1 THEN 'Presente'
+                                    WHEN T.Asistencia_TUR = 0 THEN 'Ausente'
+                                    ELSE 'Pendiente'
+                                END AS Asistencia
+                                FROM Turno T
+                                INNER JOIN Paciente P
+                                    ON T.IdPaciente_TUR = P.IdPaciente_PAC
+                                INNER JOIN Medico M
+                                    ON T.Legajo_TUR = M.Legajo_MED
+                                ORDER BY T.Fecha_TUR, T.Hora_TUR";
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+            dataAdapter.Fill(dataTable);
+
+            return dataTable;
+        }
+        public DataTable ListarTurnosPorUsuario(int idUsuario)
+        {
+            DataTable dataTable = new DataTable();
+
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            string consulta = @"SELECT
+                                T.IdTurno_TUR,
+                                P.Nombre_PAC AS Nombre,
+                                P.Apellido_PAC AS Apellido,
+                                P.DNI_PAC AS DNI,
+                                T.Fecha_TUR AS Fecha,
+                                T.Hora_TUR AS Hora,
+                                CASE
+                                    WHEN T.Asistencia_TUR = 1 THEN 'Presente'
+                                    WHEN T.Asistencia_TUR = 0 THEN 'Ausente'
+                                    ELSE 'Pendiente'
+                                END AS Asistencia
+                                FROM Turno T
+                                INNER JOIN Paciente P
+                                    ON T.IdPaciente_TUR = P.IdPaciente_PAC
+                                INNER JOIN Medico M
+                                    ON T.Legajo_TUR = M.Legajo_MED
+                                WHERE M.IdUsuario_MED = @IdUsuario
+                                ORDER BY T.Fecha_TUR, T.Hora_TUR";
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+            command.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+            dataAdapter.Fill(dataTable);
+
+            return dataTable;
+        }
+
+        public bool ActualizarAsistencia(int idTurno, bool asistencia)
+        {
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            string consulta = @"UPDATE Turno
+                                SET Asistencia_TUR = @Asistencia
+                                WHERE IdTurno_TUR = @IdTurno";
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+
+            command.Parameters.AddWithValue("@Asistencia", asistencia);
+            command.Parameters.AddWithValue("@IdTurno", idTurno);
+
+            try
+            {
+                connection.Open();
+
+                int filas = command.ExecuteNonQuery();
+
+                return filas > 0;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }
