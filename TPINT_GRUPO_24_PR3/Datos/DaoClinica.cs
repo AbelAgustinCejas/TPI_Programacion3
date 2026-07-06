@@ -1,7 +1,6 @@
 ﻿using Entidades;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -41,29 +40,67 @@ namespace Datos
             SqlConnection connection = conexion.ObtenerConexion();
 
             string consulta = @"SELECT
-                                Legajo_MED,
-                                DNI_MED,
-                                Nombre_MED,
-                                Apellido_MED,
-                                Descripcion_ESP,
-                                Nombre_LOC,
-                                Nombre_PRO,
-                                Sexo_MED,
-                                Nacionalidad_MED,
-                                FechaNacimiento_MED,
-                                Direccion_MED,
-                                Email_MED,
-                                Telefono_MED
+                                    Legajo_MED,
+                                    DNI_MED,
+                                    Nombre_MED,
+                                    Apellido_MED,
+                                    Descripcion_ESP,
+                                    Nombre_LOC,
+                                    Nombre_PRO,
+                                    Sexo_MED,
+                                    Nacionalidad_MED,
+                                    FechaNacimiento_MED,
+                                    Direccion_MED,
+                                    Email_MED,
+                                    Telefono_MED
                                 FROM Medico
-                                INNER JOIN Especialidad
-                                ON Medico.IdEspecialidad_MED = Especialidad.IdEspecialidad_ESP
-                                INNER JOIN Localidad
-                                ON Medico.IdLocalidad_MED = Localidad.IdLocalidad_LOC
-                                INNER JOIN Provincia
-                                ON Localidad.IdProvincia_LOC = Provincia.IdProvincia_PRO
+                                    INNER JOIN Especialidad
+                                    ON Medico.IdEspecialidad_MED = Especialidad.IdEspecialidad_ESP
+                                    INNER JOIN Localidad
+                                    ON Medico.IdLocalidad_MED = Localidad.IdLocalidad_LOC
+                                    INNER JOIN Provincia
+                                    ON Localidad.IdProvincia_LOC = Provincia.IdProvincia_PRO
                                 WHERE Medico.Estado_MED = 1";
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(consulta, connection);
+
+            dataAdapter.Fill(dataTable);
+
+            return dataTable;
+        }
+        public DataTable ListarMedicosPorEspecialidad(int especialidad)
+        {
+            DataTable dataTable = new DataTable();
+            string consulta = "SELECT Legajo_MED, Apellido_MED + ', ' + Nombre_MED AS NombreCompleto FROM Medico WHERE IdEspecialidad_MED = @especialidad ORDER BY Nombre_MED";
+
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+            command.Parameters.AddWithValue("@especialidad", especialidad);
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+            dataAdapter.Fill(dataTable);
+
+            return dataTable;
+        }
+
+        public DataTable ListarMedicosPorLegajo(int legajo)
+        {
+            DataTable dataTable = new DataTable();
+            string consulta = "SELECT Legajo_MED, " +
+                                    " Apellido_MED, " +
+                                    " Nombre_MED AS NombreCompleto " +
+                                "FROM Medico " +
+                               "WHERE Legajo_MED = @legajo " +
+                               "ORDER BY Nombre_MED";
+
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+            command.Parameters.AddWithValue("@legajo", legajo);
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
 
             dataAdapter.Fill(dataTable);
 
@@ -176,7 +213,7 @@ namespace Datos
             SqlConnection connection = conexion.ObtenerConexion();
 
 
-          string consulta = @"INSERT INTO Paciente
+            string consulta = @"INSERT INTO Paciente
                             (DNI_PAC, Nombre_PAC, Apellido_PAC, Sexo_PAC, Nacionalidad_PAC,
                             FechaNacimiento_PAC, Direccion_PAC, Email_PAC, Telefono_PAC,
                             IdLocalidad_PAC, Estado_PAC)
@@ -193,7 +230,7 @@ namespace Datos
             command.Parameters.AddWithValue("@Sexo", paciente.getSexo());
             command.Parameters.AddWithValue("@Nacionalidad", paciente.getNacionalidad());
             command.Parameters.AddWithValue("@FechaNacimiento", paciente.getFechaNacimiento());
-            command.Parameters.AddWithValue("@Direccion", paciente.getDireccion()   );
+            command.Parameters.AddWithValue("@Direccion", paciente.getDireccion());
             command.Parameters.AddWithValue("@Email", paciente.getEmail());
             command.Parameters.AddWithValue("@Telefono", paciente.getTelefono());
             command.Parameters.AddWithValue("@IdLocalidad", paciente.getIdLocalidad());
@@ -331,7 +368,7 @@ namespace Datos
 
             string consulta = "DELETE FROM HorarioMedico WHERE IdHorario_HM = @IdHorario";
 
-            SqlCommand command = new SqlCommand (consulta, connection);
+            SqlCommand command = new SqlCommand(consulta, connection);
 
             command.Parameters.AddWithValue("IdHorario", idHorario);
 
@@ -393,14 +430,14 @@ namespace Datos
 
             SqlConnection connection = conexion.ObtenerConexion();
             SqlDataAdapter dataAdapter = new SqlDataAdapter(consulta, connection);
-            
+
             dataAdapter.Fill(dataTable);
 
             return dataTable;
         }
 
         public DataTable ListarLocalidadesPorProvincia(int idProvincia)
-        { 
+        {
             DataTable dataTable = new DataTable();
             string consulta = "SELECT IdLocalidad_LOC, Nombre_LOC FROM Localidad WHERE IdProvincia_LOC = @id ORDER BY Nombre_LOC";
 
@@ -505,7 +542,7 @@ namespace Datos
                                 CAST(Legajo_MED AS VARCHAR) + ' - ' + Apellido_MED + ', ' + Nombre_MED AS Medico
                                 FROM Medico
                                 WHERE Estado_MED = 1
-                                ORDER BY Apellido_MED, Nombre_MED";
+                                ORDER BY Legajo_MED";
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(consulta, connection);
 
@@ -606,29 +643,29 @@ namespace Datos
             SqlConnection connection = conexion.ObtenerConexion();
 
             string consulta = @"SELECT
-                                Legajo_MED,
-                                DNI_MED,
-                                Nombre_MED,
-                                Apellido_MED,
-                                Descripcion_ESP AS Especialidad,
-                                Nombre_LOC AS Localidad,
-                                Nombre_PRO AS Provincia,
-                                Sexo_MED,
-                                Nacionalidad_MED,
-                                FechaNacimiento_MED,
-                                Direccion_MED,
-                                Email_MED,
-                                Telefono_MED,
-                                IdEspecialidad_MED,
-                                IdLocalidad_MED,
-                                IdProvincia_PRO
+                                    Legajo_MED,
+                                    DNI_MED,
+                                    Nombre_MED,
+                                    Apellido_MED,
+                                    Descripcion_ESP AS Especialidad,
+                                    Nombre_LOC AS Localidad,
+                                    Nombre_PRO AS Provincia,
+                                    Sexo_MED,
+                                    Nacionalidad_MED,
+                                    FechaNacimiento_MED,
+                                    Direccion_MED,
+                                    Email_MED,
+                                    Telefono_MED,
+                                    IdEspecialidad_MED,
+                                    IdLocalidad_MED,
+                                    IdProvincia_PRO
                                 FROM Medico
-                                INNER JOIN Especialidad
-                                ON Medico.IdEspecialidad_MED = Especialidad.IdEspecialidad_ESP
-                                INNER JOIN Localidad
-                                ON Medico.IdLocalidad_MED = Localidad.IdLocalidad_LOC
-                                INNER JOIN Provincia
-                                ON Localidad.IdProvincia_LOC = Provincia.IdProvincia_PRO
+                                    INNER JOIN Especialidad
+                                    ON Medico.IdEspecialidad_MED = Especialidad.IdEspecialidad_ESP
+                                    INNER JOIN Localidad
+                                    ON Medico.IdLocalidad_MED = Localidad.IdLocalidad_LOC
+                                    INNER JOIN Provincia
+                                    ON Localidad.IdProvincia_LOC = Provincia.IdProvincia_PRO
                                 WHERE Medico.Estado_MED = 1
                                 AND DNI_MED = @DNI";
 
@@ -683,22 +720,6 @@ namespace Datos
             return filas;
         }
 
-        public DataTable ListarMedicosPorEspecialidad(int idEspecialidad)
-        {
-            DataTable dataTable = new DataTable();
-            string consulta = "SELECT Legajo_MED, Apellido_MED + ', ' + Nombre_MED AS NombreCompleto FROM Medico WHERE IdEspecialidad_MED = @id ORDER BY Nombre_MED";
-
-            SqlConnection connection = conexion.ObtenerConexion();
-
-            SqlCommand command = new SqlCommand(consulta, connection);
-            command.Parameters.AddWithValue("@id", idEspecialidad);
-
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-
-            dataAdapter.Fill(dataTable);
-
-            return dataTable;
-        }
 
 
         //////////////////////////////////////// ASIGNACION DE TURNOS ////////////////////////////////////////
@@ -800,7 +821,7 @@ namespace Datos
 
             int diaSemana = (int)fecha.DayOfWeek;
 
-           //// dia lunes 0 dia domingo 7 
+            //// dia lunes 0 dia domingo 7 
             if (diaSemana == 0)
                 diaSemana = 7;
 
@@ -868,7 +889,7 @@ namespace Datos
         {
             SqlConnection cn = conexion.ObtenerConexion();
 
-          string consulta = @"SELECT T.IdTurno_TUR,
+            string consulta = @"SELECT T.IdTurno_TUR,
                                 CONVERT(varchar(10), T.Fecha_TUR, 103) AS Fecha,
                                 T.Hora_TUR,
                                 M.Nombre_MED,
@@ -946,30 +967,65 @@ namespace Datos
 
             return tabla;
         }
+        public DataTable InformeTurnosMedico(int legajo)
+        {
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            string consulta = @"SELECT Medico.Legajo_MED AS Legajo,
+                                       Medico.Nombre_MED AS Nombre,
+                                       Medico.Apellido_MED AS Apellido,
+                                       COUNT(Turno.IdTurno_TUR) AS Turnos
+                                  FROM Medico
+                                  LEFT JOIN Turno ON Medico.Legajo_MED = Turno.Legajo_TUR";
+
+            if (legajo != 0)
+            {
+                consulta += " WHERE Medico.Legajo_MED = @Legajo";
+            }
+
+            consulta += @" GROUP BY Medico.Legajo_MED,
+                                    Medico.Nombre_MED,
+                                    Medico.Apellido_MED
+                           ORDER BY Medico.Legajo_MED";
+
+            SqlCommand comando = new SqlCommand(consulta, connection);
+
+            if (legajo != 0)
+            {
+                comando.Parameters.AddWithValue("@Legajo", legajo);
+            }
+
+            SqlDataAdapter adapter = new SqlDataAdapter(comando);
+
+            DataTable tabla = new DataTable();
+            adapter.Fill(tabla);
+
+            return tabla;
+        }
+
         public DataTable ListarTurnos()
         {
             DataTable dataTable = new DataTable();
 
             SqlConnection connection = conexion.ObtenerConexion();
 
-            string consulta = @"SELECT
-                                T.IdTurno_TUR,
-                                P.Nombre_PAC AS Nombre,
-                                P.Apellido_PAC AS Apellido,
-                                P.DNI_PAC AS DNI,
-                                T.Fecha_TUR AS Fecha,
-                                T.Hora_TUR AS Hora,
-                                CASE
-                                    WHEN T.Asistencia_TUR = 1 THEN 'Presente'
-                                    WHEN T.Asistencia_TUR = 0 THEN 'Ausente'
-                                    ELSE 'Pendiente'
+            string consulta = @"SELECT Turno.IdTurno_TUR,
+                                       Paciente.Nombre_PAC AS Nombre,
+                                       Paciente.Apellido_PAC AS Apellido,
+                                       Paciente.DNI_PAC AS DNI,
+                                       Turno.Fecha_TUR AS Fecha,
+                                       Turno.Hora_TUR AS Hora,
+                                  CASE
+                                  WHEN Turno.Asistencia_TUR = 1 THEN 'Presente'
+                                  WHEN Turno.Asistencia_TUR = 0 THEN 'Ausente'
+                                  ELSE 'Pendiente'
                                 END AS Asistencia
-                                FROM Turno T
-                                INNER JOIN Paciente P
-                                    ON T.IdPaciente_TUR = P.IdPaciente_PAC
-                                INNER JOIN Medico M
-                                    ON T.Legajo_TUR = M.Legajo_MED
-                                ORDER BY T.Fecha_TUR, T.Hora_TUR";
+                                  FROM Turno
+                            INNER JOIN Paciente
+                                    ON Turno.IdPaciente_TUR = Paciente.IdPaciente_PAC
+                            INNER JOIN Medico
+                                    ON Turno.Legajo_TUR = Medico.Legajo_MED
+                              ORDER BY Turno.Fecha_TUR, Turno.Hora_TUR";
 
             SqlCommand command = new SqlCommand(consulta, connection);
 
@@ -985,24 +1041,24 @@ namespace Datos
             SqlConnection connection = conexion.ObtenerConexion();
 
             string consulta = @"SELECT
-                                T.IdTurno_TUR,
-                                P.Nombre_PAC AS Nombre,
-                                P.Apellido_PAC AS Apellido,
-                                P.DNI_PAC AS DNI,
-                                T.Fecha_TUR AS Fecha,
-                                T.Hora_TUR AS Hora,
+                                Turno.IdTurno_TUR,
+                                Paciente.Nombre_PAC AS Nombre,
+                                Paciente.Apellido_PAC AS Apellido,
+                                Paciente.DNI_PAC AS DNI,
+                                Turno.Fecha_TUR AS Fecha,
+                                Turno.Hora_TUR AS Hora,
                                 CASE
-                                    WHEN T.Asistencia_TUR = 1 THEN 'Presente'
-                                    WHEN T.Asistencia_TUR = 0 THEN 'Ausente'
+                                    WHEN Turno.Asistencia_TUR = 1 THEN 'Presente'
+                                    WHEN Turno.Asistencia_TUR = 0 THEN 'Ausente'
                                     ELSE 'Pendiente'
                                 END AS Asistencia
-                                FROM Turno T
-                                INNER JOIN Paciente P
-                                    ON T.IdPaciente_TUR = P.IdPaciente_PAC
-                                INNER JOIN Medico M
-                                    ON T.Legajo_TUR = M.Legajo_MED
-                                WHERE M.IdUsuario_MED = @IdUsuario
-                                ORDER BY T.Fecha_TUR, T.Hora_TUR";
+                                FROM Turno
+                                INNER JOIN Paciente
+                                    ON Turno.IdPaciente_TUR = Paciente.IdPaciente_PAC
+                                INNER JOIN Medico
+                                    ON Turno.Legajo_TUR = Medico.Legajo_MED
+                                WHERE Medico.IdUsuario_MED = @IdUsuario
+                                ORDER BY Turno.Fecha_TUR, Turno.Hora_TUR";
 
             SqlCommand command = new SqlCommand(consulta, connection);
             command.Parameters.AddWithValue("@IdUsuario", idUsuario);

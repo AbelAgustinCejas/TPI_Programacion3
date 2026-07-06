@@ -1,12 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"
-    CodeBehind="InformeEspecialidad.aspx.cs"
-    Inherits="Vistas.InformeEspecialidad" %>
+﻿<%@ Page Language="C#" AutoEventWireup="True" CodeBehind="InformeEspecialidad.aspx.cs" Inherits="Vistas.InformeEspecialidad" %>
 
 <!DOCTYPE html>
 
 <html>
 <head runat="server">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     <title>Informe por Especialidad</title>
 

@@ -1,10 +1,6 @@
 ﻿using Datos;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Negocio
 {
@@ -20,6 +16,17 @@ namespace Negocio
         {
             DaoClinica dao = new DaoClinica();
             return dao.ObtenerEspecialidades();
+        }
+        public DataTable InformeTurnosMedico(int legajo)
+        {
+            DaoClinica dao = new DaoClinica();
+
+            return dao.InformeTurnosMedico(legajo);
+        }
+        public DataTable GetTablaMedico()
+        {
+            DaoClinica dao = new DaoClinica();
+            return dao.ObtenerMedicosDDL();
         }
     }
 }

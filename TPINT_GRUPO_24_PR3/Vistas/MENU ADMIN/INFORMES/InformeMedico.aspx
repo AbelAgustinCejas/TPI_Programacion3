@@ -1,13 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"
-    CodeBehind="InformeMedico.aspx.cs"
-    Inherits="Vistas.InformeMedico" %>
+﻿<%@ Page Language="C#" AutoEventWireup="True" CodeBehind="InformeMedico.aspx.cs" Inherits="Vistas.InformeMedico" %>
 
 <!DOCTYPE html>
 
 <html>
 <head runat="server">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <title>Informe por Médico</title>
+
+    <title>Informe por Medico</title>
 
     <style>
 
@@ -47,65 +45,93 @@
     </style>
 
 </head>
-    <body>
-        <form id="form1" runat="server">
-            <div class="contenedor">
+<body>
 
-                <h2>Informe de Turnos por Médico</h2>
+<form id="form1" runat="server">
 
-                <div class="filtros">
+<div class="contenedor">
 
-                    <div class="fila">
+    <h2>Informe de Turnos por Medico</h2>
 
-                        <asp:Label ID="lblMedico" runat="server" Text="Medico: "></asp:Label>
+    <div class="filtros">
 
-                        <asp:DropDownList ID="ddlMedico" runat="server">
+            <div class="fila">
 
-                            <asp:ListItem>Todos</asp:ListItem>
-                            <asp:ListItem>Ana Gómez</asp:ListItem>
-                            <asp:ListItem>Carlos Díaz</asp:ListItem>
-                            <asp:ListItem>Juan García</asp:ListItem>
+                <span class="etiqueta">
+                    Médico:
+                </span>
 
-                        </asp:DropDownList>
+                <asp:DropDownList
+                    ID="ddlMedicos"
+                    runat="server">
+                </asp:DropDownList>
 
-                    </div>
-
-                    <div class="fila"> <asp:Button ID="btnGenerar" runat="server" Text="Generar Informe" OnClick="btnGenerar_Click" /> </div>
-
-                </div>
-
-                <div class="resumen"> <h3>Resumen</h3>
-
-                    <asp:Label ID="lblTotal" runat="server"></asp:Label>
-
-                    <br />
-
-                    <asp:Label ID="lblPromedio" runat="server"></asp:Label>
-
-                    <br />
-
-                    <asp:Label ID="lblMayor" runat="server"></asp:Label>
-
-                    <br />
-
-                    <asp:Label ID="lblMenor" runat="server"></asp:Label> </div>
-
-                <asp:GridView ID="gvMedicos" runat="server" Width="100%" AutoGenerateColumns="False">
-                    <Columns>
-                        <asp:BoundField
-                            DataField="Medico"
-                            HeaderText="Médico" />
-
-                        <asp:BoundField
-                            DataField="Especialidad"
-                            HeaderText="Especialidad" />
-
-                        <asp:BoundField
-                            DataField="Turnos"
-                            HeaderText="Cantidad de Turnos" />
-                    </Columns>
-                </asp:GridView>
             </div>
-        </form>
-    </body>
+
+
+        <div class="fila">
+
+            <asp:Button
+                ID="btnGenerar"
+                runat="server"
+                Text="Generar Informe"
+                OnClick="btnGenerar_Click" />
+
+        </div>
+
+    </div>
+
+    <div class="resumen">
+
+        <h3>Resumen</h3>
+
+        <asp:Label ID="lblTotal" runat="server"></asp:Label>
+
+        <br />
+
+        <asp:Label ID="lblMayor" runat="server"></asp:Label>
+
+        <br />
+
+        <asp:Label ID="lblMenor" runat="server"></asp:Label>
+
+    </div>
+
+    <asp:GridView
+        ID="gvInforme"
+        runat="server"
+        AutoGenerateColumns="False"
+        CellPadding="4"
+        ForeColor="#333333"
+        GridLines="None"
+        Width="900px">
+
+        <Columns>
+
+            <asp:BoundField DataField="Legajo" HeaderText="Legajo" />
+            <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+            <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
+            <asp:BoundField DataField="Turnos" HeaderText="Cantidad de Turnos" />
+
+        </Columns>
+
+        <HeaderStyle BackColor="#5D7B9D"
+                     Font-Bold="True"
+                     ForeColor="White"
+                     HorizontalAlign="Center" />
+
+        <RowStyle BackColor="#F7F6F3"
+                  ForeColor="#333333"
+                  HorizontalAlign="Center" />
+
+        <AlternatingRowStyle BackColor="White"
+                             ForeColor="#284775" />
+
+    </asp:GridView>
+
+</div>
+
+</form>
+
+</body>
 </html>

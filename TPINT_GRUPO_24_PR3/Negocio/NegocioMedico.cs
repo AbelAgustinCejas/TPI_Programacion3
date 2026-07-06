@@ -108,5 +108,9 @@ namespace Negocio
         {
             return new DaoClinica().ListarMedicosPorEspecialidad(idEspecialidad);
         }
+        public DataTable GetTablaMedicosPorLegajo(int legajo)
+        {
+            return new DaoClinica().ListarMedicosPorLegajo(legajo);
+        }
     }
 }

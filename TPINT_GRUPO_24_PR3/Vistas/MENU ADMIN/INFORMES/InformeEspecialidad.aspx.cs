@@ -1,6 +1,5 @@
-﻿using System;
-using Entidades;
-using Negocio;
+﻿using Negocio;
+using System;
 using System.Data;
 using System.Web.UI.WebControls;
 
@@ -23,23 +22,23 @@ namespace Vistas
             ddlEspecialidad.DataValueField = "IdEspecialidad_ESP";
             ddlEspecialidad.DataBind();
 
-            ddlEspecialidad.Items.Insert(0, new ListItem("-- Seleccione --", "-1"));
+            ddlEspecialidad.Items.Insert(0, new ListItem("Seleccione", "-1"));
         }
 
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
-           
+
             NegocioInforme negocio = new NegocioInforme();
             int idEspecialidad = Convert.ToInt32(ddlEspecialidad.SelectedValue);
 
-            DataTable dt = negocio.InformeTurnosEspecialidad(idEspecialidad);
+            DataTable dataTable = negocio.InformeTurnosEspecialidad(idEspecialidad);
 
-            gvInforme.DataSource = dt;
+            gvInforme.DataSource = dataTable;
             gvInforme.DataBind();
 
-            MostrarResumen(dt);
+            MostrarResumen(dataTable);
         }
-        private void MostrarResumen(DataTable dt)
+        private void MostrarResumen(DataTable dataTable)
         {
             int total = 0;
 
@@ -47,11 +46,20 @@ namespace Vistas
             string menor = "";
 
             int cantMayor = 0;
-            int cantMenor = 999999;
+            int cantMenor = 0;
 
-            foreach (DataRow fila in dt.Rows)
+            bool primerCiclo = true;
+
+            foreach (DataRow fila in dataTable.Rows)
             {
                 int cantidad = Convert.ToInt32(fila["Cantidad"]);
+
+                if (primerCiclo)
+                {
+                    cantMayor = cantidad;
+                    cantMenor = cantidad;
+                    primerCiclo = false;
+                }
 
                 total += cantidad;
 
@@ -70,11 +78,9 @@ namespace Vistas
 
             lblTotal.Text = "Total de turnos: " + total;
 
-            lblMayor.Text = "Especialidad con más turnos: " +
-                            mayor + " (" + cantMayor + ")";
+            lblMayor.Text = "Especialidad con más turnos: " + mayor + " (" + cantMayor + ")";
 
-            lblMenor.Text = "Especialidad con menos turnos: " +
-                            menor + " (" + cantMenor + ")";
+            lblMenor.Text = "Especialidad con menos turnos: " + menor + " (" + cantMenor + ")";
         }
     }
 }

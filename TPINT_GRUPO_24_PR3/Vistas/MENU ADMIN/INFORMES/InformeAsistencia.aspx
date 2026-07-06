@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"
+﻿<%@ Page Language="C#" AutoEventWireup="True"
     CodeBehind="InformeAsistencia.aspx.cs"
     Inherits="Vistas.InformeAsistencia" %>
 
@@ -16,7 +16,7 @@
             font-family: Arial;
             margin: 30px;
         }
-
+        
         .contenedor {
             width: 900px;
             margin: auto;

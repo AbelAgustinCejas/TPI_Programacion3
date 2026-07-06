@@ -71,10 +71,10 @@
     <Content Include="IMAGENES\presente2.jpg" />
     <Content Include="MENU ADMIN\GestionMedicos_Modificar.aspx" />
     <Content Include="MENU ADMIN\GestionPacientes_Modificar.aspx" />
-    <Content Include="PRINCIPAL\Login.aspx" />
     <Content Include="MENU ADMIN\INFORMES\InformeAsistencia.aspx" />
     <Content Include="MENU ADMIN\INFORMES\InformeEspecialidad.aspx" />
     <Content Include="MENU ADMIN\INFORMES\InformeMedico.aspx" />
+    <Content Include="PRINCIPAL\Login.aspx" />
     <Content Include="MENU ADMIN\AsignacionTurnos.aspx" />
     <Content Include="PRINCIPAL\MenuAdmin.aspx">
       <BrowseToURL>~/Principal/MenuAdmin.aspx</BrowseToURL>
@@ -99,13 +99,6 @@
     <Compile Include="MENU ADMIN\GestionPacientes_Modificar.aspx.designer.cs">
       <DependentUpon>GestionPacientes_Modificar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PRINCIPAL\Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PRINCIPAL\Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
     <Compile Include="MENU ADMIN\INFORMES\InformeAsistencia.aspx.cs">
       <DependentUpon>InformeAsistencia.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -126,6 +119,13 @@
     </Compile>
     <Compile Include="MENU ADMIN\INFORMES\InformeMedico.aspx.designer.cs">
       <DependentUpon>InformeMedico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PRINCIPAL\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PRINCIPAL\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="MENU ADMIN\AsignacionTurnos.aspx.cs">
       <DependentUpon>AsignacionTurnos.aspx</DependentUpon>

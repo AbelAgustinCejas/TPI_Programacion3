@@ -1,7 +1,5 @@
-﻿using System;
-using Entidades;
-using Negocio;
-
+﻿using Negocio;
+using System;
 using System.Data;
 using System.Web.UI.WebControls;
 
@@ -11,42 +9,90 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                CargarMedicos();
+            }
+        }
+        private void CargarMedicos()
+        {
+            ddlMedicos.Items.Clear();
 
+            ddlMedicos.DataSource = new NegocioInforme().GetTablaMedico();
+
+            ddlMedicos.DataTextField = "Medico";
+            ddlMedicos.DataValueField = "Legajo_MED";
+
+            ddlMedicos.DataBind();
+
+            ddlMedicos.Items.Insert(0, new ListItem("Todos los médicos", "0"));
         }
 
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
+            NegocioInforme negocio = new NegocioInforme();
 
-            dt.Columns.Add("Medico");
-            dt.Columns.Add("Especialidad");
-            dt.Columns.Add("Turnos");
+            int legajo = Convert.ToInt32(ddlMedicos.SelectedValue);
 
-            dt.Rows.Add("Ana Gómez", "Cardiología", "45");
-            dt.Rows.Add("Carlos Díaz", "Pediatría", "40");
-            dt.Rows.Add("Juan García", "Traumatología", "37");
-            dt.Rows.Add("Marta Ruiz", "Dermatología", "34");
-            dt.Rows.Add("Diego Castro", "Neurología", "31");
-            dt.Rows.Add("Laura Fernández", "Oftalmología", "28");
-            dt.Rows.Add("Pablo Torres", "Urología", "25");
-            dt.Rows.Add("Sofía López", "Ginecología", "22");
-            dt.Rows.Add("Martín Silva", "Endocrinología", "18");
-            dt.Rows.Add("Carla Herrera", "Neumonología", "14");
+            DataTable tabla = negocio.InformeTurnosMedico(legajo);
 
-            gvMedicos.DataSource = dt;
-            gvMedicos.DataBind();
+            gvInforme.DataSource = tabla;
+            gvInforme.DataBind();
 
-            lblTotal.Text =
-                "Total de turnos: 294";
+            if(Convert.ToInt32(ddlMedicos.SelectedValue) == 0)
+            {
+                MostrarResumen(tabla);
+            }
+        }
+        private void MostrarResumen(DataTable tabla)
+        {
+            int totalTurnos = 0;
 
-            lblPromedio.Text =
-                "Promedio por médico: 29,4";
+            string medicoMayor = "";
+            string medicoMenor = "";
 
-            lblMayor.Text =
-                "Médico con más turnos: Ana Gómez (45)";
+            int mayor = 0;
+            int menor = 0;
 
-            lblMenor.Text =
-                "Médico con menos turnos: Carla Herrera (14)";
+            bool primerRegistro = true;
+
+            foreach (DataRow fila in tabla.Rows)
+            {
+                int turnos = Convert.ToInt32(fila["Turnos"]);
+
+                string medico = fila["Nombre"].ToString() + " " + fila["Apellido"].ToString();
+
+                totalTurnos += turnos;
+
+                if (primerRegistro)
+                {
+                    mayor = turnos;
+                    menor = turnos;
+
+                    medicoMayor = medico;
+                    medicoMenor = medico;
+
+                    primerRegistro = false;
+                }
+
+                if (turnos > mayor)
+                {
+                    mayor = turnos;
+                    medicoMayor = medico;
+                }
+
+                if (turnos < menor)
+                {
+                    menor = turnos;
+                    medicoMenor = medico;
+                }
+            }
+
+            lblTotal.Text = "Total de turnos: " + totalTurnos;
+
+            lblMayor.Text = "Médico con más turnos: " + medicoMayor + " (" + mayor + ")";
+
+            lblMenor.Text = "Médico con menos turnos: " + medicoMenor + " (" + menor + ")";
         }
     }
 }
