@@ -729,38 +729,17 @@ namespace Datos
 
         }
 
-
-        public int ObtenerProximoIdTurno()
-        {
-            SqlConnection connection = conexion.ObtenerConexion();
-
-            string consulta = "SELECT ISNULL(MAX(IdTurno_TUR),0) + 1 FROM Turno";
-
-            SqlCommand comando = new SqlCommand(consulta, connection);
-
-            connection.Open();
-
-            int id = Convert.ToInt32(comando.ExecuteScalar());
-
-            connection.Close();
-
-            return id;
-        }
-
         public bool AgregarTurno(int legajo, int idPaciente, DateTime fecha, TimeSpan hora)
         {
             SqlConnection connection = conexion.ObtenerConexion();
 
-            int idTurno = ObtenerProximoIdTurno();
-
             string consulta = @"INSERT INTO Turno
-                                (IdTurno_TUR, Fecha_TUR, Hora_TUR, IdPaciente_TUR, Legajo_TUR, Asistencia_TUR)
-                                VALUES
-                                (@IdTurno, @Fecha, @Hora, @Paciente, @Medico, @Asistencia)";
+                        (Fecha_TUR, Hora_TUR, IdPaciente_TUR, Legajo_TUR, Asistencia_TUR)
+                        VALUES
+                        (@Fecha, @Hora, @Paciente, @Medico, @Asistencia)";
 
             SqlCommand comando = new SqlCommand(consulta, connection);
 
-            comando.Parameters.AddWithValue("@IdTurno", idTurno);
             comando.Parameters.AddWithValue("@Fecha", fecha.Date);
             comando.Parameters.AddWithValue("@Hora", hora);
             comando.Parameters.AddWithValue("@Paciente", idPaciente);
@@ -783,6 +762,7 @@ namespace Datos
                 throw new Exception("Error al insertar turno: " + ex.Message);
             }
         }
+
         public List<TimeSpan> ObtenerHorariosOcupados(int legajo, DateTime fecha)
         {
             List<TimeSpan> ocupados = new List<TimeSpan>();
