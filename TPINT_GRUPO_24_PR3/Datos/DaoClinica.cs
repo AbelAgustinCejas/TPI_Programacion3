@@ -308,8 +308,8 @@ namespace Datos
             SqlConnection connection = conexion.ObtenerConexion();
 
             string consulta = @"INSERT INTO HorarioMedico
-                                (Legajo_HM, DiaSemana_HM, HoraInicio_HM, HoraFin_HM)
-                                VALUES (@Legajo, @DiaSemana, @HoraInicio, @HoraFin)";
+                                (Legajo_HM, DiaSemana_HM, HoraInicio_HM, HoraFin_HM, Estado_HM)
+                                VALUES (@Legajo, @DiaSemana, @HoraInicio, @HoraFin, 1)";
 
             SqlCommand command = new SqlCommand(consulta, connection);
 

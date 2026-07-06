@@ -233,7 +233,7 @@
                         ID="ddlLocalidad"
                         runat="server"
                         CssClass="form-select"
-                        AutoPostBack="True" OnSelectedIndexChanged="ddlLocalidad_SelectedIndexChanged">
+                        AutoPostBack="True">
                     </asp:DropDownList>
                 </td>
             </tr>
