@@ -765,7 +765,7 @@ namespace Datos
             comando.Parameters.AddWithValue("@Hora", hora);
             comando.Parameters.AddWithValue("@Paciente", idPaciente);
             comando.Parameters.AddWithValue("@Medico", legajo);
-            comando.Parameters.AddWithValue("@Asistencia", false);
+            comando.Parameters.AddWithValue("@Asistencia", DBNull.Value);
 
             try
             {
@@ -1098,6 +1098,41 @@ namespace Datos
             {
                 connection.Close();
             }
+        }
+
+        public DataTable ObtenerInformeAsistencia(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            DataTable dataTable = new DataTable();
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            string consulta = @"SELECT
+                            Fecha_TUR,
+                            Hora_TUR,
+                            Nombre_PAC + ' ' + Apellido_PAC AS Paciente,
+                            Nombre_MED + ' ' + Apellido_MED AS Medico,
+                            CASE
+                            WHEN Asistencia_TUR = 1 THEN 'Presente'
+                            WHEN Asistencia_TUR = 0 THEN 'Ausente'
+                            ELSE 'Pendiente'
+                            END
+                            AS Asistencia
+                            FROM Turno
+                            INNER JOIN Paciente
+                            ON Turno.IdPaciente_TUR = Paciente.IdPaciente_PAC
+                            INNER JOIN Medico 
+                            ON Turno.Legajo_TUR = Medico.Legajo_MED
+                            WHERE Fecha_TUR BETWEEN @FechaDesde AND @FechaHasta
+                            ORDER BY Fecha_TUR, Hora_TUR";
+
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+            command.Parameters.AddWithValue("@FechaDesde", fechaDesde);
+            command.Parameters.AddWithValue("@FechaHasta", fechaHasta);
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+            dataAdapter.Fill(dataTable);
+
+            return dataTable;
         }
     }
 }

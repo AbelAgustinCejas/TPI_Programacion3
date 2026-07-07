@@ -78,6 +78,24 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.Label lblAusentes;
 
         /// <summary>
+        /// Control lblPorcentajeAsistencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPorcentajeAsistencia;
+
+        /// <summary>
+        /// Control lblPendientes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPendientes;
+
+        /// <summary>
         /// Control gvAsistencia.
         /// </summary>
         /// <remarks>

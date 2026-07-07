@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="True"
+﻿<%@ Page Language="C#" AutoEventWireup="true"
     CodeBehind="InformeAsistencia.aspx.cs"
     Inherits="Vistas.InformeAsistencia" %>
 
@@ -16,7 +16,7 @@
             font-family: Arial;
             margin: 30px;
         }
-        
+
         .contenedor {
             width: 900px;
             margin: auto;
@@ -124,6 +124,18 @@
                     runat="server">
                 </asp:Label>
 
+                <br />
+
+                <asp:Label
+                    ID="lblPorcentajeAsistencia"
+                    runat="server"></asp:Label>
+
+                <br />
+
+                <asp:Label
+                    ID="lblPendientes"
+                    runat="server"></asp:Label>
+
             </div>
 
             <asp:GridView
@@ -135,10 +147,15 @@
                 <Columns>
 
                     <asp:BoundField
-                        DataField="Fecha"
-                        HeaderText="Fecha" />
+                        DataField="Fecha_TUR"
+                        HeaderText="Fecha"
+                        DataFormatString="{0:d/M/yyyy}" />
 
                     <asp:BoundField
+                        DataField="Hora_TUR"
+                        HeaderText="Hora" />
+
+                    <asp:BoundField  
                         DataField="Paciente"
                         HeaderText="Paciente" />
 
@@ -147,8 +164,8 @@
                         HeaderText="Médico" />
 
                     <asp:BoundField
-                        DataField="Estado"
-                        HeaderText="Estado" />
+                        DataField="Asistencia"
+                        HeaderText="Asistencia" />
 
                 </Columns>
 

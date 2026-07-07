@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Negocio;
+using System;
 using System.Data;
 
 namespace Vistas
@@ -7,35 +8,45 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            LimpiarResumen();
         }
 
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
-            lblTotal.Text = "Total de turnos: 10";
-            lblPresentes.Text = "Presentes: 7 (70%)";
-            lblAusentes.Text = "Ausentes: 3 (30%)";
+            LimpiarResumen();
 
-            DataTable dt = new DataTable();
+            DateTime fechaDesde = Convert.ToDateTime(txtDesde.Text);
+            DateTime fechaHasta = Convert.ToDateTime(txtHasta.Text);
 
-            dt.Columns.Add("Fecha");
-            dt.Columns.Add("Paciente");
-            dt.Columns.Add("Medico");
-            dt.Columns.Add("Estado");
+            DataTable tablaAsistencia = new NegocioInforme().InformeAsistencia(fechaDesde, fechaHasta, out int total, out int presentes, out int ausentes, out double porcentajeAsistencia);
+            int pendientes = total - (presentes + ausentes);
 
-            dt.Rows.Add("01/06/2026", "Juan Pérez", "Ana Gómez", "Presente");
-            dt.Rows.Add("02/06/2026", "María López", "Carlos Díaz", "Presente");
-            dt.Rows.Add("03/06/2026", "Pedro Fernández", "Ana Gómez", "Ausente");
-            dt.Rows.Add("04/06/2026", "Sofía Martínez", "Juan García", "Presente");
-            dt.Rows.Add("05/06/2026", "Lucas Ruiz", "Carlos Díaz", "Ausente");
-            dt.Rows.Add("06/06/2026", "Carla Torres", "Ana Gómez", "Presente");
-            dt.Rows.Add("07/06/2026", "Martín Rojas", "Juan García", "Presente");
-            dt.Rows.Add("08/06/2026", "Laura Silva", "Carlos Díaz", "Presente");
-            dt.Rows.Add("09/06/2026", "Diego Castro", "Ana Gómez", "Ausente");
-            dt.Rows.Add("10/06/2026", "Paula Herrera", "Juan García", "Presente");
-
-            gvAsistencia.DataSource = dt;
+            gvAsistencia.DataSource = tablaAsistencia;
             gvAsistencia.DataBind();
+
+            lblTotal.Text = "Total de turnos: " + total;
+            lblPresentes.Text = "Presentes: " + presentes;
+            lblAusentes.Text = "Ausentes: " + ausentes;
+
+            if (presentes + ausentes > 0)
+            {
+                lblPorcentajeAsistencia.Text = "Porcentaje de asistencia: " + porcentajeAsistencia.ToString("0.00") + "%";
+            }
+            else
+            {
+                lblPorcentajeAsistencia.Text = "Porcentaje de asistencia: Sin turnos evaluados";
+            }
+
+            lblPendientes.Text = "Turnos pendientes: " + pendientes;
+
+        }
+
+        void LimpiarResumen()
+        {
+            lblPresentes.Text = "";
+            lblAusentes.Text = "";
+            lblTotal.Text = "";
+            lblPorcentajeAsistencia.Text = "";
         }
     }
 }
