@@ -142,7 +142,7 @@
                 ID="gvAsistencia"
                 runat="server"
                 Width="100%"
-                AutoGenerateColumns="False">
+                AutoGenerateColumns="False" AllowPaging="True" OnPageIndexChanging="gvAsistencia_PageIndexChanging" PageSize="5">
 
                 <Columns>
 

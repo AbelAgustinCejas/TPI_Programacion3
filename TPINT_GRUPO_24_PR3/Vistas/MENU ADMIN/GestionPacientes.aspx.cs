@@ -26,6 +26,7 @@ namespace Vistas.MENU_ADMIN
 
         protected void BtnListado_Click(object sender, EventArgs e)
         {
+            LblMensaje.Text = "";
             DataTable tablaPacientes = new NegocioPaciente().GetTablaPaciente();
 
             gvPacientes.DataSource = tablaPacientes;
@@ -168,6 +169,16 @@ namespace Vistas.MENU_ADMIN
             ddlLocalidad.DataBind();
 
             ddlLocalidad.Items.Insert(0, new ListItem("-- Seleccione --", "-1"));
+        }
+
+        protected void gvPacientes_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvPacientes.PageIndex = e.NewPageIndex;
+
+            DataTable tablaPacientes = new NegocioPaciente().GetTablaPaciente();
+
+            gvPacientes.DataSource = tablaPacientes;
+            gvPacientes.DataBind();
         }
     }
 }

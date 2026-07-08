@@ -957,7 +957,9 @@ namespace Datos
             SqlCommand cmd = new SqlCommand(consulta, cn);
 
             if (idEspecialidad != 0)
+            {
                 cmd.Parameters.AddWithValue("@ID", idEspecialidad);
+            }
 
             SqlDataAdapter da = new SqlDataAdapter(cmd);
 
@@ -1045,7 +1047,7 @@ namespace Datos
                                 Paciente.Nombre_PAC AS Nombre,
                                 Paciente.Apellido_PAC AS Apellido,
                                 Paciente.DNI_PAC AS DNI,
-                                Turno.Fecha_TUR AS Fecha,
+                                CONVERT(varchar(10), Turno.Fecha_TUR, 103) AS Fecha,
                                 Turno.Hora_TUR AS Hora,
                                 CASE
                                     WHEN Turno.Asistencia_TUR = 1 THEN 'Presente'

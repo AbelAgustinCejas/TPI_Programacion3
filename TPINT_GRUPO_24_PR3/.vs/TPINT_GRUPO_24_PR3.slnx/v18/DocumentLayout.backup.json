@@ -1,26 +1,26 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\",
+  "WorkspaceRootPath": "C:\\Users\\Familia\\Documents\\GitHub\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BB105D3E-094D-4656-ADD7-21B7B7F85BF4}|Negocio\\Negocio.csproj|c:\\users\\agust\\desktop\\tpi_programacion3\\tpint_grupo_24_pr3\\negocio\\negocioinforme.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BB105D3E-094D-4656-ADD7-21B7B7F85BF4}|Negocio\\Negocio.csproj|solutionrelative:negocio\\negocioinforme.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8164A4BE-8096-4AAE-8DF7-C8E8BE013EAC}|Datos\\Datos.csproj|c:\\users\\agust\\desktop\\tpi_programacion3\\tpint_grupo_24_pr3\\datos\\daoclinica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8164A4BE-8096-4AAE-8DF7-C8E8BE013EAC}|Datos\\Datos.csproj|c:\\users\\familia\\documents\\github\\tpi_programacion3\\tpint_grupo_24_pr3\\datos\\daoclinica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8164A4BE-8096-4AAE-8DF7-C8E8BE013EAC}|Datos\\Datos.csproj|solutionrelative:datos\\daoclinica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\vistas\\menu admin\\informes\\informeasistencia.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|solutionrelative:vistas\\menu admin\\informes\\informeasistencia.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|c:\\users\\familia\\documents\\github\\tpi_programacion3\\tpint_grupo_24_pr3\\vistas\\principal\\menumedico.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|solutionrelative:vistas\\principal\\menumedico.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|c:\\users\\agust\\desktop\\tpi_programacion3\\tpint_grupo_24_pr3\\vistas\\menu admin\\informes\\informeasistencia.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|solutionrelative:vistas\\menu admin\\informes\\informeasistencia.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|c:\\users\\familia\\documents\\github\\tpi_programacion3\\tpint_grupo_24_pr3\\vistas\\menu admin\\asignacionturnos.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|solutionrelative:vistas\\menu admin\\asignacionturnos.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|c:\\users\\agust\\desktop\\tpi_programacion3\\tpint_grupo_24_pr3\\vistas\\menu admin\\informes\\informeasistencia.aspx.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|solutionrelative:vistas\\menu admin\\informes\\informeasistencia.aspx.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|c:\\users\\familia\\documents\\github\\tpi_programacion3\\tpint_grupo_24_pr3\\vistas\\menu admin\\asignacionturnos.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|solutionrelative:vistas\\menu admin\\asignacionturnos.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|c:\\users\\familia\\documents\\github\\tpi_programacion3\\tpint_grupo_24_pr3\\vistas\\principal\\menumedico.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{582321C1-59BC-4E71-8113-81638D616748}|Vistas\\Vistas.csproj|solutionrelative:vistas\\principal\\menumedico.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,34 +30,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DaoClinica.cs",
-              "DocumentMoniker": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Datos\\DaoClinica.cs",
-              "RelativeDocumentMoniker": "Datos\\DaoClinica.cs",
-              "ToolTip": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Datos\\DaoClinica.cs",
-              "RelativeToolTip": "Datos\\DaoClinica.cs",
-              "ViewState": "AgIAAP0CAAAAAAAAAAAgwAEDAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T05:20:24.049Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "NegocioInforme.cs",
-              "DocumentMoniker": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Negocio\\NegocioInforme.cs",
-              "RelativeDocumentMoniker": "Negocio\\NegocioInforme.cs",
-              "ToolTip": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Negocio\\NegocioInforme.cs",
-              "RelativeToolTip": "Negocio\\NegocioInforme.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAkwEAAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T05:19:40.312Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
@@ -68,41 +42,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "InformeAsistencia.aspx.designer.cs",
-              "DocumentMoniker": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MENU ADMIN\\INFORMES\\InformeAsistencia.aspx.designer.cs",
-              "RelativeDocumentMoniker": "Vistas\\MENU ADMIN\\INFORMES\\InformeAsistencia.aspx.designer.cs",
-              "ToolTip": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MENU ADMIN\\INFORMES\\InformeAsistencia.aspx.designer.cs",
-              "RelativeToolTip": "Vistas\\MENU ADMIN\\INFORMES\\InformeAsistencia.aspx.designer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGsAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "DaoClinica.cs",
+              "DocumentMoniker": "C:\\Users\\Familia\\Documents\\GitHub\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Datos\\DaoClinica.cs",
+              "RelativeDocumentMoniker": "Datos\\DaoClinica.cs",
+              "ToolTip": "C:\\Users\\Familia\\Documents\\GitHub\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Datos\\DaoClinica.cs",
+              "RelativeToolTip": "Datos\\DaoClinica.cs",
+              "ViewState": "AgIAAAsEAAAAAAAAAAAiwBkEAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T05:19:03.917Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "InformeAsistencia.aspx",
-              "DocumentMoniker": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MENU ADMIN\\INFORMES\\InformeAsistencia.aspx",
-              "RelativeDocumentMoniker": "Vistas\\MENU ADMIN\\INFORMES\\InformeAsistencia.aspx",
-              "ToolTip": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MENU ADMIN\\INFORMES\\InformeAsistencia.aspx",
-              "RelativeToolTip": "Vistas\\MENU ADMIN\\INFORMES\\InformeAsistencia.aspx",
-              "LogicalView": "7651a702-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2026-07-07T05:18:51.384Z",
+              "WhenOpened": "2026-07-08T00:18:34.597Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "InformeAsistencia.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MENU ADMIN\\INFORMES\\InformeAsistencia.aspx.cs",
-              "RelativeDocumentMoniker": "Vistas\\MENU ADMIN\\INFORMES\\InformeAsistencia.aspx.cs",
-              "ToolTip": "C:\\Users\\agust\\Desktop\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MENU ADMIN\\INFORMES\\InformeAsistencia.aspx.cs",
-              "RelativeToolTip": "Vistas\\MENU ADMIN\\INFORMES\\InformeAsistencia.aspx.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAA2AAAAAAAAAA==",
+              "Title": "AsignacionTurnos.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\Familia\\Documents\\GitHub\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MENU ADMIN\\AsignacionTurnos.aspx.cs",
+              "RelativeDocumentMoniker": "Vistas\\MENU ADMIN\\AsignacionTurnos.aspx.cs",
+              "ToolTip": "C:\\Users\\Familia\\Documents\\GitHub\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MENU ADMIN\\AsignacionTurnos.aspx.cs",
+              "RelativeToolTip": "Vistas\\MENU ADMIN\\AsignacionTurnos.aspx.cs",
+              "ViewState": "AgIAACYBAAAAAAAAAAAiwD0BAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T06:12:05.673Z",
+              "WhenOpened": "2026-07-08T00:11:53.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MenuMedico.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\Familia\\Documents\\GitHub\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\PRINCIPAL\\MenuMedico.aspx.cs",
+              "RelativeDocumentMoniker": "Vistas\\PRINCIPAL\\MenuMedico.aspx.cs",
+              "ToolTip": "C:\\Users\\Familia\\Documents\\GitHub\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\PRINCIPAL\\MenuMedico.aspx.cs",
+              "RelativeToolTip": "Vistas\\PRINCIPAL\\MenuMedico.aspx.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-08T00:00:04.449Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AsignacionTurnos.aspx",
+              "DocumentMoniker": "C:\\Users\\Familia\\Documents\\GitHub\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MENU ADMIN\\AsignacionTurnos.aspx",
+              "RelativeDocumentMoniker": "Vistas\\MENU ADMIN\\AsignacionTurnos.aspx",
+              "ToolTip": "C:\\Users\\Familia\\Documents\\GitHub\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\MENU ADMIN\\AsignacionTurnos.aspx",
+              "RelativeToolTip": "Vistas\\MENU ADMIN\\AsignacionTurnos.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-07-08T00:10:57.575Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MenuMedico.aspx",
+              "DocumentMoniker": "C:\\Users\\Familia\\Documents\\GitHub\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\PRINCIPAL\\MenuMedico.aspx",
+              "RelativeDocumentMoniker": "Vistas\\PRINCIPAL\\MenuMedico.aspx",
+              "ToolTip": "C:\\Users\\Familia\\Documents\\GitHub\\TPI_Programacion3\\TPINT_GRUPO_24_PR3\\Vistas\\PRINCIPAL\\MenuMedico.aspx",
+              "RelativeToolTip": "Vistas\\PRINCIPAL\\MenuMedico.aspx",
+              "LogicalView": "7651a702-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-07-07T22:44:49.04Z",
               "EditorCaption": ""
             }
           ]

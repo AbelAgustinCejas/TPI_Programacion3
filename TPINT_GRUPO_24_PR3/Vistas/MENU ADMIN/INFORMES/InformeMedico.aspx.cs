@@ -42,6 +42,11 @@ namespace Vistas
             if(Convert.ToInt32(ddlMedicos.SelectedValue) == 0)
             {
                 MostrarResumen(tabla);
+                divResumen.Visible = true;
+            }
+            else
+            {
+                divResumen.Visible = false;
             }
         }
         private void MostrarResumen(DataTable tabla)
@@ -93,6 +98,20 @@ namespace Vistas
             lblMayor.Text = "Médico con más turnos: " + medicoMayor + " (" + mayor + ")";
 
             lblMenor.Text = "Médico con menos turnos: " + medicoMenor + " (" + menor + ")";
+        }
+
+        protected void gvInforme_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvInforme.PageIndex = e.NewPageIndex;
+
+            NegocioInforme negocio = new NegocioInforme();
+
+            int legajo = Convert.ToInt32(ddlMedicos.SelectedValue);
+
+            DataTable tabla = negocio.InformeTurnosMedico(legajo);
+
+            gvInforme.DataSource = tabla;
+            gvInforme.DataBind();
         }
     }
 }

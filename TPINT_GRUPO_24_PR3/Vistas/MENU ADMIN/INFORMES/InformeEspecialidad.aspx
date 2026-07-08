@@ -87,7 +87,7 @@
 
     </div>
 
-    <div class="resumen">
+    <div id="divResumen" runat="server" class="resumen" visible="false">
 
         <h3>Resumen</h3>
 
@@ -106,7 +106,7 @@
     <asp:GridView
     ID="gvInforme"
     runat="server"
-    AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" Width="900px">
+    AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" Width="900px" AllowPaging="True" OnPageIndexChanging="gvInforme_PageIndexChanging" PageSize="4">
 
         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
 

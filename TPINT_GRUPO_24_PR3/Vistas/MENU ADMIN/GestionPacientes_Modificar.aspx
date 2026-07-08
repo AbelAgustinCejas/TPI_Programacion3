@@ -75,7 +75,7 @@
                     AutoGenerateColumns="False"
                     DataKeyNames="IdPaciente_PAC"
                     CssClass="table table-striped table-bordered table-sm grid-small"
-                    Visible="False">
+                    Visible="False" PageSize="5">
 
                     <Columns>
 
@@ -101,7 +101,7 @@
                 </asp:GridView>
 
                 <asp:Button ID="btnSeleccionar" runat="server"
-                    Text="Seleccionar"
+                    Text="Modificar"
                     CssClass="btn btn-primary"
                     OnClick="btnSeleccionar_Click" Visible="False" />
                 <br />

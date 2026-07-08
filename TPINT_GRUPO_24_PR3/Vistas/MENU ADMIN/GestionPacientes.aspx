@@ -335,7 +335,7 @@
                 AutoGenerateColumns="False"
                 DataKeyNames="IdPaciente_PAC"
                 CssClass="table table-striped table-bordered table-sm text-center align-middle"
-                Width="100%" >
+                Width="100%" AllowPaging="True" OnPageIndexChanging="gvPacientes_PageIndexChanging" PageSize="8" >
                 <%--OnSelectedIndexChanged="gvPacientes_SelectedIndexChanged"--%>
 
                 <Columns>

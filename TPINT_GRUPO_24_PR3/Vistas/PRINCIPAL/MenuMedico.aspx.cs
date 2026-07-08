@@ -1,10 +1,6 @@
 ﻿using Negocio;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Vistas
@@ -31,11 +27,7 @@ namespace Vistas
             gvTurnos.DataSource = tabla;
             gvTurnos.DataBind();
 
-            if (tabla != null && tabla.Rows.Count > 0)
-            {
-
-            }
-            else
+            if (tabla == null && tabla.Rows.Count <= 0)
             {
                 lblMensaje.Text = "No hay registros";
             }
@@ -71,6 +63,13 @@ namespace Vistas
         protected void btnLogout_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/PRINCIPAL/Login.aspx");
+        }
+
+        protected void gvTurnos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvTurnos.PageIndex = e.NewPageIndex;
+
+            CargarTurnos();
         }
     }
 }

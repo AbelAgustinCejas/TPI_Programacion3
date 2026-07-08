@@ -134,7 +134,7 @@
                 </div>--%>
                 <div class="panelGrid">
                     <div class="tituloGrid"> Turnos </div>
-                    <asp:GridView ID="gvTurnos" runat="server" AutoGenerateColumns="False" CssClass="grid" DataKeyNames="IdTurno_TUR" OnRowCommand="gvTurnos_RowCommand">
+                    <asp:GridView ID="gvTurnos" runat="server" AutoGenerateColumns="False" CssClass="grid" DataKeyNames="IdTurno_TUR" OnRowCommand="gvTurnos_RowCommand" AllowPaging="True" OnPageIndexChanging="gvTurnos_PageIndexChanging" PageSize="8">
                         <Columns>
                             <asp:BoundField DataField="Nombre" HeaderText="Nombre"/>
                             <asp:BoundField DataField="Apellido" HeaderText="Apellido"/>

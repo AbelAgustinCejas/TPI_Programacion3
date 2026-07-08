@@ -48,5 +48,17 @@ namespace Vistas
             lblTotal.Text = "";
             lblPorcentajeAsistencia.Text = "";
         }
+
+        protected void gvAsistencia_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
+        {
+            gvAsistencia.PageIndex = e.NewPageIndex;
+
+            DateTime fechaDesde = Convert.ToDateTime(txtDesde.Text);
+            DateTime fechaHasta = Convert.ToDateTime(txtHasta.Text);
+            DataTable tablaAsistencia = new NegocioInforme().InformeAsistencia(fechaDesde, fechaHasta, out int total, out int presentes, out int ausentes, out double porcentajeAsistencia);
+
+            gvAsistencia.DataSource = tablaAsistencia;
+            gvAsistencia.DataBind();
+        }
     }
 }

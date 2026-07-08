@@ -81,7 +81,7 @@
 
     </div>
 
-    <div class="resumen">
+    <div id="divResumen" runat="server" class="resumen" visible="false">
 
         <h3>Resumen</h3>
 
@@ -97,14 +97,9 @@
 
     </div>
 
-    <asp:GridView
-        ID="gvInforme"
-        runat="server"
-        AutoGenerateColumns="False"
-        CellPadding="4"
-        ForeColor="#333333"
-        GridLines="None"
-        Width="900px">
+    <asp:GridView ID="gvInforme" runat="server" AutoGenerateColumns="False"
+                  CellPadding="4" ForeColor="#333333" GridLines="None" Width="900px" 
+                  AllowPaging="True" OnPageIndexChanging="gvInforme_PageIndexChanging" PageSize="8">
 
         <Columns>
 
@@ -115,17 +110,11 @@
 
         </Columns>
 
-        <HeaderStyle BackColor="#5D7B9D"
-                     Font-Bold="True"
-                     ForeColor="White"
-                     HorizontalAlign="Center" />
+        <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" />
 
-        <RowStyle BackColor="#F7F6F3"
-                  ForeColor="#333333"
-                  HorizontalAlign="Center" />
+        <RowStyle BackColor="#F7F6F3" ForeColor="#333333" HorizontalAlign="Center" />
 
-        <AlternatingRowStyle BackColor="White"
-                             ForeColor="#284775" />
+        <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
 
     </asp:GridView>
 

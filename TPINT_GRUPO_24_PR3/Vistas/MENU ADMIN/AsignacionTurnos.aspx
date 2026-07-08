@@ -130,7 +130,7 @@
             AutoGenerateColumns="False"
             Width="850px"
             DataKeyNames="IdPaciente_PAC"
-            OnSelectedIndexChanged="gvPaciente_SelectedIndexChanged" CellPadding="4" ForeColor="#333333" GridLines="None">
+            OnSelectedIndexChanged="gvPaciente_SelectedIndexChanged" CellPadding="4" ForeColor="#333333" GridLines="None" OnPageIndexChanging="gvPaciente_PageIndexChanging" PageSize="5">
 
             <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
 
@@ -180,7 +180,7 @@
     runat="server"
     AutoGenerateColumns="False"
     DataKeyNames="IdTurno_TUR"
-    OnSelectedIndexChanged="gvTurnos_SelectedIndexChanged" CellPadding="4" ForeColor="#333333" GridLines="None" Width="866px">
+    OnSelectedIndexChanged="gvTurnos_SelectedIndexChanged" CellPadding="4" ForeColor="#333333" GridLines="None" Width="866px" OnPageIndexChanging="gvTurnos_PageIndexChanging" PageSize="5">
 
         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
 
@@ -188,16 +188,11 @@
 
         <asp:CommandField ShowSelectButton="True" SelectText="Seleccionar"/>
 
-        <asp:BoundField DataField="Fecha"
-            HeaderText="Fecha"
-        />
+        <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
 
-        <asp:BoundField DataField="Hora_TUR"
-            HeaderText="Hora"
-            />
+        <asp:BoundField DataField="Hora_TUR" HeaderText="Hora" />
 
-        <asp:BoundField DataField="Apellido_MED"
-            HeaderText="Medico" />
+        <asp:BoundField DataField="Apellido_MED" HeaderText="Medico" />
 
     </Columns>
 

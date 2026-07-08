@@ -291,7 +291,7 @@
                 </div>
 
                 <div class="card-body">
-                    <asp:GridView ID="gvMedicos" runat="server" AutoGenerateColumns="False" DataKeyNames="Legajo_MED" CssClass="table table-striped table-hover table-bordered">
+                    <asp:GridView ID="gvMedicos" runat="server" AutoGenerateColumns="False" DataKeyNames="Legajo_MED" CssClass="table table-striped table-hover table-bordered" AllowPaging="True" OnPageIndexChanging="gvMedicos_PageIndexChanging" PageSize="4">
                         <Columns>
                             <asp:BoundField DataField="Legajo_MED" HeaderText="Legajo" />
                             <asp:BoundField DataField="DNI_MED" HeaderText="DNI" />

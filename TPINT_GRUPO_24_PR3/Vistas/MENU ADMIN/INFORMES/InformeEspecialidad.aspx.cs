@@ -22,7 +22,7 @@ namespace Vistas
             ddlEspecialidad.DataValueField = "IdEspecialidad_ESP";
             ddlEspecialidad.DataBind();
 
-            ddlEspecialidad.Items.Insert(0, new ListItem("Seleccione", "-1"));
+            ddlEspecialidad.Items.Insert(0, new ListItem("Todas las especialidades", "0"));
         }
 
         protected void btnGenerar_Click(object sender, EventArgs e)
@@ -36,7 +36,15 @@ namespace Vistas
             gvInforme.DataSource = dataTable;
             gvInforme.DataBind();
 
-            MostrarResumen(dataTable);
+            if (Convert.ToInt32(ddlEspecialidad.SelectedValue) == 0)
+            {
+                MostrarResumen(dataTable);
+                divResumen.Visible = true;
+            }
+            else
+            {
+                divResumen.Visible = false;
+            }
         }
         private void MostrarResumen(DataTable dataTable)
         {
@@ -81,6 +89,19 @@ namespace Vistas
             lblMayor.Text = "Especialidad con más turnos: " + mayor + " (" + cantMayor + ")";
 
             lblMenor.Text = "Especialidad con menos turnos: " + menor + " (" + cantMenor + ")";
+        }
+
+        protected void gvInforme_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvInforme.PageIndex = e.NewPageIndex;
+
+            NegocioInforme negocio = new NegocioInforme();
+            int idEspecialidad = Convert.ToInt32(ddlEspecialidad.SelectedValue);
+
+            DataTable dataTable = negocio.InformeTurnosEspecialidad(idEspecialidad);
+
+            gvInforme.DataSource = dataTable;
+            gvInforme.DataBind();
         }
     }
 }

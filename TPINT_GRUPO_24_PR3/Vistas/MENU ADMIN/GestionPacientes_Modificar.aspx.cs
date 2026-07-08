@@ -2,6 +2,7 @@
 using Negocio;
 using System;
 using System.Data;
+using System.Net;
 using System.Web.UI.WebControls;
 
 namespace Vistas.MENU_ADMIN
@@ -35,7 +36,6 @@ namespace Vistas.MENU_ADMIN
                 gvPaciente.Visible = false;
                 LblMensaje.Text = "No se encontró paciente";
             }
-
         }
 
         protected void ddlProvincia_SelectedIndexChanged(object sender, EventArgs e)

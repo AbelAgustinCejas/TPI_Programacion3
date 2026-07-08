@@ -58,14 +58,11 @@ namespace Vistas
 
             int legajo = Convert.ToInt32(ddlMedico.SelectedValue);
 
-            List<TimeSpan> horarios =
-                negocio.ObtenerHorariosDisponibles(legajo, Calendar1.SelectedDate);
+            List<TimeSpan> horarios = negocio.ObtenerHorariosDisponibles(legajo, Calendar1.SelectedDate);
 
             foreach (TimeSpan hora in horarios)
             {
-                ddlHorario.Items.Add(new ListItem(
-                    hora.ToString(@"hh\:mm"),
-                    hora.ToString(@"hh\:mm")));
+                ddlHorario.Items.Add(new ListItem( hora.ToString(@"hh\:mm"), hora.ToString(@"hh\:mm")));
             }
         }
 
@@ -176,48 +173,37 @@ namespace Vistas
 
             TimeSpan hora = TimeSpan.Parse(ddlHorario.SelectedValue);
 
-            bool agregado = negocio.ConfirmarTurno(
-                legajo,
-                idPaciente,
-                fecha,
-                hora);
+            bool agregado = negocio.ConfirmarTurno(legajo, idPaciente, fecha, hora);
 
             if (agregado)
             {
                 lblMensaje.Text = "Turno registrado correctamente.";
 
-                if (agregado)
-                {
-                    lblMensaje.Text = "Turno registrado correctamente.";
+                // Limpiar búsqueda
+                txtDNI.Text = "";
 
-                    // Limpiar búsqueda
-                    txtDNI.Text = "";
+                // Ocultar o vaciar el GridView
+                gvPaciente.DataSource = null;
+                gvPaciente.DataBind();
 
-                    // Ocultar o vaciar el GridView
-                    gvPaciente.DataSource = null;
-                    gvPaciente.DataBind();
+                // limpiar ddl
+                ddlEspecialidad.SelectedIndex = 0;
+                ddlMedico.Items.Clear();
+                ddlHorario.Items.Clear();
 
-                    // limpiar ddl
-                    ddlEspecialidad.SelectedIndex = 0;
-                    ddlMedico.Items.Clear();
-                    ddlHorario.Items.Clear();
+                // Limpiar calendario
+                Calendar1.SelectedDates.Clear();
+                Calendar1.SelectedDate = DateTime.MinValue;
 
-                    // Limpiar calendario
-                    Calendar1.SelectedDates.Clear();
-                    Calendar1.SelectedDate = DateTime.MinValue;
+                // Limpiar resumen
+                lblPacienteResumen.Text = "";
+                lblDniResumen.Text = "";
+                lblEspecialidadResumen.Text = "";
+                lblMedicoResumen.Text = "";
+                lblFechaResumen.Text = "";
+                lblHorarioResumen.Text = "";
 
-                    // Limpiar Session
-                    Session["idPaciente"] = null;
-
-                    // Limpiar resumen
-                    lblPacienteResumen.Text = "";
-                    lblDniResumen.Text = "";
-                    lblEspecialidadResumen.Text = "";
-                    lblMedicoResumen.Text = "";
-                    lblFechaResumen.Text = "";
-                    lblHorarioResumen.Text = "";
-                }
-
+                // Limpiar Session
                 Session["idPaciente"] = null;
             }
             else
@@ -321,6 +307,18 @@ namespace Vistas
         protected void ddlHorario_SelectedIndexChanged(object sender, EventArgs e)
         {
             ActualizarResumen();
+        }
+
+        protected void gvTurnos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvTurnos.PageIndex = e.NewPageIndex;
+
+            NegocioTurno negocio = new NegocioTurno();
+
+            DataTable dataTable = negocio.BuscarTurnoPorDni(Convert.ToInt32(txtBuscarDni.Text));
+
+            gvTurnos.DataSource = dataTable;
+            gvTurnos.DataBind();
         }
     }
 }

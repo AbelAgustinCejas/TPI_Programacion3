@@ -474,5 +474,13 @@ namespace Vistas.MENU_ADMIN
         {
             Response.Redirect("~/PRINCIPAL/MenuAdmin.aspx");
         }
+
+        protected void gvMedicos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvMedicos.PageIndex = e.NewPageIndex;
+
+            CargarMedicosGrid();
+            gvMedicos.Columns[10].Visible = false;
+        }
     }
 }
