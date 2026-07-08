@@ -39,7 +39,7 @@
             margin:30px auto;
         }
 
-/*        .panelFiltros{
+        .panelFiltros{
             background:white;
             border-radius:10px;
             padding:20px;
@@ -49,18 +49,13 @@
         }
 
         .filtro{
-            width:32%;
+            width:90%;
+            margin-bottom:25px;
         }
 
-        .filtro label{
-            display:block;
-            margin-bottom:8px;
-            font-weight:bold;
-            color:#444;
-        }
-*/
         .textbox{
-            width:100%;
+            width:200px;
+            height:10px;
             padding:10px;
             border:1px solid;
             border-radius:6px;
@@ -118,49 +113,46 @@
                 </div>
             </div>
             <div class="contenedor">
-<%--                <div class="panelFiltros">
+                <div class="panelFiltros">
                     <div class="filtro">
-                        <label>Paciente</label>
-                        <asp:TextBox ID="txtFiltro1" runat="server" CssClass="textbox"></asp:TextBox>
+                        <asp:Label ID="lblPaciente" runat="server" Font-Bold="True" Font-Names="Arial" Font-Size="Medium">Paciente:</asp:Label>
+                        <asp:TextBox ID="txtBuscar" runat="server" CssClass="textbox"></asp:TextBox>
+                    </div>
+                    <%--<div class="filtro">
+                        <asp:Label ID="lblDesde" runat="server" Font-Bold="True" Font-Names="Arial" Font-Size="Medium">Desde:</asp:Label>
+                        <asp:TextBox ID="txtDesde" runat="server" TextMode="Date" CssClass="textbox"> </asp:TextBox>
                     </div>
                     <div class="filtro">
-                        <label>Fecha</label>
-                        <asp:TextBox ID="txtFiltro2" runat="server" CssClass="textbox"></asp:TextBox>
-                    </div>
+                        <asp:Label ID="lblHasta" runat="server" Font-Bold="True" Font-Names="Arial" Font-Size="Medium">Hasta:</asp:Label>
+                        <asp:TextBox ID="txtHasta" runat="server" TextMode="Date" CssClass="textbox"> </asp:TextBox>
+                    </div>--%>
                     <div class="filtro">
-                        <label>DNI</label>
-                        <asp:TextBox ID="txtFiltro3" runat="server" CssClass="textbox"></asp:TextBox>
+                        <asp:Button ID="btnBuscar" runat="server" OnClick="btnBuscar_Click" Text="Buscar" Font-Bold="True" Font-Names="Arial" Font-Size="Medium" BorderStyle="Solid" BorderWidth="1px" />
                     </div>
-                </div>--%>
+                </div>
                 <div class="panelGrid">
                     <div class="tituloGrid"> Turnos </div>
-                    <asp:GridView ID="gvTurnos" runat="server" AutoGenerateColumns="False" CssClass="grid" DataKeyNames="IdTurno_TUR" OnRowCommand="gvTurnos_RowCommand" AllowPaging="True" OnPageIndexChanging="gvTurnos_PageIndexChanging" PageSize="8">
+                    <asp:GridView ID="gvTurnos" runat="server" AutoGenerateColumns="False" CssClass="grid" 
+                        DataKeyNames="IdTurno_TUR" OnRowCommand="gvTurnos_RowCommand" 
+                        AllowPaging="True" OnPageIndexChanging="gvTurnos_PageIndexChanging" PageSize="8">
                         <Columns>
                             <asp:BoundField DataField="Nombre" HeaderText="Nombre"/>
                             <asp:BoundField DataField="Apellido" HeaderText="Apellido"/>
                             <asp:BoundField DataField="DNI" HeaderText="DNI"/>
-                            <asp:BoundField DataField="Fecha" HeaderText="Fecha"/>
+                            <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:d/M/yyyy}"/>
                             <asp:BoundField DataField="Hora" HeaderText="Hora"/>
-                            <asp:BoundField DataField="Asistencia" HeaderText="Asistencia"/>
+                            <%--<asp:BoundField DataField="Asistencia" HeaderText="Asistencia"/>--%>
                             <asp:TemplateField HeaderText="Presente">
                                 <ItemTemplate>
-                                    <asp:ImageButton
-                                        ID="btnPresente"
-                                        runat="server"
-                                        ImageUrl="~/IMAGENES/presente2.jpg"
-                                        CommandName="Presente"
-                                        CommandArgument='<%# Container.DataItemIndex %>' />
+                                    <asp:ImageButton ID="btnPresente" runat="server"
+                                        ImageUrl="~/IMAGENES/presente2.jpg" CommandName="Presente" CommandArgument='<%# Container.DataItemIndex %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
 
                             <asp:TemplateField HeaderText="Ausente">
                                 <ItemTemplate>
-                                    <asp:ImageButton
-                                        ID="btnAusente"
-                                        runat="server"
-                                        ImageUrl="~/IMAGENES/ausente2.jpg"
-                                        CommandName="Ausente"
-                                        CommandArgument='<%# Container.DataItemIndex %>' />
+                                    <asp:ImageButton ID="btnAusente" runat="server"
+                                        ImageUrl="~/IMAGENES/ausente2.jpg" CommandName="Ausente" CommandArgument='<%# Container.DataItemIndex %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

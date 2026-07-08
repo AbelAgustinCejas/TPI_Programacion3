@@ -1,4 +1,5 @@
-﻿using Negocio;
+﻿using Entidades;
+using Negocio;
 using System;
 using System.Data;
 using System.Web.UI.WebControls;
@@ -18,11 +19,11 @@ namespace Vistas
 
         private void CargarTurnos()
         {
-            int idUsuario = Convert.ToInt32(Session["IdUsuario"]);
+            int usuario = Convert.ToInt32(Session["IdUsuario"]);
 
             NegocioTurno negocio = new NegocioTurno();
 
-            DataTable tabla = negocio.GetTablaTurnos(idUsuario);
+            DataTable tabla = negocio.ObtenerTablaTurnos(usuario);
 
             gvTurnos.DataSource = tabla;
             gvTurnos.DataBind();
@@ -33,29 +34,46 @@ namespace Vistas
             }
         }
 
-        protected void gvTurnos_RowCommand(object sender, GridViewCommandEventArgs e)
+        private void CargarTurnos(string busqueda)
         {
-            if (e.CommandName == "Presente" || e.CommandName == "Ausente")
+            int usuario = Convert.ToInt32(Session["IdUsuario"]);
+
+            NegocioTurno negocio = new NegocioTurno();
+
+            DataTable tabla = negocio.ObtenerTablaTurnos(usuario, busqueda);
+
+            gvTurnos.DataSource = tabla;
+            gvTurnos.DataBind();
+
+            if (tabla == null && tabla.Rows.Count <= 0)
             {
-                int fila = Convert.ToInt32(e.CommandArgument);
+                lblMensaje.Text = "No hay registros";
+            }
+        }
+
+        protected void gvTurnos_RowCommand(object sender, GridViewCommandEventArgs evento)
+        {
+            if (evento.CommandName == "Presente" || evento.CommandName == "Ausente")
+            {
+                int fila = Convert.ToInt32(evento.CommandArgument);
                 int idTurno = Convert.ToInt32(gvTurnos.DataKeys[fila].Value);
 
-                bool asistencia = (e.CommandName == "Presente");
+                bool asistencia = (evento.CommandName == "Presente");
 
                 NegocioTurno negocio = new NegocioTurno();
 
                 if (negocio.ActualizarAsistencia(idTurno, asistencia))
                 {
-                    lblMensaje.Text = "Asistencia actualizada correctamente.";
+                    lblMensaje.Text = "Asistencia actualizada";
 
-                    int idUsuario = Convert.ToInt32(Session["IdUsuario"]);
+                    int usuario = Convert.ToInt32(Session["IdUsuario"]);
 
-                    gvTurnos.DataSource = negocio.GetTablaTurnos(idUsuario);
+                    gvTurnos.DataSource = negocio.ObtenerTablaTurnos(usuario);
                     gvTurnos.DataBind();
                 }
                 else
                 {
-                    lblMensaje.Text = "No se pudo actualizar la asistencia.";
+                    lblMensaje.Text = "Error al actualizar asistencia";
                 }
             }
         }
@@ -70,6 +88,13 @@ namespace Vistas
             gvTurnos.PageIndex = e.NewPageIndex;
 
             CargarTurnos();
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            string busqueda = txtBuscar.Text;
+            CargarTurnos(busqueda);
+            txtBuscar.Text = "";
         }
     }
 }

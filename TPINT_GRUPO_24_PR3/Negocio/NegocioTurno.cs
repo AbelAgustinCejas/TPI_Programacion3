@@ -11,13 +11,17 @@ namespace Negocio
 {
     public class NegocioTurno
     {
-
-
         DaoClinica dao = new DaoClinica();
 
-        public DataTable GetTablaTurnos(int idUsuario)
+        public DataTable ObtenerTablaTurnos(int usuario)
         {
-            DataTable tablaTurnos = new DaoClinica().ListarTurnosPorUsuario(idUsuario);
+            DataTable tablaTurnos = new DaoClinica().ObtenerTablaTurnos(usuario);
+
+            return tablaTurnos;
+        }
+        public DataTable ObtenerTablaTurnos(int usuario, string busqueda)
+        {
+            DataTable tablaTurnos = new DaoClinica().ObtenerTablaTurnos(usuario, busqueda);
 
             return tablaTurnos;
         }
