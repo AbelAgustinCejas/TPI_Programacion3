@@ -927,31 +927,35 @@ namespace Datos
         }
 
         public DataTable BuscarTurnoPorDni(int dni)
-        {
-            SqlConnection cn = conexion.ObtenerConexion();
+{
+    SqlConnection cn = conexion.ObtenerConexion();
 
-            string consulta = @"SELECT T.IdTurno_TUR,
-                                CONVERT(varchar(10), T.Fecha_TUR, 103) AS Fecha,
-                                T.Hora_TUR,
-                                M.Nombre_MED,
-                                M.Apellido_MED
-                                FROM Turno T
-                                INNER JOIN Paciente P
-                                ON T.IdPaciente_TUR = P.IdPaciente_PAC
-                                INNER JOIN Medico M
-                                ON T.Legajo_TUR = M.Legajo_MED
-                                WHERE P.DNI_PAC = @Dni";
+    string consulta = @"SELECT
+                        T.IdTurno_TUR,
+                        T.Fecha_TUR,
+                        T.Hora_TUR,
+                        P.Nombre_PAC + ' ' + P.Apellido_PAC AS Paciente,
+                        M.Nombre_MED + ' ' + M.Apellido_MED AS Medico,
+                        E.Descripcion_ESP AS Especialidad
+                        FROM Turno T
+                        INNER JOIN Paciente P
+                            ON T.IdPaciente_TUR = P.IdPaciente_PAC
+                        INNER JOIN Medico M
+                            ON T.Legajo_TUR = M.Legajo_MED
+                        INNER JOIN Especialidad E
+                            ON M.IdEspecialidad_MED = E.IdEspecialidad_ESP
+                        WHERE P.DNI_PAC = @Dni";
 
-            SqlCommand cmd = new SqlCommand(consulta, cn);
-            cmd.Parameters.AddWithValue("@Dni", dni);
+    SqlCommand cmd = new SqlCommand(consulta, cn);
+    cmd.Parameters.AddWithValue("@Dni", dni);
 
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
+    SqlDataAdapter da = new SqlDataAdapter(cmd);
+    DataTable dt = new DataTable();
 
-            da.Fill(dt);
+    da.Fill(dt);
 
-            return dt;
-        }
+    return dt;
+}
 
         public bool EliminarTurno(int idTurno)
         {

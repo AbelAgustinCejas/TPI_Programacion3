@@ -8,7 +8,10 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
             LimpiarResumen();
+            }
         }
 
         protected void btnGenerar_Click(object sender, EventArgs e)
@@ -47,6 +50,7 @@ namespace Vistas
             lblAusentes.Text = "";
             lblTotal.Text = "";
             lblPorcentajeAsistencia.Text = "";
+            lblPendientes.Text = "";
         }
 
         protected void gvAsistencia_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
@@ -59,6 +63,7 @@ namespace Vistas
 
             gvAsistencia.DataSource = tablaAsistencia;
             gvAsistencia.DataBind();
+
         }
     }
 }

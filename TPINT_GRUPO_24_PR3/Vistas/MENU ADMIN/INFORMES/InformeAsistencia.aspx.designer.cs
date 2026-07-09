@@ -33,6 +33,15 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.TextBox txtDesde;
 
         /// <summary>
+        /// Control rfvFechaDesde.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFechaDesde;
+
+        /// <summary>
         /// Control txtHasta.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,15 @@ namespace Vistas
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtHasta;
+
+        /// <summary>
+        /// Control rfvFechaHasta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFechaHasta;
 
         /// <summary>
         /// Control btnGenerar.

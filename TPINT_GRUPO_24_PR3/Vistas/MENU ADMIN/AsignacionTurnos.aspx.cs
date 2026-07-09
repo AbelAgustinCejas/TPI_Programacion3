@@ -19,6 +19,7 @@ namespace Vistas
             if (!IsPostBack)
             {
                 CargarEspecialidades();
+                DesabilitarOpciones();
             }
         }
         private void CargarEspecialidades()
@@ -89,6 +90,39 @@ namespace Vistas
                 lblHorarioResumen.Text = "";
         }
 
+        private void DesabilitarOpciones()
+        {
+            ddlMedico.Enabled = false;
+            ddlEspecialidad.Enabled = false;
+            Calendar1.Enabled = false;
+            ddlHorario.Enabled = false;
+        }
+
+        private void HabilitarOpciones()
+        {
+            ddlMedico.Enabled = true;
+            ddlEspecialidad.Enabled = true;
+            Calendar1.Enabled = true;
+            ddlHorario.Enabled = true;
+        }
+
+        private void LimpiarFormulario()
+        {
+            lblMensaje.Text = "";
+
+            gvPaciente.Visible = false;
+            gvTurnos.Visible = false;
+
+            lblPacienteResumen.Text = "Pendiente";
+            lblDniResumen.Text = "Pendiente";
+            lblEspecialidadResumen.Text = "Pendiente";
+            lblMedicoResumen.Text = "Pendiente";
+            lblFechaResumen.Text = "Pendiente";
+            lblHorarioResumen.Text = "Pendiente";
+
+            DesabilitarOpciones();
+        }
+
         protected void gvPaciente_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -100,6 +134,7 @@ namespace Vistas
             lblDniResumen.Text = fila.Cells[1].Text;
             lblPacienteResumen.Text = fila.Cells[2].Text + " " + fila.Cells[3].Text;
 
+            HabilitarOpciones();
             ActualizarResumen();
         }
 
@@ -107,7 +142,7 @@ namespace Vistas
         {
             lblMensaje.Text = "";
 
-            if (string.IsNullOrWhiteSpace(txtDNI.Text))
+            if (string.IsNullOrWhiteSpace(txtPacienteDNI.Text))
             {
                 lblMensaje.Text = "Ingrese un DNI.";
                 gvPaciente.Visible = false;
@@ -115,7 +150,7 @@ namespace Vistas
             }
 
             NegocioPaciente negocio = new NegocioPaciente();
-            DataTable dt = negocio.BuscarPacientePorDni(txtDNI.Text.Trim());
+            DataTable dt = negocio.BuscarPacientePorDni(txtPacienteDNI.Text.Trim());
 
             if (dt.Rows.Count > 0)
             {
@@ -180,7 +215,7 @@ namespace Vistas
                 lblMensaje.Text = "Turno registrado correctamente.";
 
                 // Limpiar búsqueda
-                txtDNI.Text = "";
+                txtPacienteDNI.Text = "";
 
                 // Ocultar o vaciar el GridView
                 gvPaciente.DataSource = null;
@@ -254,9 +289,16 @@ namespace Vistas
 
         protected void btnBuscarTurno_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtPacienteDNI.Text))
+            {
+                lblMensaje.Text = "Ingrese un DNI.";
+                gvPaciente.Visible = false;
+                return;
+            }
+
             NegocioTurno negocio = new NegocioTurno();
 
-            DataTable dt = negocio.BuscarTurnoPorDni(Convert.ToInt32(txtBuscarDni.Text));
+            DataTable dt = negocio.BuscarTurnoPorDni(Convert.ToInt32(txtTurnoDNI.Text));
 
             gvTurnos.DataSource = dt;
             gvTurnos.DataBind();
@@ -266,11 +308,13 @@ namespace Vistas
                 lblMensaje.Text = "No se encontró ningún turno.";
             }
 
+            btnEliminarTurno.Enabled = false;
         }
 
         protected void gvTurnos_SelectedIndexChanged(object sender, EventArgs e)
         {
             Session["IdTurno"] = gvTurnos.DataKeys[gvTurnos.SelectedIndex].Value;
+            btnEliminarTurno.Enabled = true;
 
         }
 
@@ -294,7 +338,7 @@ namespace Vistas
                 gvTurnos.DataSource = null;
                 gvTurnos.DataBind();
 
-                txtBuscarDni.Text = "";
+                txtTurnoDNI.Text = "";
 
                 Session["IdTurno"] = null;
             }
@@ -315,10 +359,15 @@ namespace Vistas
 
             NegocioTurno negocio = new NegocioTurno();
 
-            DataTable dataTable = negocio.BuscarTurnoPorDni(Convert.ToInt32(txtBuscarDni.Text));
+            DataTable dataTable = negocio.BuscarTurnoPorDni(Convert.ToInt32(txtTurnoDNI.Text));
 
             gvTurnos.DataSource = dataTable;
             gvTurnos.DataBind();
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            LimpiarFormulario();
         }
     }
 }

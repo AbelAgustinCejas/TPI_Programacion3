@@ -74,6 +74,8 @@
                         TextMode="Date">
                     </asp:TextBox>
 
+                    <asp:RequiredFieldValidator ID="rfvFechaDesde" runat="server" ControlToValidate="txtDesde" ErrorMessage="Seleccione fecha inicial!"></asp:RequiredFieldValidator>
+
                 </div>
 
                 <div class="fila">
@@ -86,6 +88,8 @@
                         runat="server"
                         TextMode="Date">
                     </asp:TextBox>
+
+                    <asp:RequiredFieldValidator ID="rfvFechaHasta" runat="server" ControlToValidate="txtHasta" ErrorMessage="Seleccione fecha final!"></asp:RequiredFieldValidator>
 
                 </div>
 
