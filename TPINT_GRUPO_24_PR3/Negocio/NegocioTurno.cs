@@ -13,17 +13,19 @@ namespace Negocio
     {
         DaoClinica dao = new DaoClinica();
 
-        public DataTable ObtenerTablaTurnos(int usuario)
+        public DataTable BuscarTurnos(int usuario, string busqueda)
         {
-            DataTable tablaTurnos = new DaoClinica().ObtenerTablaTurnos(usuario);
-
-            return tablaTurnos;
+            return dao.BuscarTurnos(usuario, busqueda);
         }
-        public DataTable ObtenerTablaTurnos(int usuario, string busqueda)
-        {
-            DataTable tablaTurnos = new DaoClinica().ObtenerTablaTurnos(usuario, busqueda);
 
-            return tablaTurnos;
+        public DataTable ObtenerTurnosPendientes(int usuario)
+        {
+            return dao.ObtenerTurnosPendientes(usuario);
+        }
+
+        public DataTable ObtenerTurnosAnteriores(int usuario)
+        {
+            return dao.ObtenerTurnosAnteriores(usuario);
         }
 
         public bool ConfirmarTurno(int legajo, int idPaciente, DateTime fecha, TimeSpan hora)

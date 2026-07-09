@@ -13,34 +13,51 @@ namespace Vistas
             if(!IsPostBack)
             {
                 lblUsuario.Text = Session["NombreBienvenida"].ToString();
-                CargarTurnos();
+                Session["FiltroTurnos"] = "Pendientes";
+                CargarTurnosPendientes();
             }
         }
 
-        private void CargarTurnos()
+        private void CargarTurnosPendientes()
         {
             int usuario = Convert.ToInt32(Session["IdUsuario"]);
 
             NegocioTurno negocio = new NegocioTurno();
 
-            DataTable tabla = negocio.ObtenerTablaTurnos(usuario);
+            DataTable tabla = negocio.ObtenerTurnosPendientes(usuario);
 
             gvTurnos.DataSource = tabla;
             gvTurnos.DataBind();
 
-            if (tabla == null && tabla.Rows.Count <= 0)
+            if (tabla.Rows.Count == 0)
+            {
+                lblMensaje.Text = "No hay registros";
+            }
+        }
+        private void CargarTurnosAnteriores()
+        {
+            int usuario = Convert.ToInt32(Session["IdUsuario"]);
+
+            NegocioTurno negocio = new NegocioTurno();
+
+            DataTable tabla = negocio.ObtenerTurnosAnteriores(usuario);
+
+            gvTurnos.DataSource = tabla;
+            gvTurnos.DataBind();
+
+            if (tabla.Rows.Count == 0)
             {
                 lblMensaje.Text = "No hay registros";
             }
         }
 
-        private void CargarTurnos(string busqueda)
+        private void BuscarTurnos(string busqueda)
         {
             int usuario = Convert.ToInt32(Session["IdUsuario"]);
 
             NegocioTurno negocio = new NegocioTurno();
 
-            DataTable tabla = negocio.ObtenerTablaTurnos(usuario, busqueda);
+            DataTable tabla = negocio.BuscarTurnos(usuario, busqueda);
 
             gvTurnos.DataSource = tabla;
             gvTurnos.DataBind();
@@ -68,7 +85,7 @@ namespace Vistas
 
                     int usuario = Convert.ToInt32(Session["IdUsuario"]);
 
-                    gvTurnos.DataSource = negocio.ObtenerTablaTurnos(usuario);
+                    gvTurnos.DataSource = negocio.ObtenerTurnosPendientes(usuario);
                     gvTurnos.DataBind();
                 }
                 else
@@ -87,13 +104,47 @@ namespace Vistas
         {
             gvTurnos.PageIndex = e.NewPageIndex;
 
-            CargarTurnos();
+            string filtro = Session["FiltroTurnos"].ToString();
+
+            switch (filtro)
+            {
+                case "Buscar":
+                    BuscarTurnos(Session["Busqueda"].ToString());
+                    break;
+
+                case "Anteriores":
+                    CargarTurnosAnteriores();
+                    break;
+
+                default:
+                    CargarTurnosPendientes();
+                    break;
+            }
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
+            Session["FiltroTurnos"] = "Buscar";
+            Session["Busqueda"] = txtBuscar.Text.Trim();
+            lblMensaje.Text = "";
             string busqueda = txtBuscar.Text;
-            CargarTurnos(busqueda);
+            BuscarTurnos(busqueda);
+            txtBuscar.Text = "";
+        }
+
+        protected void btnPendientes_Click(object sender, EventArgs e)
+        {
+            Session["FiltroTurnos"] = "Pendientes";
+            lblMensaje.Text = "";
+            CargarTurnosPendientes();
+            txtBuscar.Text = "";
+        }
+
+        protected void btnAnteriores_Click(object sender, EventArgs e)
+        {
+            Session["FiltroTurnos"] = "Anteriores";
+            lblMensaje.Text = "";
+            CargarTurnosAnteriores();
             txtBuscar.Text = "";
         }
     }

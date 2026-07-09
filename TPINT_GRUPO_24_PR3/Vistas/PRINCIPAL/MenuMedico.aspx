@@ -43,23 +43,35 @@
             background:white;
             border-radius:10px;
             padding:20px;
-            display:flex;
-            justify-content:space-between;
-            margin-bottom:25px;
-        }
+            margin-bottom:15px;
 
-        .filtro{
-            width:90%;
-            margin-bottom:25px;
+            display:flex;
+            align-items:center;
+            gap:12px;
+            flex-wrap:wrap;
         }
 
         .textbox{
-            width:200px;
-            height:10px;
+            width:300px;
             padding:10px;
-            border:1px solid;
+            border:1px solid #BDBDBD;
             border-radius:6px;
             font-size:15px;
+        }
+
+        .boton{
+            padding:10px 20px;
+            background:#0b6fa4;
+            color:white;
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+            font-size:15px;
+            font-weight:bold;
+        }
+
+        .boton:hover{
+            background:#08547c;
         }
 
         .panelGrid{
@@ -114,21 +126,11 @@
             </div>
             <div class="contenedor">
                 <div class="panelFiltros">
-                    <div class="filtro">
-                        <asp:Label ID="lblPaciente" runat="server" Font-Bold="True" Font-Names="Arial" Font-Size="Medium">Paciente:</asp:Label>
-                        <asp:TextBox ID="txtBuscar" runat="server" CssClass="textbox"></asp:TextBox>
-                    </div>
-                    <%--<div class="filtro">
-                        <asp:Label ID="lblDesde" runat="server" Font-Bold="True" Font-Names="Arial" Font-Size="Medium">Desde:</asp:Label>
-                        <asp:TextBox ID="txtDesde" runat="server" TextMode="Date" CssClass="textbox"> </asp:TextBox>
-                    </div>
-                    <div class="filtro">
-                        <asp:Label ID="lblHasta" runat="server" Font-Bold="True" Font-Names="Arial" Font-Size="Medium">Hasta:</asp:Label>
-                        <asp:TextBox ID="txtHasta" runat="server" TextMode="Date" CssClass="textbox"> </asp:TextBox>
-                    </div>--%>
-                    <div class="filtro">
-                        <asp:Button ID="btnBuscar" runat="server" OnClick="btnBuscar_Click" Text="Buscar" Font-Bold="True" Font-Names="Arial" Font-Size="Medium" BorderStyle="Solid" BorderWidth="1px" />
-                    </div>
+                    <asp:Label ID="lblPaciente" runat="server" Text="Paciente:" Font-Bold="True" Font-Size="Medium"> </asp:Label>
+                    <asp:TextBox ID="txtBuscar" runat="server" CssClass="textbox"> </asp:TextBox>
+                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="boton" OnClick="btnBuscar_Click" />
+                    <asp:Button ID="btnPendientes" runat="server" Text="Pendientes" CssClass="boton" OnClick="btnPendientes_Click" />
+                    <asp:Button ID="btnAnteriores" runat="server" Text="Anteriores" CssClass="boton" OnClick="btnAnteriores_Click" />
                 </div>
                 <div class="panelGrid">
                     <div class="tituloGrid"> Turnos </div>
@@ -141,7 +143,7 @@
                             <asp:BoundField DataField="DNI" HeaderText="DNI"/>
                             <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:d/M/yyyy}"/>
                             <asp:BoundField DataField="Hora" HeaderText="Hora"/>
-                            <%--<asp:BoundField DataField="Asistencia" HeaderText="Asistencia"/>--%>
+                            <asp:BoundField DataField="Asistencia" HeaderText="Asistencia"/>
                             <asp:TemplateField HeaderText="Presente">
                                 <ItemTemplate>
                                     <asp:ImageButton ID="btnPresente" runat="server"
