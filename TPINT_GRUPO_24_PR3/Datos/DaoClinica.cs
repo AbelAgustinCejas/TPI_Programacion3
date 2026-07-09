@@ -12,27 +12,55 @@ namespace Datos
     {
         AccesoDatos conexion = new AccesoDatos();
 
-        public DataTable ListarPacientes()
+        public DataTable ListarPacientes(string busqueda, string sexo, int idProvincia)
         {
             DataTable dataTable = new DataTable();
 
             SqlConnection connection = conexion.ObtenerConexion();
 
-            string consulta = "SELECT IdPaciente_PAC, DNI_PAC, Nombre_PAC, Apellido_PAC, Sexo_PAC, Nacionalidad_PAC, " +
-                              "FechaNacimiento_PAC, Direccion_PAC, Email_PAC, Telefono_PAC, " +
-                              "Nombre_LOC AS Localidad, Nombre_PRO AS Provincia " +
-                              "FROM Paciente " +
-                              "INNER JOIN Localidad ON Paciente.IdLocalidad_PAC = Localidad.IdLocalidad_LOC " +
-                              "INNER JOIN Provincia ON Localidad.IdProvincia_LOC = Provincia.IdProvincia_PRO " +
-                              "WHERE Paciente.Estado_PAC = 1";
+            string consulta = @"SELECT 
+                            IdPaciente_PAC, 
+                            DNI_PAC, 
+                            Nombre_PAC, 
+                            Apellido_PAC, 
+                            Sexo_PAC, 
+                            Nacionalidad_PAC,
+                            FechaNacimiento_PAC, 
+                            Direccion_PAC, 
+                            Email_PAC, 
+                            Telefono_PAC,
+                            Nombre_LOC AS Localidad, 
+                            Nombre_PRO AS Provincia
+                            FROM Paciente
+                            INNER JOIN Localidad 
+                            ON Paciente.IdLocalidad_PAC = Localidad.IdLocalidad_LOC
+                            INNER JOIN Provincia 
+                            ON Localidad.IdProvincia_LOC = Provincia.IdProvincia_PRO
+                            WHERE Paciente.Estado_PAC = 1
+                            AND 
+                            (@Busqueda = ''
+                            OR DNI_PAC LIKE '%' + @Busqueda + '%'
+                            OR Nombre_PAC LIKE '%' + @Busqueda + '%'
+                            OR Apellido_PAC LIKE '%' + @Busqueda + '%')
+                            AND 
+                            (@Sexo = '' OR Sexo_PAC = @Sexo)
+                            AND 
+                            (@IdProvincia = 0 OR Provincia.IdProvincia_PRO = @IdProvincia)";
 
+            SqlCommand command = new SqlCommand(consulta, connection);
 
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(consulta, connection);
+            command.Parameters.AddWithValue("@Busqueda", busqueda);
+            command.Parameters.AddWithValue("@Sexo", sexo);
+            command.Parameters.AddWithValue("@IdProvincia", idProvincia);
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
 
             dataAdapter.Fill(dataTable);
 
             return dataTable;
         }
+        
+
         public DataTable ListarMedicos()
         {
             DataTable dataTable = new DataTable();

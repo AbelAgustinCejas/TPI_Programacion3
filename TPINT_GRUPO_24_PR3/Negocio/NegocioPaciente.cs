@@ -14,7 +14,14 @@ namespace Negocio
     {
         public DataTable GetTablaPaciente()
         {
-            DataTable tablaPacientes = new DaoClinica().ListarPacientes();
+            DataTable tablaPacientes = new DaoClinica().ListarPacientes("", "", 0);
+
+            return tablaPacientes;
+        }
+
+        public DataTable GetTablaPaciente(string busqueda, string sexo, int idProvincia)
+        {
+            DataTable tablaPacientes = new DaoClinica().ListarPacientes(busqueda, sexo, idProvincia);
 
             return tablaPacientes;
         }
@@ -46,17 +53,14 @@ namespace Negocio
             return new DaoClinica().ModificarPaciente(paciente);
         }
 
-        public bool ExistePaciente(String dni) /// validacion que evita repetidos
+        public bool ExistePaciente(String DNI) /// validacion que evita repetidos
         {
-            return new DaoClinica().ExistePaciente(dni);
+            return new DaoClinica().ExistePaciente(DNI);
         }
 
-        public DataTable BuscarPacientePorDni(string dni)
+        public DataTable BuscarPacientePorDni(string DNI)
         {
-            DaoClinica datos = new DaoClinica();
-            return datos.BuscarPacientePorDni(dni);
+            return new DaoClinica().BuscarPacientePorDni(DNI);
         }
-
-
     }
 }

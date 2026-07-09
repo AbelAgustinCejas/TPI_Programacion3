@@ -20,6 +20,7 @@ namespace Vistas.MENU_ADMIN
             if (!IsPostBack)
             {
                 CargarProvincias();
+                divFiltros.Visible = false;
                 //lblUsuarioIngresado.Text = Session["NombreBienvenida"].ToString();
             }
         }
@@ -27,7 +28,7 @@ namespace Vistas.MENU_ADMIN
         protected void BtnListado_Click(object sender, EventArgs e)
         {
             LblMensaje.Text = "";
-            DataTable tablaPacientes = new NegocioPaciente().GetTablaPaciente();
+            DataTable tablaPacientes = new NegocioPaciente().GetTablaPaciente("", "", 0);
 
             gvPacientes.DataSource = tablaPacientes;
             gvPacientes.DataBind();
@@ -36,6 +37,7 @@ namespace Vistas.MENU_ADMIN
             if (tablaPacientes != null && tablaPacientes.Rows.Count > 0)
             {
                 btnEliminar.Enabled = true;
+                divFiltros.Visible = true;
             }
             else
             {
@@ -137,7 +139,7 @@ namespace Vistas.MENU_ADMIN
                 }
             }
 
-            DataTable tablaPacientes = new NegocioPaciente().GetTablaPaciente();
+            DataTable tablaPacientes = new NegocioPaciente().GetTablaPaciente("", "", 0);
 
             gvPacientes.DataSource = tablaPacientes;
             gvPacientes.DataBind();
@@ -149,14 +151,24 @@ namespace Vistas.MENU_ADMIN
         }
         private void CargarProvincias()
         {
+            DataTable tablaProvincia = new NegocioProvincia().GetTablaProvincia();
+
             ddlProvincia.Items.Clear();
-            ddlProvincia.DataSource = new NegocioProvincia().GetTablaProvincia();
+            ddlProvincia.DataSource = tablaProvincia;
             ddlProvincia.DataTextField = "Nombre_PRO";
             ddlProvincia.DataValueField = "IdProvincia_PRO";
             ddlProvincia.DataBind();
 
+            ddlFiltroProvincia.Items.Clear();
+            ddlFiltroProvincia.DataSource = tablaProvincia;
+            ddlFiltroProvincia.DataTextField = "Nombre_PRO";
+            ddlFiltroProvincia.DataValueField = "IdProvincia_PRO";
+            ddlFiltroProvincia.DataBind();
+
+
             ddlProvincia.Items.Insert(0, new ListItem("-- Seleccione --", "-1"));
             ddlLocalidad.Items.Insert(0, new ListItem("-- Seleccione --", "-1"));
+            ddlFiltroProvincia.Items.Insert(0, new ListItem("Todas", "0"));
         }
 
         private void CargarLocalidades(int idProvincia)
@@ -175,10 +187,30 @@ namespace Vistas.MENU_ADMIN
         {
             gvPacientes.PageIndex = e.NewPageIndex;
 
-            DataTable tablaPacientes = new NegocioPaciente().GetTablaPaciente();
+            DataTable tablaPacientes = new NegocioPaciente().GetTablaPaciente("", "", 0);
 
             gvPacientes.DataSource = tablaPacientes;
             gvPacientes.DataBind();
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            LblMensaje.Text = "";
+            string busqueda = txtBusqueda.Text.Trim();
+            string sexo = ddlFiltroSexo.SelectedValue;
+            int idProvincia = Convert.ToInt32(ddlFiltroProvincia.SelectedValue);
+
+            DataTable tablaFiltrada = new NegocioPaciente().GetTablaPaciente(busqueda, sexo, idProvincia);
+            gvPacientes.DataSource = tablaFiltrada;
+            gvPacientes.DataBind();
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            LblMensaje.Text = "";
+            divFiltros.Visible = false;
+            btnEliminar.Enabled = false;
+            btnConfirmarEliminar.Visible = false;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GestionPacientes.aspx.cs" Inherits="Vistas.MENU_ADMIN.GestionPacientes" MaintainScrollPositionOnPostBack="true" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GestionPacientes.aspx.cs" Inherits="Vistas.MENU_ADMIN.GestionPacientes" MaintainScrollPositionOnPostback="true" %>
 
 <!DOCTYPE html>
 
@@ -37,6 +37,26 @@
 
         .check-grande {
             transform: scale(1.4);
+        }
+
+        .auto-style1 {
+            --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+            display: block;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--bs-body-color);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-size: 16px 12px;
+            border-radius: var(--bs-border-radius);
+            transition: none;
+            margin-top: 0;
+            background-color: var(--bs-body-bg);
+            background-image: url('var(--bs-form-select-bg-img),var(--bs-form-select-bg-icon,none)');
+            background-repeat: no-repeat;
         }
     </style>
 </head>
@@ -121,7 +141,7 @@
                         runat="server"
                         CssClass="form-select">
 
-                        <asp:ListItem Text="Seleccionar" Value=""></asp:ListItem>
+                        <asp:ListItem Text="--Seleccione--" Value="-1"></asp:ListItem>
                         <asp:ListItem Text="Masculino" Value="M"></asp:ListItem>
                         <asp:ListItem Text="Femenino" Value="F"></asp:ListItem>
 
@@ -306,7 +326,16 @@
                                 Visible="False"
                                 OnClick="btnConfirmarEliminar_Click" />
 
+                            <asp:Button
+                                ID="btnLimpiar"
+                                runat="server"
+                                Text="Limpiar"
+                                CssClass="btn btn-secondary"
+                                CausesValidation="false"
+                                OnClick="btnLimpiar_Click" />
+
                         </div>
+
 
                         <asp:Button
                             ID="btnMenuPrincipal"
@@ -323,65 +352,142 @@
 
         </table>
 
-        <div class="text-center mt-3 mb-3">
-            <asp:Label ID="LblMensaje" runat="server"></asp:Label>
-        </div>
 
-        <div class="table-responsive mt-4 px-3">
+        <div id="divFiltros" runat="server">
+            <%--Englobamos los filtros bajo un div para ocultarlos facilmente.--%>
 
-            <asp:GridView
-                ID="gvPacientes"
-                runat="server"
-                AutoGenerateColumns="False"
-                DataKeyNames="IdPaciente_PAC"
-                CssClass="table table-striped table-bordered table-sm text-center align-middle"
-                Width="100%" AllowPaging="True" OnPageIndexChanging="gvPacientes_PageIndexChanging" PageSize="8" >
-                <%--OnSelectedIndexChanged="gvPacientes_SelectedIndexChanged"--%>
+            <div class="text-center mt-3 mb-3">
+                <asp:Label ID="LblMensaje" runat="server"></asp:Label>
+            </div>
 
-                <Columns>
+            <div class="table-responsive mt-4 px-3">
+            </div>
 
-                    <asp:BoundField DataField="DNI_PAC" HeaderText="DNI" />
+            <div class="row justify-content-center align-items-end g-3 mt-4 mb-4">
 
-                    <asp:BoundField DataField="Nombre_PAC" HeaderText="Nombre" />
+                <div class="col-md-4">
 
-                    <asp:BoundField DataField="Apellido_PAC" HeaderText="Apellido" />
+                    <label class="form-label fw-bold">
+                        Buscar
+                    </label>
 
-                    <asp:BoundField DataField="Sexo_PAC" HeaderText="Sexo" />
+                    <asp:TextBox
+                        ID="txtBusqueda"
+                        runat="server"
+                        CssClass="form-control"
+                        placeholder="DNI, nombre o apellido">
+                    </asp:TextBox>
 
-                    <asp:BoundField DataField="Nacionalidad_PAC" HeaderText="Nacionalidad" />
+                </div>
 
-                    <asp:BoundField DataField="Localidad" HeaderText="Localidad" />
+                <div class="col-md-2">
 
-                    <asp:BoundField DataField="Provincia" HeaderText="Provincia" />
+                    <label class="form-label fw-bold">
+                        Sexo
+                    </label>
 
-                    <asp:BoundField
-                        DataField="FechaNacimiento_PAC"
-                        DataFormatString="{0:yyyy-MM-dd}"
-                        HeaderText="Fecha de nacimiento" />
+                    <asp:DropDownList
+                        ID="ddlFiltroSexo"
+                        runat="server"
+                        CssClass="form-select">
+                        <asp:ListItem Text="Ambos" Value=""></asp:ListItem>
+                        <asp:ListItem Text="Masculino" Value="M"></asp:ListItem>
+                        <asp:ListItem Text="Femenino" Value="F"></asp:ListItem>
+                    </asp:DropDownList>
 
-                    <asp:BoundField DataField="Direccion_PAC" HeaderText="Direccion" />
+                </div>
 
-                    <asp:BoundField DataField="Email_PAC" HeaderText="Correo electronico" />
+                <div class="col-md-3">
 
-                    <asp:BoundField DataField="Telefono_PAC" HeaderText="Teléfono" />
+                    <label class="form-label fw-bold">
+                        Provincia
+                    </label>
 
-                    <asp:TemplateField HeaderText="">
-                        <HeaderStyle HorizontalAlign="Center" />
-                        <ItemStyle HorizontalAlign="Center" />
-                        <ItemTemplate>
-                            <asp:CheckBox
-                                ID="checkSeleccion"
-                                runat="server"
-                                CssClass="check-grande" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
+                    <asp:DropDownList
+                        ID="ddlFiltroProvincia"
+                        runat="server"
+                        CssClass="form-select">
+                    </asp:DropDownList>
 
-                </Columns>
+                </div>
 
-            </asp:GridView>
+                <div class="col-md-2 d-grid">
 
+                    <asp:Button
+                        ID="btnBuscar"
+                        runat="server"
+                        Text="Buscar"
+                        CssClass="btn btn-primary"
+                        CausesValidation="false"
+                        OnClick="btnBuscar_Click" />
+
+                </div>
+
+            </div>
+
+            <div class="table-responsive mt-4 px-3">
+
+                <asp:GridView
+                    ID="gvPacientes"
+                    runat="server"
+                    AutoGenerateColumns="False"
+                    DataKeyNames="IdPaciente_PAC"
+                    CssClass="table table-striped table-bordered table-sm text-center align-middle"
+                    Width="100%"
+                    AllowPaging="True"
+                    OnPageIndexChanging="gvPacientes_PageIndexChanging"
+                    PageSize="8">
+
+                    <Columns>
+
+                        <asp:BoundField DataField="DNI_PAC" HeaderText="DNI" />
+
+                        <asp:BoundField DataField="Nombre_PAC" HeaderText="Nombre" />
+
+                        <asp:BoundField DataField="Apellido_PAC" HeaderText="Apellido" />
+
+                        <asp:BoundField DataField="Sexo_PAC" HeaderText="Sexo" />
+
+                        <asp:BoundField DataField="Nacionalidad_PAC" HeaderText="Nacionalidad" />
+
+                        <asp:BoundField DataField="Localidad" HeaderText="Localidad" />
+
+                        <asp:BoundField DataField="Provincia" HeaderText="Provincia" />
+
+                        <asp:BoundField
+                            DataField="FechaNacimiento_PAC"
+                            DataFormatString="{0:yyyy-MM-dd}"
+                            HeaderText="Fecha de nacimiento" />
+
+                        <asp:BoundField DataField="Direccion_PAC" HeaderText="Dirección" />
+
+                        <asp:BoundField DataField="Email_PAC" HeaderText="Correo electrónico" />
+
+                        <asp:BoundField DataField="Telefono_PAC" HeaderText="Teléfono" />
+
+                        <asp:TemplateField HeaderText="">
+                            <HeaderStyle HorizontalAlign="Center" />
+                            <ItemStyle HorizontalAlign="Center" />
+
+                            <ItemTemplate>
+
+                                <asp:CheckBox
+                                    ID="checkSeleccion"
+                                    runat="server"
+                                    CssClass="check-grande" />
+
+                            </ItemTemplate>
+
+                        </asp:TemplateField>
+
+                    </Columns>
+
+                </asp:GridView>
+
+            </div>
         </div>
 
     </form>
+
 </body>
 </html>
