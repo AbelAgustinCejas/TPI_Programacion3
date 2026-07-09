@@ -4,10 +4,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Menu Administradores</title>
 </head>
-<body>
+<body style="height: 495px">
     <form id="form1" runat="server">
         <div style="font-size:30px; background-color:#C5D3BF; padding:10px; border:1px solid #4a90e2; text-align:center;"> 
             Bienvenido/a:&nbsp;
@@ -39,7 +40,12 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Button ID="btnInformes" runat="server" Text="Informes" Width="250px" Height="50px" OnClick="btnInformes_Click" />
+                    <asp:Button ID="btnInformeEspecialidad" runat="server" Text="Informe Especialidad" Width="250px" Height="50px" OnClick="btnInformeEspecialidad_Click" />
+                    <br />
+      
+        <asp:Button ID="btnInformeMedico" runat="server" Height="52px" Text="Informe Medico" Width="251px" OnClick="btnInformeMedico_Click" />  
+                    <br />
+                    <asp:Button ID="btnInformeAsistencia" runat="server" Height="52px" OnClick="btnInformeAsistencia_Click" style="margin-top: 0px" Text="Informe Asistencia" Width="252px" />
                 </td>
             </tr>
         </table>

@@ -60,12 +60,30 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.Button btnAT;
 
         /// <summary>
-        /// Control btnInformes.
+        /// Control btnInformeEspecialidad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnInformes;
+        protected global::System.Web.UI.WebControls.Button btnInformeEspecialidad;
+
+        /// <summary>
+        /// Control btnInformeMedico.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnInformeMedico;
+
+        /// <summary>
+        /// Control btnInformeAsistencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnInformeAsistencia;
     }
 }

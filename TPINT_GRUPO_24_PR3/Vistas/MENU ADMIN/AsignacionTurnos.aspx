@@ -130,7 +130,7 @@
             AutoGenerateColumns="False"
             Width="850px"
             DataKeyNames="IdPaciente_PAC"
-            OnSelectedIndexChanged="gvPaciente_SelectedIndexChanged" CellPadding="4" ForeColor="#333333" GridLines="None" OnPageIndexChanging="gvPaciente_PageIndexChanging" PageSize="5">
+            OnSelectedIndexChanged="gvPaciente_SelectedIndexChanged" CellPadding="4" ForeColor="#333333" GridLines="None" PageSize="5">
 
             <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
 
@@ -335,6 +335,23 @@
     </div>
 
 </form>
+
+    <p>
+        &nbsp;</p>
+    <p>
+        &nbsp;</p>
+    <p>
+        &nbsp;</p>
+    <p>
+        &nbsp;</p>
+    <p>
+        &nbsp;</p>
+    <p>
+        &nbsp;</p>
+    <p>
+        &nbsp;</p>
+    <p>
+        &nbsp;</p>
 
 </body>
 </html>

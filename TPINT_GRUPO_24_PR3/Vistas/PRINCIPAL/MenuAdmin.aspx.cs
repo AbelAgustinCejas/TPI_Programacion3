@@ -38,9 +38,19 @@ namespace Vistas
             Response.Redirect("~/MENU ADMIN/AsignacionTurnos.aspx");
         }
 
-        protected void btnInformes_Click(object sender, EventArgs e)
+        protected void btnInformeEspecialidad_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/MENU ADMIN/Informes.aspx");
+            Response.Redirect("~/MENU ADMIN/INFORMES/InformeEspecialidad.aspx");
+        }
+
+        protected void btnInformeAsistencia_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/MENU ADMIN/INFORMES/InformeAsistencia.aspx");
+        }
+
+        protected void btnInformeMedico_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/MENU ADMIN/INFORMES/InformeMedico.aspx");
         }
     }
 }

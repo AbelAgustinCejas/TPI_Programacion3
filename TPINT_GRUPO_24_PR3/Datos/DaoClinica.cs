@@ -11,6 +11,32 @@ namespace Datos
     public class DaoClinica
     {
         AccesoDatos conexion = new AccesoDatos();
+        
+        
+        //////////////////////// LOGIN /////////////////////////////
+        public DataTable Login(string nombreUsuario, string contrasenia)
+        {
+            DataTable dataTable = new DataTable();
+
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            string consulta = @"SELECT *
+                        FROM Usuario
+                        WHERE NombreUsuario_USU = @NombreUsuario
+                        AND Contraseña_USU = @Contraseña
+                        AND Estado_USU = 1";
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+
+            command.Parameters.AddWithValue("@NombreUsuario", nombreUsuario);
+            command.Parameters.AddWithValue("@Contraseña", contrasenia);
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+            dataAdapter.Fill(dataTable);
+
+            return dataTable;
+        }
+        /////////////////////////// PACIENTES /////////////////////////////////////
 
         public DataTable ListarPacientes(string busqueda, string sexo, int idProvincia)
         {
@@ -59,81 +85,7 @@ namespace Datos
 
             return dataTable;
         }
-        
 
-        public DataTable ListarMedicos()
-        {
-            DataTable dataTable = new DataTable();
-
-            SqlConnection connection = conexion.ObtenerConexion();
-
-            string consulta = @"SELECT
-                                    Legajo_MED,
-                                    DNI_MED,
-                                    Nombre_MED,
-                                    Apellido_MED,
-                                    Descripcion_ESP,
-                                    Nombre_LOC,
-                                    Nombre_PRO,
-                                    Sexo_MED,
-                                    Nacionalidad_MED,
-                                    FechaNacimiento_MED,
-                                    Direccion_MED,
-                                    Email_MED,
-                                    Telefono_MED
-                                FROM Medico
-                                    INNER JOIN Especialidad
-                                    ON Medico.IdEspecialidad_MED = Especialidad.IdEspecialidad_ESP
-                                    INNER JOIN Localidad
-                                    ON Medico.IdLocalidad_MED = Localidad.IdLocalidad_LOC
-                                    INNER JOIN Provincia
-                                    ON Localidad.IdProvincia_LOC = Provincia.IdProvincia_PRO
-                                WHERE Medico.Estado_MED = 1";
-
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(consulta, connection);
-
-            dataAdapter.Fill(dataTable);
-
-            return dataTable;
-        }
-        public DataTable ListarMedicosPorEspecialidad(int especialidad)
-        {
-            DataTable dataTable = new DataTable();
-            string consulta = "SELECT Legajo_MED, Apellido_MED + ', ' + Nombre_MED AS NombreCompleto FROM Medico WHERE IdEspecialidad_MED = @especialidad ORDER BY Nombre_MED";
-
-            SqlConnection connection = conexion.ObtenerConexion();
-
-            SqlCommand command = new SqlCommand(consulta, connection);
-            command.Parameters.AddWithValue("@especialidad", especialidad);
-
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-
-            dataAdapter.Fill(dataTable);
-
-            return dataTable;
-        }
-
-        public DataTable ListarMedicosPorLegajo(int legajo)
-        {
-            DataTable dataTable = new DataTable();
-            string consulta = "SELECT Legajo_MED, " +
-                                    " Apellido_MED, " +
-                                    " Nombre_MED AS NombreCompleto " +
-                                "FROM Medico " +
-                               "WHERE Legajo_MED = @legajo " +
-                               "ORDER BY Nombre_MED";
-
-            SqlConnection connection = conexion.ObtenerConexion();
-
-            SqlCommand command = new SqlCommand(consulta, connection);
-            command.Parameters.AddWithValue("@legajo", legajo);
-
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-
-            dataAdapter.Fill(dataTable);
-
-            return dataTable;
-        }
 
         public DataTable BuscarPaciente(string DNI)
         {
@@ -159,28 +111,6 @@ namespace Datos
             return dataTable;
         }
 
-        public DataTable Login(string nombreUsuario, string contrasenia)
-        {
-            DataTable dataTable = new DataTable();
-
-            SqlConnection connection = conexion.ObtenerConexion();
-
-            string consulta = @"SELECT *
-                        FROM Usuario
-                        WHERE NombreUsuario_USU = @NombreUsuario
-                        AND Contraseña_USU = @Contraseña
-                        AND Estado_USU = 1";
-
-            SqlCommand command = new SqlCommand(consulta, connection);
-
-            command.Parameters.AddWithValue("@NombreUsuario", nombreUsuario);
-            command.Parameters.AddWithValue("@Contraseña", contrasenia);
-
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-            dataAdapter.Fill(dataTable);
-
-            return dataTable;
-        }
 
         public void BajaLogicaPaciente(int id)
         {
@@ -195,23 +125,6 @@ namespace Datos
             command.ExecuteNonQuery();
             connection.Close();
         }
-
-        public void BajaLogicaMedico(int legajo)
-        {
-            string consulta = @"UPDATE Medico SET Estado_MED = 0 WHERE Legajo_MED = @legajo; 
-                                UPDATE Usuario SET Estado_USU = 0 WHERE IdUsuario_USU = 
-                               (SELECT IdUsuario_MED FROM Medico WHERE Legajo_MED = @legajo);";
-
-            SqlConnection connection = conexion.ObtenerConexion();
-            SqlCommand command = new SqlCommand(consulta, connection);
-
-            command.Parameters.AddWithValue("@legajo", legajo);
-
-            connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
-        }
-
         public bool ExistePaciente(string DNI) /// validacion que evita repetidos
         {
             SqlConnection connection = conexion.ObtenerConexion();
@@ -234,7 +147,6 @@ namespace Datos
 
             return false;
         }
-
 
         public int AgregarPaciente(Paciente paciente)
         {
@@ -309,6 +221,103 @@ namespace Datos
 
             return filas;
         }
+        ///////////////////////// MEDICOS ////////////////////////////////////
+
+        public DataTable ListarMedicos()
+        {
+            DataTable dataTable = new DataTable();
+
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            string consulta = @"SELECT
+                                    Legajo_MED,
+                                    DNI_MED,
+                                    Nombre_MED,
+                                    Apellido_MED,
+                                    Descripcion_ESP,
+                                    Nombre_LOC,
+                                    Nombre_PRO,
+                                    Sexo_MED,
+                                    Nacionalidad_MED,
+                                    FechaNacimiento_MED,
+                                    Direccion_MED,
+                                    Email_MED,
+                                    Telefono_MED
+                                FROM Medico
+                                    INNER JOIN Especialidad
+                                    ON Medico.IdEspecialidad_MED = Especialidad.IdEspecialidad_ESP
+                                    INNER JOIN Localidad
+                                    ON Medico.IdLocalidad_MED = Localidad.IdLocalidad_LOC
+                                    INNER JOIN Provincia
+                                    ON Localidad.IdProvincia_LOC = Provincia.IdProvincia_PRO
+                                WHERE Medico.Estado_MED = 1";
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(consulta, connection);
+
+            dataAdapter.Fill(dataTable);
+
+            return dataTable;
+        }
+
+
+
+        public DataTable ListarMedicosPorEspecialidad(int especialidad)
+        {
+            DataTable dataTable = new DataTable();
+            string consulta = "SELECT Legajo_MED, Apellido_MED + ', ' + Nombre_MED AS NombreCompleto FROM Medico WHERE IdEspecialidad_MED = @especialidad ORDER BY Nombre_MED";
+
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+            command.Parameters.AddWithValue("@especialidad", especialidad);
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+            dataAdapter.Fill(dataTable);
+
+            return dataTable;
+        }
+
+        public DataTable ListarMedicosPorLegajo(int legajo)
+        {
+            DataTable dataTable = new DataTable();
+            string consulta = "SELECT Legajo_MED, " +
+                                    " Apellido_MED, " +
+                                    " Nombre_MED AS NombreCompleto " +
+                                "FROM Medico " +
+                               "WHERE Legajo_MED = @legajo " +
+                               "ORDER BY Nombre_MED";
+
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+            command.Parameters.AddWithValue("@legajo", legajo);
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+
+            dataAdapter.Fill(dataTable);
+
+            return dataTable;
+        }
+
+       
+
+    
+        public void BajaLogicaMedico(int legajo)
+        {
+            string consulta = @"UPDATE Medico SET Estado_MED = 0 WHERE Legajo_MED = @legajo; 
+                                UPDATE Usuario SET Estado_USU = 0 WHERE IdUsuario_USU = 
+                               (SELECT IdUsuario_MED FROM Medico WHERE Legajo_MED = @legajo);";
+
+            SqlConnection connection = conexion.ObtenerConexion();
+            SqlCommand command = new SqlCommand(consulta, connection);
+
+            command.Parameters.AddWithValue("@legajo", legajo);
+
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
 
         public int AgregarMedico(Medico medico)
         {
@@ -367,7 +376,7 @@ namespace Datos
 
             return legajoGenerado;
         }
-
+        ////////////////////////// HORARIO MEDICO ///////////////////////////////////////////////////
         public int AgregarHorarioMedico(int legajo, int diaSemana, TimeSpan horaInicio, TimeSpan horaFin)
         {
             SqlConnection connection = conexion.ObtenerConexion();
@@ -494,6 +503,8 @@ namespace Datos
             return dataTable;
         }
 
+
+        /////////////////////////////////// USUARIO /////////////////////////////////////////////////
         public int AgregarUsuario(Usuario usuario)
         {
             SqlConnection cn = conexion.ObtenerConexion();
@@ -663,6 +674,8 @@ namespace Datos
 
             return filas;
         }
+
+        /////////////////////////// MEDICO //////////////////////////////////////////////////
 
         public DataTable BuscarMedico(string DNI)
         {
