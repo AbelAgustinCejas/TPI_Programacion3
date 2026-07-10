@@ -4,53 +4,97 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Menu Administradores</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <title>Menú Administrador</title>
 </head>
-<body style="height: 495px">
+
+<body class="bg-light">
+
     <form id="form1" runat="server">
-        <div style="font-size:30px; background-color:#C5D3BF; padding:10px; border:1px solid #4a90e2; text-align:center;"> 
-            Bienvenido/a:&nbsp;
-            <asp:Label ID="lblUsuarioIngresado" runat="server"></asp:Label>
-            <br />
+
+        <div class="container py-5">
+
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-body text-center">
+
+                    <h2 class="mb-2">Panel de Administración</h2>
+
+                    <h5 class="text-muted">
+                        Bienvenido/a:
+                        <asp:Label ID="lblUsuarioIngresado" runat="server"></asp:Label>
+                    </h5>
+
+                </div>
+
+            </div>
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+                    Opciones disponibles
+                </div>
+
+                <div class="card-body">
+
+                    <div class="d-grid gap-3 col-md-6 mx-auto">
+
+                        <asp:Button
+                            ID="btnGP"
+                            runat="server"
+                            Text="Gestión de Pacientes"
+                            CssClass="btn btn-primary btn-lg"
+                            OnClick="btnGP_Click" />
+
+                        <asp:Button
+                            ID="btnGM"
+                            runat="server"
+                            Text="Gestión de Médicos"
+                            CssClass="btn btn-primary btn-lg"
+                            OnClick="btnGM_Click" />
+
+                        <asp:Button
+                            ID="btnAT"
+                            runat="server"
+                            Text="Asignación de Turnos"
+                            CssClass="btn btn-primary btn-lg"
+                            OnClick="btnAT_Click" />
+
+                        <hr />
+
+                        <asp:Button
+                            ID="btnInformeEspecialidad"
+                            runat="server"
+                            Text="Informe por Especialidad"
+                            CssClass="btn btn-outline-primary"
+                            OnClick="btnInformeEspecialidad_Click" />
+
+                        <asp:Button
+                            ID="btnInformeMedico"
+                            runat="server"
+                            Text="Informe por Médico"
+                            CssClass="btn btn-outline-primary"
+                            OnClick="btnInformeMedico_Click" />
+
+                        <asp:Button
+                            ID="btnInformeAsistencia"
+                            runat="server"
+                            Text="Informe de Asistencia"
+                            CssClass="btn btn-outline-primary"
+                            OnClick="btnInformeAsistencia_Click" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
-      
-    <p style="font-size:20px; text-decoration: underline; text-align:center;">
-        Opciones disponibles</p>
- 
-    <p>
-        &nbsp;</p>
-   
-        <table style="margin:auto;">
-            <tr>
-                <td>
-                    <asp:Button runat="server" Text="Gestion Pacientes" Width="250px" Height="50px" ID="btnGP" OnClick="btnGP_Click" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:Button ID="btnGM" runat="server" Text="Gestion Medicos" Width="250px" Height="50px" OnClick="btnGM_Click" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:Button ID="btnAT" runat="server" Text="Asignacion de Turnos" Width="250px" Height="50px" OnClick="btnAT_Click" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:Button ID="btnInformeEspecialidad" runat="server" Text="Informe Especialidad" Width="250px" Height="50px" OnClick="btnInformeEspecialidad_Click" />
-                    <br />
-      
-        <asp:Button ID="btnInformeMedico" runat="server" Height="52px" Text="Informe Medico" Width="251px" OnClick="btnInformeMedico_Click" />  
-                    <br />
-                    <asp:Button ID="btnInformeAsistencia" runat="server" Height="52px" OnClick="btnInformeAsistencia_Click" style="margin-top: 0px" Text="Informe Asistencia" Width="252px" />
-                </td>
-            </tr>
-        </table>
-      
+
     </form>
-   
-    </body>
+
+</body>
 </html>

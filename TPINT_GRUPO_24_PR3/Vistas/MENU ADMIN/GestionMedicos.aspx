@@ -145,7 +145,7 @@
                             ID="btnMenuPrincipal"
                             runat="server"
                             Text="Menú Principal"
-                            CssClass="btn btn-secondary"
+                            CssClass="btn btn-outline-primary"
                             CausesValidation="false"
                             OnClick="btnMenuPrincipal_Click" />
 

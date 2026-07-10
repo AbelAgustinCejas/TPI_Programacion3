@@ -65,5 +65,10 @@ namespace Vistas
             gvAsistencia.DataBind();
 
         }
+
+        protected void btnMenuPrincipal_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PRINCIPAL/MenuAdmin.aspx");
+        }
     }
 }

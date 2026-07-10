@@ -120,6 +120,13 @@ namespace Vistas
             lblFechaResumen.Text = "Pendiente";
             lblHorarioResumen.Text = "Pendiente";
 
+            ddlEspecialidad.SelectedIndex = 0;
+            ddlMedico.SelectedIndex = 0;
+            ddlHorario.SelectedIndex = 0;
+
+            txtTurnoDNI.Text = "";
+            txtPacienteDNI.Text = "";
+
             DesabilitarOpciones();
         }
 
@@ -289,7 +296,7 @@ namespace Vistas
 
         protected void btnBuscarTurno_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtPacienteDNI.Text))
+            if (string.IsNullOrWhiteSpace(txtTurnoDNI.Text))
             {
                 lblMensaje.Text = "Ingrese un DNI.";
                 gvPaciente.Visible = false;
@@ -368,6 +375,11 @@ namespace Vistas
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             LimpiarFormulario();
+        }
+
+        protected void btnMenuPrincipal_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PRINCIPAL/MenuAdmin.aspx");
         }
     }
 }

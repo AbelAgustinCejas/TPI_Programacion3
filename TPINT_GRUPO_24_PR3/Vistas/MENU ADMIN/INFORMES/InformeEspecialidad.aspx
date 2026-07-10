@@ -1,16 +1,11 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="True" CodeBehind="InformeEspecialidad.aspx.cs" Inherits="Vistas.InformeEspecialidad" %>
 
 <!DOCTYPE html>
-
 <html>
 <head runat="server">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
     <title>Informe por Especialidad</title>
-
     <style>
-
         body {
             font-family: Arial;
             margin: 30px;
@@ -39,107 +34,80 @@
         .resumen {
             border: 1px solid #ccc;
             padding: 15px;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            margin: 20px 0;
             background-color: #f5f5f5;
         }
-
     </style>
-
 </head>
 <body>
+    <form id="form1" runat="server">
+        <div class="contenedor">
+            <h2>Informe de Turnos por Especialidad</h2>
 
-<form id="form1" runat="server">
+            <div class="mb-3">
+                <asp:Button
+                    ID="btnMenuPrincipal"
+                    runat="server"
+                    Text="Menú Principal"
+                    CssClass="btn btn-outline-secondary"
+                    CausesValidation="False"
+                    OnClick="btnMenuPrincipal_Click" />
+            </div>
 
-<div class="contenedor">
 
-    <h2>Informe de Turnos por Especialidad</h2>
+            <div class="filtros">
+                <div class="fila">
+                    <span class="etiqueta">Especialidad:</span>
+                    <asp:DropDownList ID="ddlEspecialidad" runat="server" CssClass="form-select d-inline-block" Width="300px" />
+                </div>
 
-    <div class="filtros">
+                <div class="fila">
+                    <span class="etiqueta">Fecha desde:</span>
+                    <asp:TextBox ID="txtDesde" runat="server" TextMode="Date" CssClass="form-control d-inline-block" Width="200px" />
+                    <asp:RequiredFieldValidator ID="rfvFechaDesde" runat="server"
+                        ControlToValidate="txtDesde" ErrorMessage="Ingrese la fecha desde."
+                        CssClass="text-danger" Display="Dynamic" ValidationGroup="Informe" />
+                </div>
 
-        <div class="fila">
+                <div class="fila">
+                    <span class="etiqueta">Fecha hasta:</span>
+                    <asp:TextBox ID="txtHasta" runat="server" TextMode="Date" CssClass="form-control d-inline-block" Width="200px" />
+                    <asp:RequiredFieldValidator ID="rfvFechaHasta" runat="server"
+                        ControlToValidate="txtHasta" ErrorMessage="Ingrese la fecha hasta."
+                        CssClass="text-danger" Display="Dynamic" ValidationGroup="Informe" />
+                    <asp:CompareValidator ID="cvFechas" runat="server"
+                        ControlToValidate="txtHasta" ControlToCompare="txtDesde"
+                        Operator="GreaterThanEqual" Type="Date"
+                        ErrorMessage="La fecha hasta no puede ser anterior a la fecha desde."
+                        CssClass="text-danger" Display="Dynamic" ValidationGroup="Informe" />
+                </div>
 
-            <span class="etiqueta">
-                Especialidad:
-            </span>
+                <div class="fila">
+                    <asp:Button ID="btnGenerar" runat="server" Text="Generar Informe"
+                        CssClass="btn btn-primary" OnClick="btnGenerar_Click" ValidationGroup="Informe" />
+                </div>
+            </div>
 
-            <asp:DropDownList
-                ID="ddlEspecialidad"
-                runat="server">
+            <div id="divResumen" runat="server" class="resumen" visible="false">
+                <h3>Resumen</h3>
+                <asp:Label ID="lblTotal" runat="server" /><br />
+                <asp:Label ID="lblMayor" runat="server" /><br />
+                <asp:Label ID="lblMenor" runat="server" />
+            </div>
 
-                <asp:ListItem>Todas</asp:ListItem>
-                <asp:ListItem>Cardiología</asp:ListItem>
-                <asp:ListItem>Pediatría</asp:ListItem>
-                <asp:ListItem>Traumatología</asp:ListItem>
-                <asp:ListItem>Dermatología</asp:ListItem>
-
-            </asp:DropDownList>
-
+            <asp:GridView ID="gvInforme" runat="server" AutoGenerateColumns="False"
+                CellPadding="4" ForeColor="#333333" GridLines="None" Width="900px"
+                AllowPaging="True" OnPageIndexChanging="gvInforme_PageIndexChanging" PageSize="4">
+                <Columns>
+                    <asp:BoundField DataField="Especialidad" HeaderText="Especialidad" />
+                    <asp:BoundField DataField="Cantidad" HeaderText="Cantidad de Turnos" />
+                </Columns>
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" HorizontalAlign="Center" />
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+            </asp:GridView>
         </div>
-
-        <div class="fila">
-
-            <asp:Button
-                ID="btnGenerar"
-                runat="server"
-                Text="Generar Informe"
-                OnClick="btnGenerar_Click" />
-
-        </div>
-
-    </div>
-
-    <div id="divResumen" runat="server" class="resumen" visible="false">
-
-        <h3>Resumen</h3>
-
-        <asp:Label ID="lblTotal" runat="server"></asp:Label>
-
-        <br />
-
-        <asp:Label ID="lblMayor" runat="server"></asp:Label>
-
-        <br />
-
-        <asp:Label ID="lblMenor" runat="server"></asp:Label>
-
-    </div>
-
-    <asp:GridView
-    ID="gvInforme"
-    runat="server"
-    AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" Width="900px" AllowPaging="True" OnPageIndexChanging="gvInforme_PageIndexChanging" PageSize="4">
-
-        <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
-
-    <Columns>
-
-        <asp:BoundField
-            DataField="Especialidad"
-            HeaderText="Especialidad" />
-
-        <asp:BoundField
-            DataField="Cantidad"
-            HeaderText="Cantidad de Turnos" />
-
-    </Columns>
-
-        <EditRowStyle BackColor="#999999" />
-        <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-        <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-        <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-        <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
-        <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-        <SortedAscendingCellStyle BackColor="#E9E7E2" />
-        <SortedAscendingHeaderStyle BackColor="#506C8C" />
-        <SortedDescendingCellStyle BackColor="#FFFDF8" />
-        <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
-
-</asp:GridView>
-
-</div>
-
-</form>
-
+    </form>
 </body>
 </html>

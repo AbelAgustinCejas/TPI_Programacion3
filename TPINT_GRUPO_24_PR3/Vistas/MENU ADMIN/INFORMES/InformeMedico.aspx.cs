@@ -12,106 +12,88 @@ namespace Vistas
             if (!IsPostBack)
             {
                 CargarMedicos();
+                LimpiarResumen();
             }
         }
+
         private void CargarMedicos()
         {
             ddlMedicos.Items.Clear();
-
             ddlMedicos.DataSource = new NegocioInforme().GetTablaMedico();
-
             ddlMedicos.DataTextField = "Medico";
             ddlMedicos.DataValueField = "Legajo_MED";
-
             ddlMedicos.DataBind();
-
             ddlMedicos.Items.Insert(0, new ListItem("Todos los médicos", "0"));
         }
 
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
-            NegocioInforme negocio = new NegocioInforme();
+            if (!Page.IsValid)
+                return;
 
+            gvInforme.PageIndex = 0;
+            GenerarInforme(true);
+        }
+
+        private void GenerarInforme(bool mostrarResumen)
+        {
             int legajo = Convert.ToInt32(ddlMedicos.SelectedValue);
+            DateTime fechaDesde = Convert.ToDateTime(txtDesde.Text);
+            DateTime fechaHasta = Convert.ToDateTime(txtHasta.Text);
 
-            DataTable tabla = negocio.InformeTurnosMedico(legajo);
+            DataTable tabla = new NegocioInforme().InformeTurnosMedico(
+                legajo,
+                fechaDesde,
+                fechaHasta,
+                out int totalTurnos,
+                out string medicoMayor,
+                out int cantidadMayor,
+                out string medicoMenor,
+                out int cantidadMenor);
 
             gvInforme.DataSource = tabla;
             gvInforme.DataBind();
 
-            if(Convert.ToInt32(ddlMedicos.SelectedValue) == 0)
+            if (mostrarResumen && legajo == 0)
             {
-                MostrarResumen(tabla);
+                lblTotal.Text = "Total de turnos: " + totalTurnos;
+
+                if (tabla.Rows.Count > 0)
+                {
+                    lblMayor.Text = "Médico con más turnos: " + medicoMayor + " (" + cantidadMayor + ")";
+                    lblMenor.Text = "Médico con menos turnos: " + medicoMenor + " (" + cantidadMenor + ")";
+                }
+                else
+                {
+                    lblMayor.Text = "Médico con más turnos: Sin datos";
+                    lblMenor.Text = "Médico con menos turnos: Sin datos";
+                }
+
                 divResumen.Visible = true;
             }
-            else
+            else if (mostrarResumen)
             {
-                divResumen.Visible = false;
+                LimpiarResumen();
             }
         }
-        private void MostrarResumen(DataTable tabla)
+
+        private void LimpiarResumen()
         {
-            int totalTurnos = 0;
-
-            string medicoMayor = "";
-            string medicoMenor = "";
-
-            int mayor = 0;
-            int menor = 0;
-
-            bool primerRegistro = true;
-
-            foreach (DataRow fila in tabla.Rows)
-            {
-                int turnos = Convert.ToInt32(fila["Turnos"]);
-
-                string medico = fila["Nombre"].ToString() + " " + fila["Apellido"].ToString();
-
-                totalTurnos += turnos;
-
-                if (primerRegistro)
-                {
-                    mayor = turnos;
-                    menor = turnos;
-
-                    medicoMayor = medico;
-                    medicoMenor = medico;
-
-                    primerRegistro = false;
-                }
-
-                if (turnos > mayor)
-                {
-                    mayor = turnos;
-                    medicoMayor = medico;
-                }
-
-                if (turnos < menor)
-                {
-                    menor = turnos;
-                    medicoMenor = medico;
-                }
-            }
-
-            lblTotal.Text = "Total de turnos: " + totalTurnos;
-
-            lblMayor.Text = "Médico con más turnos: " + medicoMayor + " (" + mayor + ")";
-
-            lblMenor.Text = "Médico con menos turnos: " + medicoMenor + " (" + menor + ")";
+            lblTotal.Text = "";
+            lblMayor.Text = "";
+            lblMenor.Text = "";
+            divResumen.Visible = false;
         }
 
         protected void gvInforme_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvInforme.PageIndex = e.NewPageIndex;
+            GenerarInforme(false);
+        }
 
-            NegocioInforme negocio = new NegocioInforme();
-
-            int legajo = Convert.ToInt32(ddlMedicos.SelectedValue);
-
-            DataTable tabla = negocio.InformeTurnosMedico(legajo);
-
-            gvInforme.DataSource = tabla;
-            gvInforme.DataBind();
+        protected void btnMenuPrincipal_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PRINCIPAL/MenuAdmin.aspx");
         }
     }
 }

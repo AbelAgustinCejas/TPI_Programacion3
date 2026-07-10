@@ -11,8 +11,8 @@ namespace Datos
     public class DaoClinica
     {
         AccesoDatos conexion = new AccesoDatos();
-        
-        
+
+
         //////////////////////// LOGIN /////////////////////////////
         public DataTable Login(string nombreUsuario, string contrasenia)
         {
@@ -300,9 +300,9 @@ namespace Datos
             return dataTable;
         }
 
-       
 
-    
+
+
         public void BajaLogicaMedico(int legajo)
         {
             string consulta = @"UPDATE Medico SET Estado_MED = 0 WHERE Legajo_MED = @legajo; 
@@ -927,10 +927,10 @@ namespace Datos
         }
 
         public DataTable BuscarTurnoPorDni(int dni)
-{
-    SqlConnection cn = conexion.ObtenerConexion();
+        {
+            SqlConnection cn = conexion.ObtenerConexion();
 
-    string consulta = @"SELECT
+            string consulta = @"SELECT
                         T.IdTurno_TUR,
                         T.Fecha_TUR,
                         T.Hora_TUR,
@@ -946,16 +946,16 @@ namespace Datos
                             ON M.IdEspecialidad_MED = E.IdEspecialidad_ESP
                         WHERE P.DNI_PAC = @Dni";
 
-    SqlCommand cmd = new SqlCommand(consulta, cn);
-    cmd.Parameters.AddWithValue("@Dni", dni);
+            SqlCommand cmd = new SqlCommand(consulta, cn);
+            cmd.Parameters.AddWithValue("@Dni", dni);
 
-    SqlDataAdapter da = new SqlDataAdapter(cmd);
-    DataTable dt = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
 
-    da.Fill(dt);
+            da.Fill(dt);
 
-    return dt;
-}
+            return dt;
+        }
 
         public bool EliminarTurno(int idTurno)
         {
@@ -977,53 +977,19 @@ namespace Datos
 
         //////////////////////////////////////// INFORMES ////////////////////////////////////////
 
-        public DataTable InformeTurnosEspecialidad(int idEspecialidad)
-        {
-            SqlConnection cn = conexion.ObtenerConexion();
 
-            string consulta = @"SELECT
-                                    E.Descripcion_ESP AS Especialidad,
-                                    COUNT(T.IdTurno_TUR) AS Cantidad
-                                FROM Turno T
-                                INNER JOIN Medico M
-                                    ON T.Legajo_TUR = M.Legajo_MED
-                                INNER JOIN Especialidad E
-                                    ON M.IdEspecialidad_MED = E.IdEspecialidad_ESP";
-
-            if (idEspecialidad != 0)
-            {
-                consulta += " WHERE M.IdEspecialidad_MED = @ID ";
-            }
-
-            consulta += @"
-                        GROUP BY E.Descripcion_ESP
-                        ORDER BY Cantidad DESC";
-
-            SqlCommand cmd = new SqlCommand(consulta, cn);
-
-            if (idEspecialidad != 0)
-            {
-                cmd.Parameters.AddWithValue("@ID", idEspecialidad);
-            }
-
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-
-            DataTable tabla = new DataTable();
-
-            da.Fill(tabla);
-
-            return tabla;
-        }
-        public DataTable InformeTurnosMedico(int legajo)
+        public DataTable InformeTurnosMedico(int legajo, DateTime fechaDesde, DateTime fechaHasta)
         {
             SqlConnection connection = conexion.ObtenerConexion();
 
             string consulta = @"SELECT Medico.Legajo_MED AS Legajo,
-                                       Medico.Nombre_MED AS Nombre,
-                                       Medico.Apellido_MED AS Apellido,
-                                       COUNT(Turno.IdTurno_TUR) AS Turnos
-                                  FROM Medico
-                                  LEFT JOIN Turno ON Medico.Legajo_MED = Turno.Legajo_TUR";
+                               Medico.Nombre_MED AS Nombre,
+                               Medico.Apellido_MED AS Apellido,
+                               COUNT(Turno.IdTurno_TUR) AS Turnos
+                        FROM Medico
+                        LEFT JOIN Turno
+                          ON Medico.Legajo_MED = Turno.Legajo_TUR
+                         AND Turno.Fecha_TUR BETWEEN @FechaDesde AND @FechaHasta";
 
             if (legajo != 0)
             {
@@ -1031,11 +997,13 @@ namespace Datos
             }
 
             consulta += @" GROUP BY Medico.Legajo_MED,
-                                    Medico.Nombre_MED,
-                                    Medico.Apellido_MED
-                           ORDER BY Medico.Legajo_MED";
+                            Medico.Nombre_MED,
+                            Medico.Apellido_MED
+                   ORDER BY Medico.Legajo_MED";
 
             SqlCommand comando = new SqlCommand(consulta, connection);
+            comando.Parameters.AddWithValue("@FechaDesde", fechaDesde);
+            comando.Parameters.AddWithValue("@FechaHasta", fechaHasta);
 
             if (legajo != 0)
             {
@@ -1043,12 +1011,49 @@ namespace Datos
             }
 
             SqlDataAdapter adapter = new SqlDataAdapter(comando);
-
             DataTable tabla = new DataTable();
             adapter.Fill(tabla);
 
             return tabla;
         }
+
+        public DataTable InformeTurnosEspecialidad(int idEspecialidad, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            SqlConnection cn = conexion.ObtenerConexion();
+
+            string consulta = @"SELECT E.Descripcion_ESP AS Especialidad,
+                               COUNT(T.IdTurno_TUR) AS Cantidad
+                        FROM Turno T
+                        INNER JOIN Medico M
+                            ON T.Legajo_TUR = M.Legajo_MED
+                        INNER JOIN Especialidad E
+                            ON M.IdEspecialidad_MED = E.IdEspecialidad_ESP
+                        WHERE T.Fecha_TUR BETWEEN @FechaDesde AND @FechaHasta";
+
+            if (idEspecialidad != 0)
+            {
+                consulta += " AND M.IdEspecialidad_MED = @ID";
+            }
+
+            consulta += @" GROUP BY E.Descripcion_ESP
+                   ORDER BY Cantidad DESC";
+
+            SqlCommand cmd = new SqlCommand(consulta, cn);
+            cmd.Parameters.AddWithValue("@FechaDesde", fechaDesde);
+            cmd.Parameters.AddWithValue("@FechaHasta", fechaHasta);
+
+            if (idEspecialidad != 0)
+            {
+                cmd.Parameters.AddWithValue("@ID", idEspecialidad);
+            }
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable tabla = new DataTable();
+            da.Fill(tabla);
+
+            return tabla;
+        }
+
 
         public DataTable ListarTurnos()
         {

@@ -3,193 +3,118 @@
     Inherits="Vistas.InformeAsistencia" %>
 
 <!DOCTYPE html>
-
 <html>
 <head runat="server">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-
+    <meta charset="utf-8" />
     <title>Informe de Asistencia</title>
-
-    <style>
-        body {
-            font-family: Arial;
-            margin: 30px;
-        }
-
-        .contenedor {
-            width: 900px;
-            margin: auto;
-        }
-
-        .filtros {
-            border: 1px solid #ccc;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .fila {
-            margin-bottom: 15px;
-        }
-
-        .etiqueta {
-            display: inline-block;
-            width: 120px;
-        }
-
-        .resumen {
-            border: 1px solid #ccc;
-            padding: 15px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            background-color: #f5f5f5;
-        }
-
-        .titulo {
-            margin-bottom: 20px;
-        }
-    </style>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
-<body>
+<body class="bg-light">
 
     <form id="form1" runat="server">
 
-        <div class="contenedor">
+        <div class="container py-4">
 
-            <div class="titulo">
-                <h2>Informe de Asistencia de Turnos</h2>
+            <h2 class="mb-4">Informe de Asistencia de Turnos</h2>
+
+            <div class="mb-3">
+                <asp:Button
+                    ID="btnMenuPrincipal"
+                    runat="server"
+                    Text="Menú Principal"
+                    CssClass="btn btn-outline-secondary"
+                    CausesValidation="False"
+                    OnClick="btnMenuPrincipal_Click" />
             </div>
 
-            <div class="filtros">
 
-                <div class="fila">
+            <div class="card mb-4">
+                <div class="card-header">Filtros</div>
+                <div class="card-body">
 
-                    <span class="etiqueta">Fecha Desde:
-                    </span>
+                    <div class="row g-3">
 
-                    <asp:TextBox
-                        ID="txtDesde"
-                        runat="server"
-                        TextMode="Date">
-                    </asp:TextBox>
+                        <div class="col-md-6">
+                            <label class="form-label">Fecha desde</label>
 
-                    <asp:RequiredFieldValidator ID="rfvFechaDesde" runat="server" ControlToValidate="txtDesde" ErrorMessage="Seleccione fecha inicial!"></asp:RequiredFieldValidator>
+                            <asp:TextBox
+                                ID="txtDesde"
+                                runat="server"
+                                CssClass="form-control"
+                                TextMode="Date">
+                            </asp:TextBox>
+
+                            <asp:RequiredFieldValidator
+                                ID="rfvFechaDesde"
+                                runat="server"
+                                ControlToValidate="txtDesde"
+                                CssClass="text-danger"
+                                ErrorMessage="Seleccione fecha inicial." />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Fecha hasta</label>
+
+                            <asp:TextBox
+                                ID="txtHasta"
+                                runat="server"
+                                CssClass="form-control"
+                                TextMode="Date">
+                            </asp:TextBox>
+
+                            <asp:RequiredFieldValidator
+                                ID="rfvFechaHasta"
+                                runat="server"
+                                ControlToValidate="txtHasta"
+                                CssClass="text-danger"
+                                ErrorMessage="Seleccione fecha final." />
+                        </div>
+
+                        <div class="col-12 text-end mt-2">
+                            <asp:Button
+                                ID="btnGenerar"
+                                runat="server"
+                                Text="Generar Informe"
+                                CssClass="btn btn-primary"
+                                OnClick="btnGenerar_Click" />
+                        </div>
+
+                    </div>
 
                 </div>
-
-                <div class="fila">
-
-                    <span class="etiqueta">Fecha Hasta:
-                    </span>
-
-                    <asp:TextBox
-                        ID="txtHasta"
-                        runat="server"
-                        TextMode="Date">
-                    </asp:TextBox>
-
-                    <asp:RequiredFieldValidator ID="rfvFechaHasta" runat="server" ControlToValidate="txtHasta" ErrorMessage="Seleccione fecha final!"></asp:RequiredFieldValidator>
-
-                </div>
-
-                <div class="fila">
-
-                    <asp:Button
-                        ID="btnGenerar"
-                        runat="server"
-                        Text="Generar Informe"
-                        OnClick="btnGenerar_Click" />
-
-                </div>
-
             </div>
-
-            <div class="resumen">
-
-                <h3>Resumen</h3>
-
-                <asp:Label
-                    ID="lblTotal"
-                    runat="server">
-                </asp:Label>
-
-                <br />
-
-                <asp:Label
-                    ID="lblPresentes"
-                    runat="server">
-                </asp:Label>
-
-                <br />
-
-                <asp:Label
-                    ID="lblAusentes"
-                    runat="server">
-                </asp:Label>
-
-                <br />
-
-                <asp:Label
-                    ID="lblPorcentajeAsistencia"
-                    runat="server"></asp:Label>
-
-                <br />
-
-                <asp:Label
-                    ID="lblPendientes"
-                    runat="server"></asp:Label>
-
-            </div>
-
-            <asp:GridView
-                ID="gvAsistencia"
-                runat="server"
-                Width="100%"
-                AutoGenerateColumns="False" AllowPaging="True" OnPageIndexChanging="gvAsistencia_PageIndexChanging" PageSize="5" CellPadding="4" ForeColor="#333333" GridLines="None">
-
-                <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
-
-                <Columns>
-
-                    <asp:BoundField
-                        DataField="Fecha_TUR"
-                        HeaderText="Fecha"
-                        DataFormatString="{0:d/M/yyyy}" />
-
-                    <asp:BoundField
-                        DataField="Hora_TUR"
-                        HeaderText="Hora" />
-
-                    <asp:BoundField  
-                        DataField="Paciente"
-                        HeaderText="Paciente" />
-
-                    <asp:BoundField
-                        DataField="Medico"
-                        HeaderText="Médico" />
-
-                    <asp:BoundField
-                        DataField="Asistencia"
-                        HeaderText="Asistencia" />
-
-                </Columns>
-
-                <EditRowStyle BackColor="#999999" />
-                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
-                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                <SortedAscendingCellStyle BackColor="#E9E7E2" />
-                <SortedAscendingHeaderStyle BackColor="#506C8C" />
-                <SortedDescendingCellStyle BackColor="#FFFDF8" />
-                <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
-
-            </asp:GridView>
-
         </div>
 
+        <div class="card mb-4">
+            <div class="card-header">Resumen</div>
+            <div class="card-body">
+                <asp:Label ID="lblTotal" runat="server"></asp:Label><br />
+                <asp:Label ID="lblPresentes" runat="server"></asp:Label><br />
+                <asp:Label ID="lblAusentes" runat="server"></asp:Label><br />
+                <asp:Label ID="lblPorcentajeAsistencia" runat="server"></asp:Label><br />
+                <asp:Label ID="lblPendientes" runat="server"></asp:Label>
+            </div>
+        </div>
+
+        <asp:GridView ID="gvAsistencia"
+            runat="server"
+            CssClass="table table-striped table-bordered"
+            AutoGenerateColumns="False"
+            AllowPaging="True"
+            PageSize="5"
+            OnPageIndexChanging="gvAsistencia_PageIndexChanging">
+
+            <Columns>
+                <asp:BoundField DataField="Fecha_TUR" HeaderText="Fecha" DataFormatString="{0:d/M/yyyy}" />
+                <asp:BoundField DataField="Hora_TUR" HeaderText="Hora" />
+                <asp:BoundField DataField="Paciente" HeaderText="Paciente" />
+                <asp:BoundField DataField="Medico" HeaderText="Médico" />
+                <asp:BoundField DataField="Asistencia" HeaderText="Asistencia" />
+            </Columns>
+
+        </asp:GridView>
+
+   
     </form>
 
 </body>
