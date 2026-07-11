@@ -10,6 +10,12 @@ namespace Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["IdUsuario"] == null)
+            {
+                Response.Redirect("~/PRINCIPAL/Login.aspx");
+                return;
+            }
+
             if(!IsPostBack)
             {
                 lblUsuario.Text = Session["NombreBienvenida"].ToString();
@@ -31,7 +37,11 @@ namespace Vistas
 
             if (tabla.Rows.Count == 0)
             {
-                lblMensaje.Text = "No hay registros";
+                lblMensaje.Text = "No hay turnos pendientes...";
+            }
+            else
+            {
+                lblMensaje.Text = "";
             }
         }
         private void CargarTurnosAnteriores()
@@ -47,7 +57,11 @@ namespace Vistas
 
             if (tabla.Rows.Count == 0)
             {
-                lblMensaje.Text = "No hay registros";
+                lblMensaje.Text = "No hay turnos en el historial...";
+            }
+            else
+            {
+                lblMensaje.Text = "";
             }
         }
 
@@ -62,9 +76,13 @@ namespace Vistas
             gvTurnos.DataSource = tabla;
             gvTurnos.DataBind();
 
-            if (tabla == null && tabla.Rows.Count <= 0)
+            if (tabla.Rows.Count == 0)
             {
-                lblMensaje.Text = "No hay registros";
+                lblMensaje.Text = "No se encontraron turnos...";
+            }
+            else
+            {
+                lblMensaje.Text = "";
             }
         }
 
@@ -81,22 +99,23 @@ namespace Vistas
 
                 if (negocio.ActualizarAsistencia(idTurno, asistencia))
                 {
-                    lblMensaje.Text = "Asistencia actualizada";
+                    lblMensaje.Text = "Asistencia actualizada!";
 
-                    int usuario = Convert.ToInt32(Session["IdUsuario"]);
-
-                    gvTurnos.DataSource = negocio.ObtenerTurnosPendientes(usuario);
-                    gvTurnos.DataBind();
+                    Session["FiltroTurnos"] = "Pendientes";
+                    CargarTurnosPendientes();
                 }
                 else
                 {
-                    lblMensaje.Text = "Error al actualizar asistencia";
+                    lblMensaje.Text = "Error al actualizar asistencia!";
                 }
             }
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
+            Session.Clear();
+            Session.Abandon();
+
             Response.Redirect("~/PRINCIPAL/Login.aspx");
         }
 

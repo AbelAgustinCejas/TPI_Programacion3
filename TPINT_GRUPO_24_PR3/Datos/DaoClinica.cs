@@ -259,8 +259,6 @@ namespace Datos
             return dataTable;
         }
 
-
-
         public DataTable ListarMedicosPorEspecialidad(int especialidad)
         {
             DataTable dataTable = new DataTable();
@@ -299,9 +297,6 @@ namespace Datos
 
             return dataTable;
         }
-
-
-
 
         public void BajaLogicaMedico(int legajo)
         {
@@ -376,6 +371,149 @@ namespace Datos
 
             return legajoGenerado;
         }
+
+        public DataTable BuscarTurnos(int usuario, string busqueda)
+        {
+            DataTable dataTable = new DataTable();
+
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            string consulta = @"SELECT  Turno.IdTurno_TUR,
+                                        Paciente.Nombre_PAC AS Nombre,
+                                        Paciente.Apellido_PAC AS Apellido,
+                                        Paciente.DNI_PAC AS DNI,
+                                        Turno.Fecha_TUR AS Fecha,
+                                        Turno.Hora_TUR AS Hora,
+                                   CASE
+                                   WHEN Turno.Asistencia_TUR = 1 THEN 'Presente'
+                                   WHEN Turno.Asistencia_TUR = 0 THEN 'Ausente'
+                                   ELSE 'Pendiente'
+                                 END AS Asistencia
+                                   FROM Turno
+                             INNER JOIN Paciente
+                                     ON Turno.IdPaciente_TUR = Paciente.IdPaciente_PAC
+                             INNER JOIN Medico
+                                     ON Turno.Legajo_TUR = Medico.Legajo_MED
+                                  WHERE Medico.IdUsuario_MED = @usuario
+                                  AND ( Paciente.Nombre_PAC LIKE '%' + @busqueda + '%'
+                                     OR Paciente.Apellido_PAC LIKE '%' + @busqueda + '%'
+                                     OR Paciente.DNI_PAC LIKE '%' + @busqueda + '%' )
+                               ORDER BY Turno.Fecha_TUR, Turno.Hora_TUR";
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+
+            command.Parameters.AddWithValue("@usuario", usuario);
+            command.Parameters.AddWithValue("@busqueda", busqueda);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            adapter.Fill(dataTable);
+
+            return dataTable;
+        }
+
+        public DataTable ObtenerTurnosPendientes(int usuario)
+        {
+            DataTable dataTable = new DataTable();
+
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            string consulta = @"SELECT  Turno.IdTurno_TUR,
+                                        Paciente.Nombre_PAC AS Nombre,
+                                        Paciente.Apellido_PAC AS Apellido,
+                                        Paciente.DNI_PAC AS DNI,
+                                        Turno.Fecha_TUR AS Fecha,
+                                        Turno.Hora_TUR AS Hora,
+                                   CASE
+                                   WHEN Turno.Asistencia_TUR = 1 THEN 'Presente'
+                                   WHEN Turno.Asistencia_TUR = 0 THEN 'Ausente'
+                                   ELSE 'Pendiente'
+                                 END AS Asistencia
+                                   FROM Turno
+                             INNER JOIN Paciente
+                                     ON Turno.IdPaciente_TUR = Paciente.IdPaciente_PAC
+                             INNER JOIN Medico
+                                     ON Turno.Legajo_TUR = Medico.Legajo_MED
+                                  WHERE Medico.IdUsuario_MED = @usuario
+                                    AND Turno.Asistencia_TUR IS NULL
+                               ORDER BY Turno.Fecha_TUR, Turno.Hora_TUR";
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+
+            command.Parameters.AddWithValue("@usuario", usuario);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            adapter.Fill(dataTable);
+
+            return dataTable;
+        }
+
+        public DataTable ObtenerTurnosAnteriores(int usuario)
+        {
+            DataTable dataTable = new DataTable();
+
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            string consulta = @"SELECT  Turno.IdTurno_TUR,
+                                        Paciente.Nombre_PAC AS Nombre,
+                                        Paciente.Apellido_PAC AS Apellido,
+                                        Paciente.DNI_PAC AS DNI,
+                                        Turno.Fecha_TUR AS Fecha,
+                                        Turno.Hora_TUR AS Hora,
+                                   CASE
+                                        WHEN Turno.Asistencia_TUR = 1 THEN 'Presente'
+                                        WHEN Turno.Asistencia_TUR = 0 THEN 'Ausente'
+                                        ELSE 'Pendiente'
+                                 END AS Asistencia
+                                   FROM Turno
+                             INNER JOIN Paciente
+                                     ON Turno.IdPaciente_TUR = Paciente.IdPaciente_PAC
+                             INNER JOIN Medico
+                                     ON Turno.Legajo_TUR = Medico.Legajo_MED
+                                  WHERE Medico.IdUsuario_MED = @usuario
+                                    AND Turno.Asistencia_TUR IS NOT NULL
+                               ORDER BY Turno.Fecha_TUR, Turno.Hora_TUR";
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+
+            command.Parameters.AddWithValue("@usuario", usuario);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            adapter.Fill(dataTable);
+
+            return dataTable;
+        }
+
+        public bool ActualizarAsistencia(int idTurno, bool asistencia)
+        {
+            SqlConnection connection = conexion.ObtenerConexion();
+
+            string consulta = @"UPDATE Turno
+                                SET Asistencia_TUR = @Asistencia
+                                WHERE IdTurno_TUR = @IdTurno";
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+
+            command.Parameters.AddWithValue("@Asistencia", asistencia);
+            command.Parameters.AddWithValue("@IdTurno", idTurno);
+
+            try
+            {
+                connection.Open();
+
+                int filas = command.ExecuteNonQuery();
+
+                return filas > 0;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
         ////////////////////////// HORARIO MEDICO ///////////////////////////////////////////////////
         public int AgregarHorarioMedico(int legajo, int diaSemana, TimeSpan horaInicio, TimeSpan horaFin)
         {
@@ -1085,148 +1223,6 @@ namespace Datos
             dataAdapter.Fill(dataTable);
 
             return dataTable;
-        }
-
-        public DataTable BuscarTurnos(int usuario, string busqueda)
-        {
-            DataTable dataTable = new DataTable();
-
-            SqlConnection connection = conexion.ObtenerConexion();
-
-            string consulta = @"SELECT  Turno.IdTurno_TUR,
-                                        Paciente.Nombre_PAC AS Nombre,
-                                        Paciente.Apellido_PAC AS Apellido,
-                                        Paciente.DNI_PAC AS DNI,
-                                        Turno.Fecha_TUR AS Fecha,
-                                        Turno.Hora_TUR AS Hora,
-                                   CASE
-                                   WHEN Turno.Asistencia_TUR = 1 THEN 'Presente'
-                                   WHEN Turno.Asistencia_TUR = 0 THEN 'Ausente'
-                                   ELSE 'Pendiente'
-                                 END AS Asistencia
-                                   FROM Turno
-                             INNER JOIN Paciente
-                                     ON Turno.IdPaciente_TUR = Paciente.IdPaciente_PAC
-                             INNER JOIN Medico
-                                     ON Turno.Legajo_TUR = Medico.Legajo_MED
-                                  WHERE Medico.IdUsuario_MED = @usuario
-                                  AND ( Paciente.Nombre_PAC LIKE '%' + @busqueda + '%'
-                                     OR Paciente.Apellido_PAC LIKE '%' + @busqueda + '%'
-                                     OR Paciente.DNI_PAC LIKE '%' + @busqueda + '%' )
-                               ORDER BY Turno.Fecha_TUR, Turno.Hora_TUR";
-
-            SqlCommand command = new SqlCommand(consulta, connection);
-
-            command.Parameters.AddWithValue("@usuario", usuario);
-            command.Parameters.AddWithValue("@busqueda", busqueda);
-
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            adapter.Fill(dataTable);
-
-            return dataTable;
-        }
-
-        public DataTable ObtenerTurnosPendientes(int usuario)
-        {
-            DataTable dataTable = new DataTable();
-
-            SqlConnection connection = conexion.ObtenerConexion();
-
-            string consulta = @"SELECT  Turno.IdTurno_TUR,
-                                        Paciente.Nombre_PAC AS Nombre,
-                                        Paciente.Apellido_PAC AS Apellido,
-                                        Paciente.DNI_PAC AS DNI,
-                                        Turno.Fecha_TUR AS Fecha,
-                                        Turno.Hora_TUR AS Hora,
-                                   CASE
-                                   WHEN Turno.Asistencia_TUR = 1 THEN 'Presente'
-                                   WHEN Turno.Asistencia_TUR = 0 THEN 'Ausente'
-                                   ELSE 'Pendiente'
-                                 END AS Asistencia
-                                   FROM Turno
-                             INNER JOIN Paciente
-                                     ON Turno.IdPaciente_TUR = Paciente.IdPaciente_PAC
-                             INNER JOIN Medico
-                                     ON Turno.Legajo_TUR = Medico.Legajo_MED
-                                  WHERE Medico.IdUsuario_MED = @usuario
-                                    AND Turno.Asistencia_TUR IS NULL
-                               ORDER BY Turno.Fecha_TUR, Turno.Hora_TUR";
-
-            SqlCommand command = new SqlCommand(consulta, connection);
-
-            command.Parameters.AddWithValue("@usuario", usuario);
-
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            adapter.Fill(dataTable);
-
-            return dataTable;
-        }
-
-        public DataTable ObtenerTurnosAnteriores(int usuario)
-        {
-            DataTable dataTable = new DataTable();
-
-            SqlConnection connection = conexion.ObtenerConexion();
-
-            string consulta = @"SELECT  Turno.IdTurno_TUR,
-                                        Paciente.Nombre_PAC AS Nombre,
-                                        Paciente.Apellido_PAC AS Apellido,
-                                        Paciente.DNI_PAC AS DNI,
-                                        Turno.Fecha_TUR AS Fecha,
-                                        Turno.Hora_TUR AS Hora,
-                                   CASE
-                                        WHEN Turno.Asistencia_TUR = 1 THEN 'Presente'
-                                        WHEN Turno.Asistencia_TUR = 0 THEN 'Ausente'
-                                        ELSE 'Pendiente'
-                                 END AS Asistencia
-                                   FROM Turno
-                             INNER JOIN Paciente
-                                     ON Turno.IdPaciente_TUR = Paciente.IdPaciente_PAC
-                             INNER JOIN Medico
-                                     ON Turno.Legajo_TUR = Medico.Legajo_MED
-                                  WHERE Medico.IdUsuario_MED = @usuario
-                                    AND Turno.Asistencia_TUR IS NOT NULL
-                               ORDER BY Turno.Fecha_TUR, Turno.Hora_TUR";
-
-            SqlCommand command = new SqlCommand(consulta, connection);
-
-            command.Parameters.AddWithValue("@usuario", usuario);
-
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            adapter.Fill(dataTable);
-
-            return dataTable;
-        }
-
-        public bool ActualizarAsistencia(int idTurno, bool asistencia)
-        {
-            SqlConnection connection = conexion.ObtenerConexion();
-
-            string consulta = @"UPDATE Turno
-                                SET Asistencia_TUR = @Asistencia
-                                WHERE IdTurno_TUR = @IdTurno";
-
-            SqlCommand command = new SqlCommand(consulta, connection);
-
-            command.Parameters.AddWithValue("@Asistencia", asistencia);
-            command.Parameters.AddWithValue("@IdTurno", idTurno);
-
-            try
-            {
-                connection.Open();
-
-                int filas = command.ExecuteNonQuery();
-
-                return filas > 0;
-            }
-            catch
-            {
-                return false;
-            }
-            finally
-            {
-                connection.Close();
-            }
         }
 
         public DataTable ObtenerInformeAsistencia(DateTime fechaDesde, DateTime fechaHasta)
