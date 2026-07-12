@@ -15,6 +15,9 @@
 
         <div class="container py-4">
 
+            <h2 class="mb-4">Bienvenido/a:
+                <asp:Label ID="lblUsuarioIngresado" runat="server"></asp:Label>
+            </h2>
             <h2 class="mb-4">Informe de Asistencia de Turnos</h2>
 
             <div class="mb-3">

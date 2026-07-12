@@ -42,6 +42,9 @@
 <body>
     <form id="form1" runat="server">
         <div class="contenedor">
+            <h2>Bienvenido/a:
+                <asp:Label ID="lblUsuarioIngresado" runat="server"></asp:Label>
+            </h2>
             <h2>Informe de Turnos por Especialidad</h2>
 
             <div class="mb-3">
@@ -59,6 +62,7 @@
                 <div class="fila">
                     <span class="etiqueta">Especialidad:</span>
                     <asp:DropDownList ID="ddlEspecialidad" runat="server" CssClass="form-select d-inline-block" Width="300px" />
+                &nbsp;<asp:RequiredFieldValidator ID="rqfEspecialidad" runat="server" ControlToValidate="ddlEspecialidad" ErrorMessage="Seleccione una especialidad"></asp:RequiredFieldValidator>
                 </div>
 
                 <div class="fila">

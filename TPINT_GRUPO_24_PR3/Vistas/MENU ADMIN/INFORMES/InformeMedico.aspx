@@ -42,6 +42,9 @@
 <body>
     <form id="form1" runat="server">
         <div class="contenedor">
+            <h2>Bienvenido/a:
+                <asp:Label ID="lblUsuarioIngresado" runat="server"></asp:Label>
+            </h2>
             <h2>Informe de Turnos por Médico</h2>
 
             <div class="mb-3">
@@ -57,12 +60,13 @@
 
             <div class="filtros">
                 <div class="fila">
-                    <span class="etiqueta">Médico:</span>
+                    <span class="etiquet
                     <asp:DropDownList ID="ddlMedicos" runat="server" CssClass="form-select d-inline-block" Width="300px" />
+                    <asp:RequiredFieldValidator ID="rqfMedico" runat="server" ControlToValidate="ddlMedicos" ErrorMessage="Seleccione un medico"></asp:RequiredFieldValidator>
                 </div>
 
                 <div class="fila">
-                    <span class="etiqueta">Fecha desde:</span>
+                    <span class="etiqueta">Fecha desde:eta">Fecha desde:</span>
                     <asp:TextBox ID="txtDesde" runat="server" TextMode="Date" CssClass="form-control d-inline-block" Width="200px" />
                     <asp:RequiredFieldValidator ID="rfvFechaDesde" runat="server"
                         ControlToValidate="txtDesde" ErrorMessage="Ingrese la fecha desde."

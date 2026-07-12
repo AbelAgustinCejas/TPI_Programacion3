@@ -10,7 +10,8 @@ namespace Vistas
         {
             if (!IsPostBack)
             {
-            LimpiarResumen();
+                lblUsuarioIngresado.Text = Session["NombreBienvenida"].ToString();
+                LimpiarResumen();
             }
         }
 
