@@ -15,7 +15,7 @@ namespace Vistas
             }
         }
 
-        protected void btnGenerar_Click(object sender, EventArgs e)
+        protected void btnGenerar_Click(object sender, EventArgs e) /// GENERAR INFORME DE ASISTENCIA
         {
             LimpiarResumen();
 

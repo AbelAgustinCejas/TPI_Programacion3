@@ -23,7 +23,7 @@ namespace Vistas
                 DesabilitarOpciones();
             }
         }
-        private void CargarEspecialidades()
+        private void CargarEspecialidades() /// CARGAR ESPECIALIDADES
         {
             ddlEspecialidad.Items.Clear();
             ddlEspecialidad.DataSource = new NegocioMedico().GetTablaEspecialidad();
@@ -91,7 +91,8 @@ namespace Vistas
                 lblHorarioResumen.Text = "";
         }
 
-        private void DesabilitarOpciones()
+        private void DesabilitarOpciones() /// DESHABILITA LAS OPCIONES DE SELECCION DE ESPECIALIDAD, MEDICO, FECHA Y HORARIO
+                                           /// PORQUE NO SE HA SELECCIONADO UN PACIENTE AUN
         {
             ddlMedico.Enabled = false;
             ddlEspecialidad.Enabled = false;

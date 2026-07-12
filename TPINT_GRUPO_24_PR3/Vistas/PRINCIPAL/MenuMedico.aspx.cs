@@ -44,7 +44,7 @@ namespace Vistas
                 lblMensaje.Text = "";
             }
         }
-        private void CargarTurnosAnteriores()
+        private void CargarTurnosAnteriores() /// CARGAR TURNOS ANTERIORES
         {
             int usuario = Convert.ToInt32(Session["IdUsuario"]);
 
@@ -65,7 +65,7 @@ namespace Vistas
             }
         }
 
-        private void BuscarTurnos(string busqueda)
+        private void BuscarTurnos(string busqueda) /// BUSCAR TURNOS POR NOMBRE O APELLIDO
         {
             int usuario = Convert.ToInt32(Session["IdUsuario"]);
 
@@ -86,7 +86,7 @@ namespace Vistas
             }
         }
 
-        protected void gvTurnos_RowCommand(object sender, GridViewCommandEventArgs evento)
+        protected void gvTurnos_RowCommand(object sender, GridViewCommandEventArgs evento) /// ACTUALIZAR ASISTENCIA DE TURNOS
         {
             if (evento.CommandName == "Presente" || evento.CommandName == "Ausente")
             {
@@ -111,7 +111,7 @@ namespace Vistas
             }
         }
 
-        protected void btnLogout_Click(object sender, EventArgs e)
+        protected void btnLogout_Click(object sender, EventArgs e) /// CERRAR SESION
         {
             Session.Clear();
             Session.Abandon();
@@ -119,7 +119,7 @@ namespace Vistas
             Response.Redirect("~/PRINCIPAL/Login.aspx");
         }
 
-        protected void gvTurnos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        protected void gvTurnos_PageIndexChanging(object sender, GridViewPageEventArgs e) /// PAGINACION DE GRILLA
         {
             gvTurnos.PageIndex = e.NewPageIndex;
 
@@ -141,7 +141,7 @@ namespace Vistas
             }
         }
 
-        protected void btnBuscar_Click(object sender, EventArgs e)
+        protected void btnBuscar_Click(object sender, EventArgs e) 
         {
             Session["FiltroTurnos"] = "Buscar";
             Session["Busqueda"] = txtBuscar.Text.Trim();

@@ -19,6 +19,8 @@ namespace Vistas.MENU_ADMIN
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
+            LblMensaje.Text = ""; /// limpia el mensaje anterior
+
             string DNI = txtBuscarDNI.Text;
 
             DataTable dataTablePaciente = new NegocioPaciente().GetTablaPacientePorDNI(DNI);
@@ -54,7 +56,7 @@ namespace Vistas.MENU_ADMIN
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-
+            LblMensaje.Text = "";
             Paciente paciente = new Paciente();
 
             DataRow rowPaciente = ((DataTable)Session["Paciente"]).Rows[0];

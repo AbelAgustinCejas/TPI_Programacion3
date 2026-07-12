@@ -38,7 +38,7 @@ namespace Vistas
 
         private void GenerarInforme(bool mostrarResumen)
         {
-            int idEspecialidad = Convert.ToInt32(ddlEspecialidad.SelectedValue);
+            int idEspecialidad = Convert.ToInt32(ddlEspecialidad.SelectedValue); /// OBTIENE FECHAS INGRESADAS
             DateTime fechaDesde = Convert.ToDateTime(txtDesde.Text);
             DateTime fechaHasta = Convert.ToDateTime(txtHasta.Text);
 

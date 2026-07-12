@@ -31,7 +31,7 @@ namespace Datos
             command.Parameters.AddWithValue("@Contraseña", contrasenia);
 
 
-            return command.ExecuteReader();
+            return command.ExecuteReader(); /// lee los registros uno x uno y devuelve el resultado
         }
         /////////////////////////// PACIENTES /////////////////////////////////////
 
@@ -133,7 +133,7 @@ namespace Datos
 
             connection.Open();
 
-            int cantidad = Convert.ToInt32(cmd.ExecuteScalar());
+            int cantidad = Convert.ToInt32(cmd.ExecuteScalar()); /// devuelve un unico valor, en este caso la cantidad de registros que cumplen la condicion
 
             connection.Close();
 
