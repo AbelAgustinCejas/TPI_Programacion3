@@ -1,5 +1,6 @@
 ﻿using Datos;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace Negocio
 {
@@ -7,7 +8,7 @@ namespace Negocio
     {
         DaoClinica dao = new DaoClinica();
 
-        public DataTable Login(string nombreUsuario, string contraseña)
+        public SqlDataReader Login(string nombreUsuario, string contraseña)
         {
             return dao.Login(nombreUsuario, contraseña);
         }
@@ -16,16 +17,16 @@ namespace Negocio
         {
             string nombreBienvenida;
 
-            if (tipoUsuario != true) 
+            if (tipoUsuario)
             {
-                nombreBienvenida = "Administrador";
-                return nombreBienvenida;
+                nombreBienvenida = dao.ObtenerNombreMedico(idUsuario);
             }
             else
             {
-                nombreBienvenida = dao.ObtenerNombreMedico(idUsuario);
-                return nombreBienvenida;
+                nombreBienvenida = "Administrador";
             }
+
+            return nombreBienvenida;
         }
     }
 }

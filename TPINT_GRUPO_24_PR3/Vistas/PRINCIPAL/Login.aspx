@@ -4,59 +4,32 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title>Login</title>
 
-    <style type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
 
+    <style>
         body {
-            font-family: Arial;
-            background-color: #F5F5F5;
+            background: #f4f6f9;
         }
 
-        .contenedor {
-            width: 500px;
-            margin: 100px auto;
-            border: 1px groove #C0C0C0;
-            background-color: white;
+        .login-card {
+            width: 100%;
+            max-width: 430px;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.15);
         }
 
-        .titulo {
-            background-color: #C5D3BF;
-            text-align: center;
-            padding: 15px;
-            border-bottom: 1px solid #A0A0A0;
-        }
-
-        .contenido {
-            padding: 30px;
-        }
-
-        .fila {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .etiqueta {
-            display: block;
+        .login-title {
+            color: #0d6efd;
             font-weight: bold;
-            font-size: large;
-            margin-bottom: 8px;
         }
 
-        .textbox {
-            width: 200px;
-            height: 25px;
-            border: 1px solid #808080;
-        }
-
-        .boton {
-            width: 150px;
-            height: 35px;
-            font-size: medium;
-            font-weight: bold;
+        .btn-login {
+            width: 100%;
         }
 
         .validator {
@@ -64,13 +37,6 @@
             font-weight: bold;
             margin-left: 5px;
         }
-
-        .resumen {
-            text-align: center;
-            color: red;
-            margin-top: 15px;
-        }
-
     </style>
 
 </head>
@@ -79,95 +45,101 @@
 
 <form id="form1" runat="server">
 
-    <div class="contenedor">
+    <div class="container vh-100 d-flex justify-content-center align-items-center">
 
-        <div class="titulo">
+        <div class="card login-card">
 
-            <asp:Label ID="lblTitulo"
-                runat="server"
-                Text="Iniciar Sesión"
-                Font-Bold="True"
-                Font-Size="XX-Large">
-            </asp:Label>
+            <div class="card-body p-5">
 
-        </div>
+                <h2 class="text-center login-title mb-4">
+                    Iniciar Sesión
+                </h2>
 
-        <div class="contenido">
+                <div class="mb-3">
 
-            <div class="fila">
+                    <asp:Label
+                        ID="lblUsuario"
+                        runat="server"
+                        CssClass="form-label fw-semibold"
+                        Text="Usuario">
+                    </asp:Label>
 
-                <asp:Label ID="lblUsuario"
-                    runat="server"
-                    CssClass="etiqueta"
-                    Text="Usuario:">
-                </asp:Label>
+                    <asp:TextBox
+                        ID="txtUsuario"
+                        runat="server"
+                        CssClass="form-control">
+                    </asp:TextBox>
 
-                <asp:TextBox ID="txtUsuario"
-                    runat="server"
-                    CssClass="textbox">
-                </asp:TextBox>
+                    <asp:RequiredFieldValidator
+                        ID="rfvUsuario"
+                        runat="server"
+                        ControlToValidate="txtUsuario"
+                        CssClass="validator"
+                        ErrorMessage="Debe ingresar un Usuario!">
+                        *
+                    </asp:RequiredFieldValidator>
 
-                <asp:RequiredFieldValidator
-                    ID="rfvUsuario"
-                    runat="server"
-                    CssClass="validator"
-                    ControlToValidate="txtUsuario">
-                    *
-                </asp:RequiredFieldValidator>
+                </div>
+
+                <div class="mb-4">
+
+                    <asp:Label
+                        ID="lblContrasenia"
+                        runat="server"
+                        CssClass="form-label fw-semibold"
+                        Text="Contraseña">
+                    </asp:Label>
+
+                    <asp:TextBox
+                        ID="txtContrasenia"
+                        runat="server"
+                        CssClass="form-control"
+                        TextMode="Password">
+                    </asp:TextBox>
+
+                    <asp:RequiredFieldValidator
+                        ID="rfvContrasenia"
+                        runat="server"
+                        ControlToValidate="txtContrasenia"
+                        CssClass="validator"
+                        ErrorMessage="Debe ingresar una Contraseña!">
+                        *
+                    </asp:RequiredFieldValidator>
+
+                </div>
+
+                <div class="d-grid mb-3">
+
+                    <asp:Button
+                        ID="btnInSesion"
+                        runat="server"
+                        Text="Iniciar Sesión"
+                        CssClass="btn btn-primary btn-lg btn-login"
+                        OnClick="btnInSesion_Click" />
+
+                </div>
+
+                <div class="text-center">
+
+                    <asp:Label
+                        ID="lblMensaje"
+                        runat="server"
+                        CssClass="text-danger fw-bold">
+                    </asp:Label>
+
+                </div>
+
+                <div class="mt-3">
+
+                    <asp:ValidationSummary
+                        ID="vsResumen"
+                        runat="server"
+                        CssClass="alert alert-danger"
+                        DisplayMode="List" />
+
+                </div>
 
             </div>
-
-            <div class="fila">
-
-                <asp:Label ID="lblContrasenia"
-                    runat="server"
-                    CssClass="etiqueta"
-                    Text="Contraseña:">
-                </asp:Label>
-
-                <asp:TextBox ID="txtContrasenia"
-                    runat="server"
-                    CssClass="textbox"
-                    TextMode="Password">
-                </asp:TextBox>
-
-                <asp:RequiredFieldValidator
-                    ID="rfvContrasenia"
-                    runat="server"
-                    CssClass="validator"
-                    ControlToValidate="txtContrasenia">
-                    *
-                </asp:RequiredFieldValidator>
-
-            </div>
-
-            <div class="fila">
-
-    <asp:Button ID="btnInSesion"
-        runat="server"
-        Text="Iniciar Sesión"
-        CssClass="boton"
-        OnClick="btnInSesion_Click" />
-
-        </div>
-
-        <div class="fila">
-
-            <asp:Label ID="lblMensaje"
-                runat="server"
-                ForeColor="Red"
-                Font-Bold="True">
-            </asp:Label>
-
-        </div>
-
-        <div class="resumen">
-
-            <asp:ValidationSummary
-                ID="vsResumen"
-                runat="server" />
-
-        </div>
 
         </div>
 

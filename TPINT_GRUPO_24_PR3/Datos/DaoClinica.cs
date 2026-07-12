@@ -14,27 +14,24 @@ namespace Datos
 
 
         //////////////////////// LOGIN /////////////////////////////
-        public DataTable Login(string nombreUsuario, string contrasenia)
+        public SqlDataReader Login(string nombreUsuario, string contrasenia)
         {
-            DataTable dataTable = new DataTable();
-
             SqlConnection connection = conexion.ObtenerConexion();
+            connection.Open();
 
-            string consulta = @"SELECT *
-                        FROM Usuario
-                        WHERE NombreUsuario_USU = @NombreUsuario
-                        AND Contraseña_USU = @Contraseña
-                        AND Estado_USU = 1";
+            string consulta = @"SELECT IdUsuario_USU, Tipo_USU
+                                FROM Usuario
+                                WHERE NombreUsuario_USU = @NombreUsuario
+                                AND Contraseña_USU = @Contraseña
+                                AND Estado_USU = 1";
 
             SqlCommand command = new SqlCommand(consulta, connection);
 
             command.Parameters.AddWithValue("@NombreUsuario", nombreUsuario);
             command.Parameters.AddWithValue("@Contraseña", contrasenia);
 
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-            dataAdapter.Fill(dataTable);
 
-            return dataTable;
+            return command.ExecuteReader();
         }
         /////////////////////////// PACIENTES /////////////////////////////////////
 
@@ -694,18 +691,25 @@ namespace Datos
 
         public string ObtenerNombreMedico(int idUsuario)
         {
-            SqlConnection connection = conexion.ObtenerConexion();
+            string consulta = "SELECT Nombre_MED, Apellido_MED FROM Medico WHERE IdUsuario_MED = @IdUsuario";
+            string nombre = "";
 
-            string consulta = "SELECT Nombre_MED + ' ' + Apellido_MED FROM Medico WHERE IdUsuario_MED = @IdUsuario";
+            SqlConnection connection = conexion.ObtenerConexion();
+            connection.Open();
 
             SqlCommand command = new SqlCommand(consulta, connection);
             command.Parameters.AddWithValue("@IdUsuario", idUsuario);
 
-            connection.Open();
-            string nombreCompleto = command.ExecuteScalar().ToString();
+            SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                nombre = reader["Nombre_MED"].ToString() + " " + reader["Apellido_MED"].ToString();
+            }
+
             connection.Close();
 
-            return nombreCompleto;
+            return nombre;
         }
 
         public DataTable ObtenerMedicosDDL()

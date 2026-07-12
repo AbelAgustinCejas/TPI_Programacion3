@@ -5,165 +5,233 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
     <title>Menú Médico</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+
     <style>
-        *{
-            font-family:Arial;
+
+        body {
+            background-color: #f8f9fa;
         }
 
-        body{
-            background:#F5F5F5;
+        .logout {
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
         }
 
-        .header{
-            width:100%;
-            height:90px;
-            background:#0b6fa4;
-            color:white;
+        .grid th {
+            background-color: #0d6efd;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
         }
 
-        .titulo{
-            width:100%;
-            font-size:30px;
-            font-weight:bold;
+        .grid td {
+            text-align: center;
+            vertical-align: middle;
         }
 
-        .usuario{
-            width:100%;
-            font-size:20px;
-        }
-
-        .contenedor{
-            width:100%;
-            margin:30px auto;
-        }
-
-        .panelFiltros{
-            background:white;
-            border-radius:10px;
-            padding:20px;
-            margin-bottom:15px;
-
-            display:flex;
-            align-items:center;
-            gap:12px;
-            flex-wrap:wrap;
-        }
-
-        .textbox{
-            width:300px;
-            padding:10px;
-            border:1px solid #BDBDBD;
-            border-radius:6px;
-            font-size:15px;
-        }
-
-        .boton{
-            padding:10px 20px;
-            background:#0b6fa4;
-            color:white;
-            border:none;
-            border-radius:6px;
-            cursor:pointer;
-            font-size:15px;
-            font-weight:bold;
-        }
-
-        .boton:hover{
-            background:#08547c;
-        }
-
-        .panelGrid{
-            background:white;
-            padding:20px;
-            border-radius:10px;
-        }
-
-        .tituloGrid{
-            font-size:24px;
-            margin-bottom:15px;
-            color:royalblue;
-            font-weight:bold;
-        }
-
-        .grid{
-            width:100%;
-        }
-
-        .grid th{
-            background:#0b6fa4;
-            color:white;
-            padding:10px;
-            text-align:center;
-        }
-
-        .grid td{
-            padding:10px;
-            border-bottom:1px solid;
-            text-align:center;
-        }
-
-        .mensaje{
-            margin-top:15px;
-            color:orangered;
-            font-weight:bold;
+        .grid img {
+            width: 32px;
+            height: 32px;
         }
 
     </style>
 
 </head>
-    <body>
-        <form id="form1" runat="server">
-            <div class="header">
-                <div class="titulo">
-                    Menu Medico
-                </div>
-                <div class="usuario">
-                    <asp:Label ID="lblUsuario" runat="server"></asp:Label>
-                    <asp:ImageButton ID="btnLogout" runat="server" ImageUrl="~/IMAGENES/logout.jpg" OnClick="btnLogout_Click"/>
-                </div>
+
+<body>
+
+<form id="form1" runat="server">
+
+    <!-- Encabezado -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+
+        <div class="container-fluid">
+
+            <span class="navbar-brand fw-bold fs-3">
+                Menú Médico
+            </span>
+
+            <div class="d-flex align-items-center">
+
+                <asp:Label
+                    ID="lblUsuario"
+                    runat="server"
+                    CssClass="text-white fw-semibold me-3">
+                </asp:Label>
+
+                <asp:ImageButton
+                    ID="btnLogout"
+                    runat="server"
+                    ImageUrl="~/IMAGENES/logout.jpg"
+                    CssClass="logout rounded-circle"
+                    OnClick="btnLogout_Click" />
+
             </div>
-            <div class="contenedor">
-                <div class="panelFiltros">
-                    <asp:Label ID="lblPaciente" runat="server" Text="Paciente:" Font-Bold="True" Font-Size="Medium"> </asp:Label>
-                    <asp:TextBox ID="txtBuscar" runat="server" CssClass="textbox"> </asp:TextBox>
-                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="boton" OnClick="btnBuscar_Click" />
-                    <asp:Button ID="btnPendientes" runat="server" Text="Pendientes" CssClass="boton" OnClick="btnPendientes_Click" />
-                    <asp:Button ID="btnAnteriores" runat="server" Text="Anteriores" CssClass="boton" OnClick="btnAnteriores_Click" />
+
+        </div>
+
+    </nav>
+
+    <div class="container mt-4">
+
+        <!-- Panel de búsqueda -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header bg-primary text-white fw-bold">
+                Buscar Turnos
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3 align-items-end">
+
+                    <div class="col-md-4">
+
+                        <asp:Label
+                            ID="lblPaciente"
+                            runat="server"
+                            Text="Paciente"
+                            CssClass="form-label fw-bold">
+                        </asp:Label>
+
+                        <asp:TextBox
+                            ID="txtBuscar"
+                            runat="server"
+                            CssClass="form-control">
+                        </asp:TextBox>
+
+                    </div>
+
+                    <div class="col-auto">
+
+                        <asp:Button
+                            ID="btnBuscar"
+                            runat="server"
+                            Text="Buscar"
+                            CssClass="btn btn-primary"
+                            OnClick="btnBuscar_Click" />
+
+                    </div>
+
+                    <div class="col-auto">
+
+                        <asp:Button
+                            ID="btnPendientes"
+                            runat="server"
+                            Text="Pendientes"
+                            CssClass="btn btn-warning"
+                            OnClick="btnPendientes_Click" />
+
+                    </div>
+
+                    <div class="col-auto">
+
+                        <asp:Button
+                            ID="btnAnteriores"
+                            runat="server"
+                            Text="Anteriores"
+                            CssClass="btn btn-secondary"
+                            OnClick="btnAnteriores_Click" />
+
+                    </div>
+
                 </div>
-                <div class="panelGrid">
-                    <div class="tituloGrid"> Turnos </div>
-                    <asp:GridView ID="gvTurnos" runat="server" AutoGenerateColumns="False" CssClass="grid" 
-                        DataKeyNames="IdTurno_TUR" OnRowCommand="gvTurnos_RowCommand" 
-                        AllowPaging="True" OnPageIndexChanging="gvTurnos_PageIndexChanging" PageSize="8">
+
+            </div>
+
+        </div>
+
+        <!-- Tabla -->
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-primary text-white fw-bold">
+                Turnos
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <asp:GridView
+                        ID="gvTurnos"
+                        runat="server"
+                        AutoGenerateColumns="False"
+                        CssClass="table table-striped table-hover table-bordered grid"
+                        DataKeyNames="IdTurno_TUR"
+                        AllowPaging="True"
+                        PageSize="8"
+                        OnRowCommand="gvTurnos_RowCommand"
+                        OnPageIndexChanging="gvTurnos_PageIndexChanging">
+
                         <Columns>
-                            <asp:BoundField DataField="Nombre" HeaderText="Nombre"/>
-                            <asp:BoundField DataField="Apellido" HeaderText="Apellido"/>
-                            <asp:BoundField DataField="DNI" HeaderText="DNI"/>
-                            <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:d/M/yyyy}"/>
-                            <asp:BoundField DataField="Hora" HeaderText="Hora"/>
-                            <asp:BoundField DataField="Asistencia" HeaderText="Asistencia"/>
+
+                            <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                            <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
+                            <asp:BoundField DataField="DNI" HeaderText="DNI" />
+                            <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:d/M/yyyy}" />
+                            <asp:BoundField DataField="Hora" HeaderText="Hora" />
+                            <asp:BoundField DataField="Asistencia" HeaderText="Asistencia" />
+
                             <asp:TemplateField HeaderText="Presente">
+
                                 <ItemTemplate>
-                                    <asp:ImageButton ID="btnPresente" runat="server"
-                                        ImageUrl="~/IMAGENES/presente2.jpg" CommandName="Presente" CommandArgument='<%# Container.DataItemIndex %>' />
+
+                                    <asp:ImageButton
+                                        ID="btnPresente"
+                                        runat="server"
+                                        ImageUrl="~/IMAGENES/presente2.jpg"
+                                        CommandName="Presente"
+                                        CommandArgument='<%# Container.DataItemIndex %>' />
+
                                 </ItemTemplate>
+
                             </asp:TemplateField>
 
                             <asp:TemplateField HeaderText="Ausente">
+
                                 <ItemTemplate>
-                                    <asp:ImageButton ID="btnAusente" runat="server"
-                                        ImageUrl="~/IMAGENES/ausente2.jpg" CommandName="Ausente" CommandArgument='<%# Container.DataItemIndex %>' />
+
+                                    <asp:ImageButton
+                                        ID="btnAusente"
+                                        runat="server"
+                                        ImageUrl="~/IMAGENES/ausente2.jpg"
+                                        CommandName="Ausente"
+                                        CommandArgument='<%# Container.DataItemIndex %>' />
+
                                 </ItemTemplate>
+
                             </asp:TemplateField>
+
                         </Columns>
+
                     </asp:GridView>
-                    <div class="mensaje">
-                    <asp:Label ID="lblMensaje" runat="server"></asp:Label>
-                    </div>
+
                 </div>
+
+                <div class="text-center mt-3">
+
+                    <asp:Label
+                        ID="lblMensaje"
+                        runat="server"
+                        CssClass="text-danger fw-bold">
+                    </asp:Label>
+
+                </div>
+
             </div>
-        </form>
-    </body>
+
+        </div>
+
+    </div>
+
+</form>
+
+</body>
 </html>

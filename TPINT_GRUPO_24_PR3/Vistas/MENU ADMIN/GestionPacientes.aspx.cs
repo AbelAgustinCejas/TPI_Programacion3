@@ -1,12 +1,7 @@
 ﻿using Entidades;
 using Negocio;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Net.Security;
-using System.Web;
-using System.Web.UI.HtmlControls;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -19,9 +14,9 @@ namespace Vistas.MENU_ADMIN
 
             if (!IsPostBack)
             {
-                CargarProvincias();
+                lblUsuarioIngresado.Text = Session["NombreBienvenida"].ToString();
                 divFiltros.Visible = false;
-                //lblUsuarioIngresado.Text = Session["NombreBienvenida"].ToString();
+                CargarProvincias();
             }
         }
 
@@ -63,8 +58,8 @@ namespace Vistas.MENU_ADMIN
             Paciente paciente = new Paciente();
 
             paciente.setIdLocalidad(Convert.ToInt32(ddlLocalidad.SelectedValue));
-            paciente.setDNI(txtNombre.Text);
-            paciente.setNombre(DNI.Text);
+            paciente.setDNI(DNI.Text);
+            paciente.setNombre(txtNombre.Text);
             paciente.setApellido(txtApellido.Text);
             paciente.setSexo(Convert.ToChar(ddlSexo.SelectedValue));
             paciente.setNacionalidad(txtNacionalidad.Text);

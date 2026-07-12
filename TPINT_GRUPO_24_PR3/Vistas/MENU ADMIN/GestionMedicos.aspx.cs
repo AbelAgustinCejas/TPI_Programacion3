@@ -12,12 +12,12 @@ namespace Vistas.MENU_ADMIN
         {
             if (!IsPostBack)
             {
+                lblUsuarioIngresado.Text = Session["NombreBienvenida"].ToString();
                 CargarProvincias();
                 CargarEspecialidades();
                 CargarMedicosDDL();
                 CargarDias();
                 CargarHoras();
-                // lblUsuarioIngresado.Text = Session["NombreBienvenida"].ToString();
             }
         }
 

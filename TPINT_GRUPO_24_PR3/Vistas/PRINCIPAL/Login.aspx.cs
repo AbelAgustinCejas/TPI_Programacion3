@@ -2,6 +2,7 @@
 using Negocio;
 using System;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace Vistas.PRINCIPAL
 {
@@ -16,26 +17,21 @@ namespace Vistas.PRINCIPAL
 
         protected void btnInSesion_Click(object sender, EventArgs e)
         {
-            if (!Page.IsValid)
-                return;
-
             string nombreUsuario = txtUsuario.Text.Trim();
             string contraseña = txtContrasenia.Text.Trim();
 
+            SqlDataReader reader = negocio.Login(nombreUsuario, contraseña);
 
-            DataTable dataTableUsuario = negocio.Login(nombreUsuario, contraseña);
-
-            if (dataTableUsuario.Rows.Count > 0)
+            if (reader.Read())
             {
-                int idUsuario = Convert.ToInt32(dataTableUsuario.Rows[0]["IdUsuario_USU"]);
-                bool tipoUsuario = Convert.ToBoolean(dataTableUsuario.Rows[0]["Tipo_USU"]);
+                int idUsuario = Convert.ToInt32(reader["IdUsuario_USU"]);
+                bool tipoUsuario = Convert.ToBoolean(reader["Tipo_USU"]);
 
+                Session["NombreBienvenida"] = negocio.ObtenerNombreBienvenida(idUsuario, tipoUsuario);
                 Session["IdUsuario"] = idUsuario;
                 Session["TipoUsuario"] = tipoUsuario;
-                Session["NombreBienvenida"] = negocio.ObtenerNombreBienvenida(idUsuario, tipoUsuario);
 
-                 
-                if (tipoUsuario == false)
+                if (!tipoUsuario)
                 {
                     Response.Redirect("~/PRINCIPAL/MenuAdmin.aspx");
                 }
@@ -46,6 +42,8 @@ namespace Vistas.PRINCIPAL
             }
             else
             {
+                txtUsuario.Text = "";
+                txtContrasenia.Text = "";
                 lblMensaje.Text = "Usuario o contraseña incorrectos.";
             }
         }
