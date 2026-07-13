@@ -93,7 +93,7 @@ namespace Vistas
                 int fila = Convert.ToInt32(evento.CommandArgument);
                 int idTurno = Convert.ToInt32(gvTurnos.DataKeys[fila].Value);
 
-                bool asistencia = (evento.CommandName == "Presente");
+                bool asistencia = (evento.CommandName == "Presente"); /// PREGUNTAMOS SI ES PRESENTE Y SE GUARDA TRUE
 
                 NegocioTurno negocio = new NegocioTurno();
 

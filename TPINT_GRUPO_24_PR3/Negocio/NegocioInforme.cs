@@ -143,7 +143,9 @@ namespace Negocio
             }
 
             if (presentes + ausentes > 0)
+            {
                 porcentajeAsistencia = (double)(presentes * 100) / (presentes + ausentes);
+            }
 
             return tablaAsistencia;
         }

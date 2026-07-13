@@ -122,12 +122,21 @@ namespace Vistas
             lblFechaResumen.Text = "Pendiente";
             lblHorarioResumen.Text = "Pendiente";
 
+            ddlHorario.Items.Clear();
+            ddlHorario.Items.Add(new ListItem("-- Seleccione --", "-1"));
+
+            ddlMedico.Items.Clear();
+            ddlMedico.Items.Add(new ListItem("-- Seleccione --", "-1"));
+
             ddlEspecialidad.SelectedIndex = 0;
             ddlMedico.SelectedIndex = 0;
             ddlHorario.SelectedIndex = 0;
 
             txtTurnoDNI.Text = "";
             txtPacienteDNI.Text = "";
+
+            Session["idPaciente"] = null;
+            Session["IdTurno"] = null;
 
             DesabilitarOpciones();
         }

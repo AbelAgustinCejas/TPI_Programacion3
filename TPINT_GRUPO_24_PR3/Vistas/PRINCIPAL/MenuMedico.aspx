@@ -135,7 +135,7 @@
                         <asp:Button
                             ID="btnAnteriores"
                             runat="server"
-                            Text="Anteriores"
+                            Text="Historial"
                             CssClass="btn btn-secondary"
                             OnClick="btnAnteriores_Click" />
 

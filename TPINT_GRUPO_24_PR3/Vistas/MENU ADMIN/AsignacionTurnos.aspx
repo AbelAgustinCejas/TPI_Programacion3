@@ -248,7 +248,7 @@
                                             CssClass="form-select"
                                             AutoPostBack="True"
                                             OnSelectedIndexChanged="ddlHorario_SelectedIndexChanged">
-                                            <asp:ListItem Value="-1">Seleccionar</asp:ListItem>
+                                            <asp:ListItem Value="-1">-- Seleccione --</asp:ListItem>
                                         </asp:DropDownList>
                                     </td>
                                 </tr>

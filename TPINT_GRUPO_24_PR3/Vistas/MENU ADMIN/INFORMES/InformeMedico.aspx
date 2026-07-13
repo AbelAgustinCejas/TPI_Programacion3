@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="fila">
-                    <span class="etiqueta">Fecha desde:eta">Fecha desde:</span>
+                    <span class="etiqueta">Fecha desde:</span>
                     <asp:TextBox ID="txtDesde" runat="server" TextMode="Date" CssClass="form-control d-inline-block" Width="200px" />
                     <asp:RequiredFieldValidator ID="rfvFechaDesde" runat="server"
                         ControlToValidate="txtDesde" ErrorMessage="Ingrese la fecha desde."

@@ -47,8 +47,7 @@
         </div>
 
         <div class="titulo-principal">
-            Gestión de Médicos
-        </div>
+            Gestión de Médicos</div>
 
         <div class="container mt-4">
 
@@ -61,24 +60,57 @@
                 <div class="card-body">
                     <table class="table table-borderless">
                         <tr>
-                            <td><strong>DNI</strong></td>
+                            <td><strong>DNI</strong>
+                                <asp:RegularExpressionValidator
+                                    ID="RegularExpressionValidator1"
+                                    runat="server"
+                                    ControlToValidate="txtDNI"
+                                    ErrorMessage="Solo Numeros"
+                                    ValidationExpression="^\d+$">
+                                </asp:RegularExpressionValidator>
+                            &nbsp;<asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidator16"
+                                    runat="server"
+                                    ControlToValidate="txtDNI"
+                                    ErrorMessage="Ingrese DNI"></asp:RequiredFieldValidator>
+                            </td>
                             <td>
                                 <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control"></asp:TextBox>
                             </td>
 
-                            <td><strong>Nombre</strong></td>
+                            <td><strong>Nombre</strong>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidator12"
+                                    runat="server"
+                                    ControlToValidate="txtNombre"
+                                    ErrorMessage="Ingrese Nombre">
+                                </asp:RequiredFieldValidator>
+                            </td>
                             <td>
                                 <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
                             </td>
                         </tr>
 
                         <tr>
-                            <td><strong>Apellido</strong></td>
+                            <td><strong>Apellido</strong>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidator11"
+                                    runat="server"
+                                    ControlToValidate="txtApellido"
+                                    ErrorMessage="Ingrese Apellido">
+                                </asp:RequiredFieldValidator>
+                            </td>
                             <td>
                                 <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control"></asp:TextBox>
                             </td>
 
-                            <td><strong>Sexo</strong></td>
+                            <td><strong>Sexo</strong>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidator15"
+                                    runat="server"
+                                    ControlToValidate="ddlSexo"
+                                    ErrorMessage="Ingrese Sexo" InitialValue="-1"></asp:RequiredFieldValidator>
+                            </td>
                             <td>
                                 <asp:DropDownList ID="ddlSexo" runat="server" CssClass="form-select">
                                     <asp:ListItem Value="-1">-- Seleccione --</asp:ListItem>
@@ -90,48 +122,107 @@
                         </tr>
 
                         <tr>
-                            <td><strong>Nacionalidad</strong></td>
+                            <td><strong>Nacionalidad</strong>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidator13"
+                                    runat="server"
+                                    ControlToValidate="txtNacionalidad"
+                                    ErrorMessage="Ingrese Nacionalidad">
+                                </asp:RequiredFieldValidator>
+                            </td>
                             <td>
                                 <asp:TextBox ID="txtNacionalidad" runat="server" CssClass="form-control"></asp:TextBox>
                             </td>
 
-                            <td><strong>Fecha Nacimiento</strong></td>
+                            <td><strong>Fecha Nacimiento</strong>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidator6"
+                                    runat="server"
+                                    ControlToValidate="txtFechaNacimiento"
+                                    ErrorMessage="Ingrese Fecha">
+                                </asp:RequiredFieldValidator>
+                            </td>
                             <td>
                                 <asp:TextBox ID="txtFechaNacimiento" runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
                             </td>
                         </tr>
 
                         <tr>
-                            <td><strong>Dirección</strong></td>
+                            <td><strong>Dirección</strong>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidator14"
+                                    runat="server"
+                                    ControlToValidate="txtDireccion"
+                                    ErrorMessage="Ingrese Direccion">
+                                </asp:RequiredFieldValidator>
+                            </td>
                             <td>
                                 <asp:TextBox ID="txtDireccion" runat="server" CssClass="form-control"></asp:TextBox>
                             </td>
 
-                            <td><strong>Correo Electrónico</strong></td>
+                            <td><strong>Correo Electrónico</strong>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidator7"
+                                    runat="server"
+                                    ControlToValidate="txtEmail"
+                                    ErrorMessage="Ingrese Correo">
+                                </asp:RequiredFieldValidator>
+                            </td>
                             <td>
                                 <asp:TextBox ID="txtEmail" runat="server" TextMode="Email" CssClass="form-control"></asp:TextBox>
                             </td>
                         </tr>
 
                         <tr>
-                            <td><strong>Teléfono</strong></td>
+                            <td><strong>Teléfono</strong>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidator10"
+                                    runat="server"
+                                    ControlToValidate="txtTelefono"
+                                    ErrorMessage="Ingrese Telefono">
+                                </asp:RequiredFieldValidator>
+                            </td>
                             <td>
                                 <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control"></asp:TextBox>
                             </td>
 
-                            <td><strong>Especialidad</strong></td>
+                            <td><strong>Especialidad</strong>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidatorEspecialidad"
+                                    runat="server"
+                                    ControlToValidate="ddlEspecialidad"
+                                    ErrorMessage="Ingrese Especialidad"
+                                    InitialValue="-1">
+                                </asp:RequiredFieldValidator>
+                            </td>
                             <td>
                                 <asp:DropDownList ID="ddlEspecialidad" runat="server" CssClass="form-select"></asp:DropDownList>
                             </td>
                         </tr>
 
                         <tr>
-                            <td><strong>Provincia</strong></td>
+                            <td><strong>Provincia</strong>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidator9"
+                                    runat="server"
+                                    ControlToValidate="ddlProvincia"
+                                    ErrorMessage="Ingrese Provincia"
+                                    InitialValue="-1">
+                                </asp:RequiredFieldValidator>
+                            </td>
                             <td>
                                 <asp:DropDownList ID="ddlProvincia" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged"></asp:DropDownList>
                             </td>
 
-                            <td><strong>Localidad</strong></td>
+                            <td><strong>Localidad</strong>
+                                <asp:RequiredFieldValidator
+                                    ID="RequiredFieldValidator8"
+                                    runat="server"
+                                    ControlToValidate="ddlLocalidad"
+                                    ErrorMessage="Ingrese Localidad"
+                                    InitialValue="-1">
+                                </asp:RequiredFieldValidator>
+                            </td>
                             <td>
                                 <asp:DropDownList ID="ddlLocalidad" runat="server" CssClass="form-select"></asp:DropDownList>
                             </td>
