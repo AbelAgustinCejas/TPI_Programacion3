@@ -11,7 +11,7 @@ namespace Vistas
         {
             if (!IsPostBack)
             {
-                lblUsuarioIngresado.Text = Session["NombreBienvenida"].ToString();
+                lblUsuarioIngresado.Text = Session["NombreUsuario"].ToString();
                 CargarMedicos();
                 LimpiarResumen();
             }
@@ -43,14 +43,14 @@ namespace Vistas
             DateTime fechaHasta = Convert.ToDateTime(txtHasta.Text);
 
             DataTable tabla = new NegocioInforme().InformeTurnosMedico(
-                legajo,
-                fechaDesde,
-                fechaHasta,
-                out int totalTurnos,
-                out string medicoMayor,
-                out int cantidadMayor,
-                out string medicoMenor,
-                out int cantidadMenor);
+                        legajo,
+                        fechaDesde,
+                        fechaHasta,
+                        out int totalTurnos,
+                        out string medicoMayor,
+                        out int cantidadMayor,
+                        out string medicoMenor,
+                        out int cantidadMenor);
 
             gvInforme.DataSource = tabla;
             gvInforme.DataBind();
@@ -95,6 +95,12 @@ namespace Vistas
         protected void btnMenuPrincipal_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/PRINCIPAL/MenuAdmin.aspx");
+        }
+
+        protected void btnLogout_Click(object sender, System.Web.UI.ImageClickEventArgs e)
+        {
+            Response.Redirect("~/PRINCIPAL/Login.aspx");
+
         }
     }
 }

@@ -44,6 +44,9 @@
         <div class="encabezado">
             Bienvenido/a:
             <asp:Label ID="lblUsuarioIngresado" runat="server"></asp:Label>
+
+                    <asp:ImageButton ID="btnLogout" runat="server" ImageUrl="~/IMAGENES/logout.jpg" CssClass="logout rounded-circle" OnClick="btnLogout_Click" />
+
         </div>
 
         <div class="titulo-principal">
@@ -72,7 +75,7 @@
                                     ID="RequiredFieldValidator16"
                                     runat="server"
                                     ControlToValidate="txtDNI"
-                                    ErrorMessage="Ingrese DNI"></asp:RequiredFieldValidator>
+                                    ErrorMessage="Ingrese DNI" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control"></asp:TextBox>
@@ -83,8 +86,7 @@
                                     ID="RequiredFieldValidator12"
                                     runat="server"
                                     ControlToValidate="txtNombre"
-                                    ErrorMessage="Ingrese Nombre">
-                                </asp:RequiredFieldValidator>
+                                    ErrorMessage="Ingrese Nombre" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
@@ -97,8 +99,7 @@
                                     ID="RequiredFieldValidator11"
                                     runat="server"
                                     ControlToValidate="txtApellido"
-                                    ErrorMessage="Ingrese Apellido">
-                                </asp:RequiredFieldValidator>
+                                    ErrorMessage="Ingrese Apellido" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control"></asp:TextBox>
@@ -109,7 +110,7 @@
                                     ID="RequiredFieldValidator15"
                                     runat="server"
                                     ControlToValidate="ddlSexo"
-                                    ErrorMessage="Ingrese Sexo" InitialValue="-1"></asp:RequiredFieldValidator>
+                                    ErrorMessage="Ingrese Sexo" InitialValue="-1" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                             </td>
                             <td>
                                 <asp:DropDownList ID="ddlSexo" runat="server" CssClass="form-select">
@@ -127,8 +128,7 @@
                                     ID="RequiredFieldValidator13"
                                     runat="server"
                                     ControlToValidate="txtNacionalidad"
-                                    ErrorMessage="Ingrese Nacionalidad">
-                                </asp:RequiredFieldValidator>
+                                    ErrorMessage="Ingrese Nacionalidad" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtNacionalidad" runat="server" CssClass="form-control"></asp:TextBox>
@@ -139,8 +139,7 @@
                                     ID="RequiredFieldValidator6"
                                     runat="server"
                                     ControlToValidate="txtFechaNacimiento"
-                                    ErrorMessage="Ingrese Fecha">
-                                </asp:RequiredFieldValidator>
+                                    ErrorMessage="Ingrese Fecha" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtFechaNacimiento" runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
@@ -153,8 +152,7 @@
                                     ID="RequiredFieldValidator14"
                                     runat="server"
                                     ControlToValidate="txtDireccion"
-                                    ErrorMessage="Ingrese Direccion">
-                                </asp:RequiredFieldValidator>
+                                    ErrorMessage="Ingrese Direccion" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtDireccion" runat="server" CssClass="form-control"></asp:TextBox>
@@ -165,8 +163,7 @@
                                     ID="RequiredFieldValidator7"
                                     runat="server"
                                     ControlToValidate="txtEmail"
-                                    ErrorMessage="Ingrese Correo">
-                                </asp:RequiredFieldValidator>
+                                    ErrorMessage="Ingrese Correo" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtEmail" runat="server" TextMode="Email" CssClass="form-control"></asp:TextBox>
@@ -179,8 +176,7 @@
                                     ID="RequiredFieldValidator10"
                                     runat="server"
                                     ControlToValidate="txtTelefono"
-                                    ErrorMessage="Ingrese Telefono">
-                                </asp:RequiredFieldValidator>
+                                    ErrorMessage="Ingrese Telefono" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control"></asp:TextBox>
@@ -192,8 +188,7 @@
                                     runat="server"
                                     ControlToValidate="ddlEspecialidad"
                                     ErrorMessage="Ingrese Especialidad"
-                                    InitialValue="-1">
-                                </asp:RequiredFieldValidator>
+                                    InitialValue="-1" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                             </td>
                             <td>
                                 <asp:DropDownList ID="ddlEspecialidad" runat="server" CssClass="form-select"></asp:DropDownList>
@@ -207,8 +202,7 @@
                                     runat="server"
                                     ControlToValidate="ddlProvincia"
                                     ErrorMessage="Ingrese Provincia"
-                                    InitialValue="-1">
-                                </asp:RequiredFieldValidator>
+                                    InitialValue="-1" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                             </td>
                             <td>
                                 <asp:DropDownList ID="ddlProvincia" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged"></asp:DropDownList>
@@ -220,8 +214,7 @@
                                     runat="server"
                                     ControlToValidate="ddlLocalidad"
                                     ErrorMessage="Ingrese Localidad"
-                                    InitialValue="-1">
-                                </asp:RequiredFieldValidator>
+                                    InitialValue="-1" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                             </td>
                             <td>
                                 <asp:DropDownList ID="ddlLocalidad" runat="server" CssClass="form-select"></asp:DropDownList>
@@ -230,7 +223,7 @@
                     </table>
 
                     <div class="text-center mt-3">
-                        <asp:Button ID="btnAgregar" runat="server" Text="Agregar médico" CssClass="btn btn-success px-4" OnClick="btnAgregar_Click" />
+                        <asp:Button ID="btnAgregar" runat="server" Text="Agregar médico" CssClass="btn btn-success px-4" OnClick="btnAgregar_Click" ValidationGroup="agregar" />
 
                         <asp:Button
                             ID="btnMenuPrincipal"

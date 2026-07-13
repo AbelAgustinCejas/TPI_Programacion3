@@ -26,6 +26,9 @@
                     <h5 class="text-muted">
                         Bienvenido/a:
                         <asp:Label ID="lblUsuarioIngresado" runat="server"></asp:Label>
+
+                    <asp:ImageButton ID="btnLogout" runat="server" ImageUrl="~/IMAGENES/logout.jpg" CssClass="logout rounded-circle" OnClick="btnLogout_Click" />
+
                     </h5>
 
                 </div>

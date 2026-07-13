@@ -20,7 +20,7 @@ namespace Vistas
 
             if (!IsPostBack)
             {
-                lblUsuarioIngresado.Text = Session["NombreBienvenida"].ToString();
+                lblUsuarioIngresado.Text = Session["NombreUsuario"].ToString();
             }
         }
 
@@ -51,6 +51,12 @@ namespace Vistas
         protected void btnInformeMedico_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/MENU ADMIN/INFORMES/InformeMedico.aspx");
+        }
+
+        protected void btnLogout_Click(object sender, ImageClickEventArgs e)
+        {
+            Session.Clear();
+            Response.Redirect("~/PRINCIPAL/Login.aspx");
         }
     }
 }

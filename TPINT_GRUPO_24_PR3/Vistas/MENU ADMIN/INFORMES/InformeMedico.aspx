@@ -44,6 +44,9 @@
         <div class="contenedor">
             <h2>Bienvenido/a:
                 <asp:Label ID="lblUsuarioIngresado" runat="server"></asp:Label>
+
+                    <asp:ImageButton ID="btnLogout" runat="server" ImageUrl="~/IMAGENES/logout.jpg" CssClass="logout rounded-circle" OnClick="btnLogout_Click" />
+
             </h2>
             <h2>Informe de Turnos por Médico</h2>
 

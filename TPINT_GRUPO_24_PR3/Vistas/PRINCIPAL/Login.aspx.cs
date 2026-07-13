@@ -27,7 +27,7 @@ namespace Vistas.PRINCIPAL
                 int idUsuario = Convert.ToInt32(reader["IdUsuario_USU"]);
                 bool tipoUsuario = Convert.ToBoolean(reader["Tipo_USU"]);
 
-                Session["NombreBienvenida"] = negocio.ObtenerNombreBienvenida(idUsuario, tipoUsuario);
+                Session["NombreUsuario"] = negocio.ObtenerNombreUsuario(idUsuario, tipoUsuario);
                 Session["IdUsuario"] = idUsuario;
                 Session["TipoUsuario"] = tipoUsuario;
 

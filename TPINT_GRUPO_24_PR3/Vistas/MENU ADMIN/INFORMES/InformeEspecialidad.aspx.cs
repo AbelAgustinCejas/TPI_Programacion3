@@ -11,7 +11,7 @@ namespace Vistas
         {
             if (!IsPostBack)
             {
-                lblUsuarioIngresado.Text = Session["NombreBienvenida"].ToString();
+                lblUsuarioIngresado.Text = Session["NombreUsuario"].ToString();
                 CargarEspecialidades();
                 LimpiarResumen();
             }

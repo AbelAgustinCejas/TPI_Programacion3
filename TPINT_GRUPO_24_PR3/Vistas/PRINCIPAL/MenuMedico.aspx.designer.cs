@@ -42,15 +42,6 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.ImageButton btnLogout;
 
         /// <summary>
-        /// Control lblPaciente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPaciente;
-
-        /// <summary>
         /// Control txtBuscar.
         /// </summary>
         /// <remarks>
@@ -69,6 +60,15 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
+        /// Control rfvBuscar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvBuscar;
+
+        /// <summary>
         /// Control btnPendientes.
         /// </summary>
         /// <remarks>
@@ -78,13 +78,22 @@ namespace Vistas
         protected global::System.Web.UI.WebControls.Button btnPendientes;
 
         /// <summary>
-        /// Control btnAnteriores.
+        /// Control btnHistorial.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnteriores;
+        protected global::System.Web.UI.WebControls.Button btnHistorial;
+
+        /// <summary>
+        /// Control ValidationSummary1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
 
         /// <summary>
         /// Control gvTurnos.

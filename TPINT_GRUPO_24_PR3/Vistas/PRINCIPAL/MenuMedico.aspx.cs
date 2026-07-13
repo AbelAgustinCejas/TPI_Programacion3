@@ -8,18 +8,13 @@ namespace Vistas
 {
     public partial class MenuMedico : System.Web.UI.Page
     {
+        NegocioTurno negocio = new NegocioTurno();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["IdUsuario"] == null)
-            {
-                Response.Redirect("~/PRINCIPAL/Login.aspx");
-                return;
-            }
-
             if(!IsPostBack)
             {
-                lblUsuario.Text = Session["NombreBienvenida"].ToString();
-                Session["FiltroTurnos"] = "Pendientes";
+                lblUsuario.Text = Session["NombreUsuario"].ToString();
+                Session["Filtros"] = "Pendientes";
                 CargarTurnosPendientes();
             }
         }
@@ -27,8 +22,6 @@ namespace Vistas
         private void CargarTurnosPendientes()
         {
             int usuario = Convert.ToInt32(Session["IdUsuario"]);
-
-            NegocioTurno negocio = new NegocioTurno();
 
             DataTable tabla = negocio.ObtenerTurnosPendientes(usuario);
 
@@ -44,13 +37,11 @@ namespace Vistas
                 lblMensaje.Text = "";
             }
         }
-        private void CargarTurnosAnteriores() /// CARGAR TURNOS ANTERIORES
+        private void CargarTurnosHistorial() /// CARGAR TURNOS Historial
         {
             int usuario = Convert.ToInt32(Session["IdUsuario"]);
 
-            NegocioTurno negocio = new NegocioTurno();
-
-            DataTable tabla = negocio.ObtenerTurnosAnteriores(usuario);
+            DataTable tabla = negocio.ObtenerTurnosHistorial(usuario);
 
             gvTurnos.DataSource = tabla;
             gvTurnos.DataBind();
@@ -68,8 +59,6 @@ namespace Vistas
         private void BuscarTurnos(string busqueda) /// BUSCAR TURNOS POR NOMBRE O APELLIDO
         {
             int usuario = Convert.ToInt32(Session["IdUsuario"]);
-
-            NegocioTurno negocio = new NegocioTurno();
 
             DataTable tabla = negocio.BuscarTurnos(usuario, busqueda);
 
@@ -90,18 +79,16 @@ namespace Vistas
         {
             if (evento.CommandName == "Presente" || evento.CommandName == "Ausente")
             {
-                int fila = Convert.ToInt32(evento.CommandArgument);
-                int idTurno = Convert.ToInt32(gvTurnos.DataKeys[fila].Value);
+                int fila = Convert.ToInt32(evento.CommandArgument); ///CONVERTIMOS A INT EL ARGUMENTO DEL COMANDO
+                int idTurno = Convert.ToInt32(gvTurnos.DataKeys[fila].Value); ///
 
                 bool asistencia = (evento.CommandName == "Presente"); /// PREGUNTAMOS SI ES PRESENTE Y SE GUARDA TRUE
-
-                NegocioTurno negocio = new NegocioTurno();
 
                 if (negocio.ActualizarAsistencia(idTurno, asistencia))
                 {
                     lblMensaje.Text = "Asistencia actualizada!";
 
-                    Session["FiltroTurnos"] = "Pendientes";
+                    Session["Filtros"] = "Pendientes";
                     CargarTurnosPendientes();
                 }
                 else
@@ -111,19 +98,12 @@ namespace Vistas
             }
         }
 
-        protected void btnLogout_Click(object sender, EventArgs e) /// CERRAR SESION
-        {
-            Session.Clear();
-            Session.Abandon();
-
-            Response.Redirect("~/PRINCIPAL/Login.aspx");
-        }
 
         protected void gvTurnos_PageIndexChanging(object sender, GridViewPageEventArgs e) /// PAGINACION DE GRILLA
         {
             gvTurnos.PageIndex = e.NewPageIndex;
 
-            string filtro = Session["FiltroTurnos"].ToString();
+            string filtro = Session["Filtros"].ToString();
 
             switch (filtro)
             {
@@ -131,8 +111,8 @@ namespace Vistas
                     BuscarTurnos(Session["Busqueda"].ToString());
                     break;
 
-                case "Anteriores":
-                    CargarTurnosAnteriores();
+                case "Historial":
+                    CargarTurnosHistorial();
                     break;
 
                 default:
@@ -143,7 +123,7 @@ namespace Vistas
 
         protected void btnBuscar_Click(object sender, EventArgs e) 
         {
-            Session["FiltroTurnos"] = "Buscar";
+            Session["Filtros"] = "Buscar";
             Session["Busqueda"] = txtBuscar.Text.Trim();
             lblMensaje.Text = "";
             string busqueda = txtBuscar.Text;
@@ -153,18 +133,24 @@ namespace Vistas
 
         protected void btnPendientes_Click(object sender, EventArgs e)
         {
-            Session["FiltroTurnos"] = "Pendientes";
+            Session["Filtros"] = "Pendientes";
             lblMensaje.Text = "";
             CargarTurnosPendientes();
             txtBuscar.Text = "";
         }
 
-        protected void btnAnteriores_Click(object sender, EventArgs e)
+        protected void btnHistorial_Click(object sender, EventArgs e)
         {
-            Session["FiltroTurnos"] = "Anteriores";
+            Session["Filtros"] = "Historial";
             lblMensaje.Text = "";
-            CargarTurnosAnteriores();
+            CargarTurnosHistorial();
             txtBuscar.Text = "";
+        }
+
+        protected void btnLogout_Click(object sender, System.Web.UI.ImageClickEventArgs e)
+        {
+            Response.Redirect("~/PRINCIPAL/Login.aspx");
+
         }
     }
 }

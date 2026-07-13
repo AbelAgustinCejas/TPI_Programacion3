@@ -12,7 +12,7 @@ namespace Vistas.MENU_ADMIN
         {
             if (!IsPostBack)
             {
-                lblUsuarioIngresado.Text = Session["NombreBienvenida"].ToString();
+                lblUsuarioIngresado.Text = Session["NombreUsuario"].ToString();
                 CargarProvincias();
                 CargarEspecialidades();
                 CargarMedicosDDL();
@@ -481,6 +481,11 @@ namespace Vistas.MENU_ADMIN
 
             CargarMedicosGrid();
             gvMedicos.Columns[10].Visible = false;
+        }
+
+        protected void btnLogout_Click(object sender, System.Web.UI.ImageClickEventArgs e)
+        {
+            Response.Redirect("~/PRINCIPAL/Login.aspx");
         }
     }
 }

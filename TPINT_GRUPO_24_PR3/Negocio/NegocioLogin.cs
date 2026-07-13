@@ -13,20 +13,20 @@ namespace Negocio
             return dao.Login(nombreUsuario, contraseña);
         }
 
-        public string ObtenerNombreBienvenida(int idUsuario, bool tipoUsuario)
+        public string ObtenerNombreUsuario(int idUsuario, bool tipoUsuario)
         {
-            string nombreBienvenida;
+            string NombreUsuario;
 
             if (tipoUsuario)
             {
-                nombreBienvenida = dao.ObtenerNombreMedico(idUsuario);
+                NombreUsuario = dao.ObtenerNombreMedico(idUsuario);
             }
             else
             {
-                nombreBienvenida = "Administrador";
+                NombreUsuario = "Administrador";
             }
 
-            return nombreBienvenida;
+            return NombreUsuario;
         }
     }
 }

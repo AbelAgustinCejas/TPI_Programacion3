@@ -14,7 +14,7 @@ namespace Vistas.MENU_ADMIN
 
             if (!IsPostBack)
             {
-                lblUsuarioIngresado.Text = Session["NombreBienvenida"].ToString();
+                lblUsuarioIngresado.Text = Session["NombreUsuario"].ToString();
                 divFiltros.Visible = false;
                 CargarProvincias();
             }

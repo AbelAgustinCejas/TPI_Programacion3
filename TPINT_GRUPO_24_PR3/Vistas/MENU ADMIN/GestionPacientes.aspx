@@ -62,8 +62,7 @@
                         ID="RequiredFieldValidator12"
                         runat="server"
                         ControlToValidate="txtNombre"
-                        ErrorMessage="Ingrese Nombre">
-                    </asp:RequiredFieldValidator>
+                        ErrorMessage="Ingrese Nombre" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                 </td>
                 <td>
                     <asp:TextBox
@@ -85,7 +84,7 @@
                         ID="RequiredFieldValidator16"
                         runat="server"
                         ControlToValidate="DNI"
-                        ErrorMessage="Ingrese DNI"></asp:RequiredFieldValidator>
+                        ErrorMessage="Ingrese DNI" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                 </td>
                 <td>
                     <asp:TextBox
@@ -102,8 +101,7 @@
                         ID="RequiredFieldValidator11"
                         runat="server"
                         ControlToValidate="txtApellido"
-                        ErrorMessage="Ingrese Apellido">
-                    </asp:RequiredFieldValidator>
+                        ErrorMessage="Ingrese Apellido" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                 </td>
                 <td>
                     <asp:TextBox
@@ -118,7 +116,7 @@
                         ID="RequiredFieldValidator15"
                         runat="server"
                         ControlToValidate="ddlSexo"
-                        ErrorMessage="Ingrese Sexo" InitialValue="-1"></asp:RequiredFieldValidator>
+                        ErrorMessage="Ingrese Sexo" InitialValue="-1" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                 </td>
                 <td>
                     <asp:DropDownList
@@ -140,8 +138,7 @@
                         ID="RequiredFieldValidator13"
                         runat="server"
                         ControlToValidate="txtNacionalidad"
-                        ErrorMessage="Ingrese Nacionalidad">
-                    </asp:RequiredFieldValidator>
+                        ErrorMessage="Ingrese Nacionalidad" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                 </td>
                 <td>
                     <asp:TextBox
@@ -156,8 +153,7 @@
                         ID="RequiredFieldValidator6"
                         runat="server"
                         ControlToValidate="txtFechaNacimiento"
-                        ErrorMessage="Ingrese Fecha">
-                    </asp:RequiredFieldValidator>
+                        ErrorMessage="Ingrese Fecha" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                 </td>
                 <td>
                     <asp:TextBox
@@ -175,8 +171,7 @@
                         ID="RequiredFieldValidator14"
                         runat="server"
                         ControlToValidate="txtDireccion"
-                        ErrorMessage="Ingrese Direccion">
-                    </asp:RequiredFieldValidator>
+                        ErrorMessage="Ingrese Direccion" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                 </td>
                 <td>
                     <asp:TextBox
@@ -191,8 +186,7 @@
                         ID="RequiredFieldValidator7"
                         runat="server"
                         ControlToValidate="txtEmail"
-                        ErrorMessage="Ingrese Correo">
-                    </asp:RequiredFieldValidator>
+                        ErrorMessage="Ingrese Correo" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                 </td>
                 <td>
                     <asp:TextBox
@@ -211,8 +205,7 @@
                         runat="server"
                         ControlToValidate="ddlProvincia"
                         ErrorMessage="Ingrese Provincia"
-                        InitialValue="-1">
-                    </asp:RequiredFieldValidator>
+                        InitialValue="-1" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                 </td>
                 <td>
                     <asp:DropDownList
@@ -230,8 +223,7 @@
                         runat="server"
                         ControlToValidate="ddlLocalidad"
                         ErrorMessage="Ingrese Localidad"
-                        InitialValue="-1">
-                    </asp:RequiredFieldValidator>
+                        InitialValue="-1" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                 </td>
                 <td>
                     <asp:DropDownList
@@ -249,8 +241,7 @@
                         ID="RequiredFieldValidator10"
                         runat="server"
                         ControlToValidate="txtTelefono"
-                        ErrorMessage="Ingrese Telefono">
-                    </asp:RequiredFieldValidator>
+                        ErrorMessage="Ingrese Telefono" ValidationGroup="agregar"></asp:RequiredFieldValidator>
                 </td>
                 <td>
                     <asp:TextBox
@@ -276,7 +267,7 @@
                                 runat="server"
                                 Text="Agregar"
                                 CssClass="btn btn-success"
-                                OnClick="btnAgregar_Click" />
+                                OnClick="btnAgregar_Click" ValidationGroup="agregar" />
 
                             <asp:Button
                                 ID="btnVerPacientes"

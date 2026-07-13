@@ -23,9 +23,9 @@ namespace Negocio
             return dao.ObtenerTurnosPendientes(usuario);
         }
 
-        public DataTable ObtenerTurnosAnteriores(int usuario)
+        public DataTable ObtenerTurnosHistorial(int usuario)
         {
-            return dao.ObtenerTurnosAnteriores(usuario);
+            return dao.ObtenerTurnosHistorial(usuario);
         }
 
         public bool ConfirmarTurno(int legajo, int idPaciente, DateTime fecha, TimeSpan hora)

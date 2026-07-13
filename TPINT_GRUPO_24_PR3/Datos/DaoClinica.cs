@@ -12,7 +12,6 @@ namespace Datos
     {
         AccesoDatos conexion = new AccesoDatos();
 
-
         //////////////////////// LOGIN /////////////////////////////
         public SqlDataReader Login(string nombreUsuario, string contrasenia)
         {
@@ -33,6 +32,30 @@ namespace Datos
 
             return command.ExecuteReader(); /// lee los registros uno x uno y devuelve el resultado
         }
+
+        public string ObtenerNombreMedico(int idUsuario)
+        {
+            string consulta = "SELECT Nombre_MED, Apellido_MED FROM Medico WHERE IdUsuario_MED = @IdUsuario";
+            string nombre = "";
+
+            SqlConnection connection = conexion.ObtenerConexion();
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(consulta, connection);
+            command.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                nombre = reader["Nombre_MED"].ToString() + " " + reader["Apellido_MED"].ToString();
+            }
+
+            connection.Close();
+
+            return nombre;
+        }
+
         /////////////////////////// PACIENTES /////////////////////////////////////
 
         public DataTable ListarPacientes(string busqueda, string sexo, int idProvincia)
@@ -226,28 +249,27 @@ namespace Datos
 
             SqlConnection connection = conexion.ObtenerConexion();
 
-            string consulta = @"SELECT
-                                    Legajo_MED,
-                                    DNI_MED,
-                                    Nombre_MED,
-                                    Apellido_MED,
-                                    Descripcion_ESP,
-                                    Nombre_LOC,
-                                    Nombre_PRO,
-                                    Sexo_MED,
-                                    Nacionalidad_MED,
-                                    FechaNacimiento_MED,
-                                    Direccion_MED,
-                                    Email_MED,
-                                    Telefono_MED
-                                FROM Medico
-                                    INNER JOIN Especialidad
-                                    ON Medico.IdEspecialidad_MED = Especialidad.IdEspecialidad_ESP
-                                    INNER JOIN Localidad
-                                    ON Medico.IdLocalidad_MED = Localidad.IdLocalidad_LOC
-                                    INNER JOIN Provincia
-                                    ON Localidad.IdProvincia_LOC = Provincia.IdProvincia_PRO
-                                WHERE Medico.Estado_MED = 1";
+            string consulta = @"SELECT Medico.Legajo_MED,
+                                        Medico.DNI_MED,
+                                        Medico.Nombre_MED,
+                                        Medico.Apellido_MED,
+                                        Especialidad.Descripcion_ESP,
+                                        Localidad.Nombre_LOC,
+                                        Provincia.Nombre_PRO,
+                                        Medico.Sexo_MED,
+                                        Medico.Nacionalidad_MED,
+                                        Medico.FechaNacimiento_MED,
+                                        Medico.Direccion_MED,
+                                        Medico.Email_MED,
+                                        Medico.Telefono_MED
+                                    FROM Medico
+                                        INNER JOIN Especialidad
+                                        ON Medico.IdEspecialidad_MED = Especialidad.IdEspecialidad_ESP
+                                        INNER JOIN Localidad
+                                        ON Medico.IdLocalidad_MED = Localidad.IdLocalidad_LOC
+                                        INNER JOIN Provincia
+                                        ON Localidad.IdProvincia_LOC = Provincia.IdProvincia_PRO
+                                    WHERE Medico.Estado_MED = 1";
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter(consulta, connection);
 
@@ -444,7 +466,7 @@ namespace Datos
             return dataTable;
         }
 
-        public DataTable ObtenerTurnosAnteriores(int usuario)
+        public DataTable ObtenerTurnosHistorial(int usuario)
         {
             DataTable dataTable = new DataTable();
 
@@ -687,29 +709,6 @@ namespace Datos
             connection.Close();
 
             return cantidad > 0;
-        }
-
-        public string ObtenerNombreMedico(int idUsuario)
-        {
-            string consulta = "SELECT Nombre_MED, Apellido_MED FROM Medico WHERE IdUsuario_MED = @IdUsuario";
-            string nombre = "";
-
-            SqlConnection connection = conexion.ObtenerConexion();
-            connection.Open();
-
-            SqlCommand command = new SqlCommand(consulta, connection);
-            command.Parameters.AddWithValue("@IdUsuario", idUsuario);
-
-            SqlDataReader reader = command.ExecuteReader();
-
-            if (reader.Read())
-            {
-                nombre = reader["Nombre_MED"].ToString() + " " + reader["Apellido_MED"].ToString();
-            }
-
-            connection.Close();
-
-            return nombre;
         }
 
         public DataTable ObtenerMedicosDDL()
